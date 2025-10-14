@@ -5,39 +5,38 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4FAFF"
+    android:background="@color/white_background_color"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <android.widget.Button
-            style="@style/StyleTitle14"
-            android:layout_width="190dp"
+        <Button
+            style="@style/StyleNavButton"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:layout_marginEnd="@dimen/margin_smallest"
+            android:layout_weight="1"
             android:background="@drawable/shape_rounded_buttons"
-            android:backgroundTint="@color/category"
+            android:backgroundTint="@color/category_color"
             android:text="@string/category" />
 
-        <android.widget.Button
-            style="@style/StyleTitle14"
-            android:layout_width="match_parent"
+        <Button
+            style="@style/StyleNavButton"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/margin_smallest"
+            android:layout_weight="1"
             android:background="@drawable/shape_rounded_buttons"
-            android:backgroundTint="@color/favorites"
+            android:backgroundTint="@color/favorites_color"
             android:text="@string/favorites"
             app:icon="@drawable/ic_heart_empty"
-            app:iconGravity="end" />
+            app:iconGravity="textEnd" />
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
