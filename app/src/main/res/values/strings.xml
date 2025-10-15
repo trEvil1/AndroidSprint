@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">AndroidSprint</string>
-    <string name="category">категории</string>
-    <string name="favorites">Избранное</string>
+    <string name="title_category">категории</string>
+    <string name="title_favorites">Избранное</string>
 </resources>
