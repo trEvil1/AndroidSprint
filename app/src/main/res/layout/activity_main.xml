@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/llNavButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
@@ -23,8 +24,8 @@
             android:layout_gravity="start"
             android:layout_marginEnd="@dimen/margin_smallest"
             android:layout_weight="1"
-            app:backgroundTint="@color/category_color"
-            android:text="@string/title_category" />
+            android:text="@string/title_category"
+            app:backgroundTint="@color/category_color" />
 
         <Button
             style="@style/StyleNavButton"
@@ -33,9 +34,21 @@
             android:layout_marginStart="@dimen/margin_smallest"
             android:layout_weight="1"
 
-            app:backgroundTint="@color/favorites_color"
             android:text="@string/title_favorites"
+            app:backgroundTint="@color/favorites_color"
             app:icon="@drawable/ic_heart_empty"
             app:iconGravity="textEnd" />
     </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mainContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/llNavButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.fragment.app.FragmentContainerView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
