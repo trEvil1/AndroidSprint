@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            android:id="@+id/butCategory"
             style="@style/StyleNavButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -28,12 +29,12 @@
             app:backgroundTint="@color/category_color" />
 
         <Button
+            android:id="@+id/butFavorite"
             style="@style/StyleNavButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/margin_smallest"
             android:layout_weight="1"
-
             android:text="@string/title_favorites"
             app:backgroundTint="@color/favorites_color"
             app:icon="@drawable/ic_heart_empty"
