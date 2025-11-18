@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.butCategory.setOnClickListener {
+        binding.btnCategory.setOnClickListener {
             supportFragmentManager.commit {
                 replace<CategoriesListFragment>(R.id.mainContainer)
                 setReorderingAllowed(true)
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.butFavorite.setOnClickListener {
+        binding.btnFavorite.setOnClickListener {
             supportFragmentManager.commit {
                 replace<FavoritesFragment>(R.id.mainContainer)
                 setReorderingAllowed(true)
