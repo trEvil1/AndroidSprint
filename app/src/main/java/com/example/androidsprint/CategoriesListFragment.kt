@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment
 import com.example.androidsprint.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
-    private var binding: FragmentListCategoriesBinding? = null
-        get() = binding ?: throw IllegalAccessException(
+    private var _binding: FragmentListCategoriesBinding? = null
+        private val binding
+        get() = _binding ?: throw IllegalAccessException(
             "Binding for FragmentListCategoriesBinding must not be null"
         )
 
@@ -19,12 +20,12 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): ConstraintLayout? {
-        binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
-        return binding?.root
+        _binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }

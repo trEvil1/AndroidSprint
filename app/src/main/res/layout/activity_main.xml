@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/butCategory"
+            android:id="@+id/btnCategory"
             style="@style/StyleNavButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -29,7 +29,7 @@
             app:backgroundTint="@color/category_color" />
 
         <Button
-            android:id="@+id/butFavorite"
+            android:id="@+id/btnFavorite"
             style="@style/StyleNavButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"

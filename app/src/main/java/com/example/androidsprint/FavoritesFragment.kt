@@ -9,18 +9,23 @@ import com.example.androidsprint.databinding.FavoritesFragmentBinding
 
 
 class FavoritesFragment : Fragment(R.layout.favorites_fragment) {
-    private var binding: FavoritesFragmentBinding? = null
+    private var _binding: FavoritesFragmentBinding? = null
+    private val binding
+        get() = _binding ?: throw IllegalAccessException(
+            "Binding for FragmentListCategoriesBinding must not be null"
+        )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): ConstraintLayout? {
-        binding = FavoritesFragmentBinding.inflate(inflater, container, false)
-        return binding?.root
+    ): ConstraintLayout {
+        _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }
