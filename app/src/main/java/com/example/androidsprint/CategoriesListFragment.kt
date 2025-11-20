@@ -11,7 +11,7 @@ import com.example.androidsprint.databinding.FragmentListCategoriesBinding
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding
-        get() = _binding ?: throw IllegalAccessException(
+        get() = _binding ?: throw IllegalStateException(
             "Binding for FragmentListCategoriesBinding must not be null"
         )
 

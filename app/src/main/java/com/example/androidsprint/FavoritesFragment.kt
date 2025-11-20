@@ -11,7 +11,7 @@ import com.example.androidsprint.databinding.FavoritesFragmentBinding
 class FavoritesFragment : Fragment(R.layout.favorites_fragment) {
     private var _binding: FavoritesFragmentBinding? = null
     private val binding
-        get() = _binding ?: throw IllegalAccessException(
+        get() = _binding ?: throw IllegalStateException(
             "Binding for FavoriteFragmentBinding must not be null"
         )
 
