@@ -20,17 +20,20 @@ object STUB {
             "Пицца",
             "Пицца на любой вкус и цвет. Лучшая подборка для тебя",
             "categories/pizza.png"
-        ), Category(
+        ),
+        Category(
             3,
             "Рыба",
             "Печеная, жареная, сушеная, любая рыба на твой вкус",
             "categories/fish.png"
-        ), Category(
+        ),
+        Category(
             4,
             "Супы",
             "От классики до экзотики: мир в одной тарелке",
             "categories/soup.png"
-        ), Category(
+        ),
+        Category(
             5,
             "Салаты",
             "Хрустящий калейдоскоп под соусом вдохновения",
@@ -38,9 +41,8 @@ object STUB {
         )
     )
 
-    public fun getCategories(category: List<Category>): List<Category> {
-        return category
+    fun getCategories(): List<Category> {
+       return categories
     }
 }
-
 
