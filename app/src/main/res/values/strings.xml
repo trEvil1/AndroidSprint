@@ -2,4 +2,6 @@
     <string name="app_name">AndroidSprint</string>
     <string name="title_category">категории</string>
     <string name="title_favorites">Избранное</string>
+    <string name="title_burgers">Бургеры</string>
+    <string name="title_category">Категории</string>
 </resources>
