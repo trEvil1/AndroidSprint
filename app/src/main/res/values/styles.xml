@@ -12,4 +12,9 @@
         <item name="cornerRadius">@dimen/margin_small</item>
         <item name="android:textAppearance">@style/StyleTitle14</item>
     </style>
+    <style name="StyleCategoryText" parent="StyleCategoryText">
+        <item name ="android:textAppearance">@style/StyleTitle14</item>
+        <item name="android:textSize">@dimen/margin_large</item>
+        <item name = "android:textColor">@color/title_color</item>
+    </style>
 </resources>

@@ -8,4 +8,7 @@
     <dimen name="margin_normal_x">18dp</dimen>
     <dimen name="margin_smallest">2dp</dimen>
     <dimen name="margin_large">20dp</dimen>
+    <dimen name="layout_height">224dp</dimen>
+    <dimen name="text_title_height">44dp</dimen>
+    <dimen name="text_title_width">149dp</dimen>
 </resources>
