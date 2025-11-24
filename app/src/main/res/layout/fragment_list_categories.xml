@@ -6,25 +6,26 @@
     android:background="@color/white_background_color"
     android:orientation="vertical">
 
+    <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rvCategories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_category" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height">
 
-        <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/rvCategories"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/margin_small"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:itemCount="6"
-            tools:listitem="@layout/item_category" />
 
         <ImageView
-            android:contentDescription="@string/title_category"
             android:id="@+id/ivCategories"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/title_category"
             android:scaleType="centerCrop"
             android:src="@drawable/bcg_categories"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,8 +35,8 @@
 
         <TextView
             style="@style/StyleCategoryText"
-            android:layout_width="@dimen/text_title_width"
-            android:layout_height="@dimen/text_title_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_normal"
             android:background="@drawable/shape_screen_title"
