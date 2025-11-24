@@ -10,19 +10,35 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="@dimen/margin_small"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:cardCornerRadius="@dimen/margin_small">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/btnBurgerCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/title_burgers"
+            android:src="@drawable/bcg_recipes_list" />
+
+        <TextView
+            style="@style/StyleCategoryText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:lines="1"
+            android:text="@string/title_burgers" />
+
+        <TextView
+            style="@style/StyleTextSimple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:text="@string/description_burger" />
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>
-
 

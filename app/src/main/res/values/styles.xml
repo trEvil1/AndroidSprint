@@ -12,9 +12,16 @@
         <item name="cornerRadius">@dimen/margin_small</item>
         <item name="android:textAppearance">@style/StyleTitle14</item>
     </style>
-    <style name="StyleCategoryText" parent="StyleCategoryText">
-        <item name ="android:textAppearance">@style/StyleTitle14</item>
+
+    <style name="StyleCategoryText" parent="TextAppearance.AppCompat">
+        <item name="android:textAppearance">@style/StyleTitle14</item>
         <item name="android:textSize">@dimen/margin_large</item>
-        <item name = "android:textColor">@color/title_color</item>
+        <item name="android:textColor">@color/title_color</item>
+    </style>
+
+    <style name="StyleTextSimple" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:textSize">@dimen/margin_small_xx</item>
+        <item name="android:textColor">@color/grey_color</item>
     </style>
 </resources>
