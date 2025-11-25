@@ -28,6 +28,7 @@
             tools:src="@drawable/bcg_recipes_list" />
 
         <TextView
+            android:id="@+id/tvTitleCategories"
             style="@style/StyleCategoryText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,6 +38,7 @@
             tools:text="@string/title_burgers" />
 
         <TextView
+            android:id="@+id/tvDescription"
             style="@style/StyleTextSimple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
