@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_height">
 
-
         <ImageView
             android:id="@+id/ivCategories"
             android:layout_width="match_parent"
@@ -29,6 +28,7 @@
             android:id="@+id/tvTitleCategory"
             style="@style/StyleCategoryText"
             android:layout_width="wrap_content"
+            android:padding="@dimen/margin_small"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginBottom="@dimen/margin_normal"

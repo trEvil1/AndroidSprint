@@ -8,14 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.androidsprint.databinding.ItemCategoryBinding
 import java.io.InputStream
 
 class CategoriesListAdapter(val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.ivBurgerCategory)
-        val titleTextView: TextView? = view.findViewById(R.id.tvTitleCategories)
-        val descriptionTextView: TextView = view.findViewById(R.id.tvDescription)
+        val binding  = ItemCategoryBinding.bind(view)
+
+        val imageView: ImageView = binding.ivBurgerCategory
+        val titleTextView: TextView = binding.tvTitleCategories
+        val descriptionTextView: TextView = binding.tvDescription
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -28,10 +31,10 @@ class CategoriesListAdapter(val dataSet: List<Category>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val category = dataSet[position]
         viewHolder.descriptionTextView.text = category.description
-        viewHolder.titleTextView?.text = category.title
+        viewHolder.titleTextView.text = category.title
         try {
-            val inputStream: InputStream? =
-                viewHolder.itemView.context?.assets?.open(dataSet[position].imageUrl)
+            val inputStream: InputStream =
+                viewHolder.itemView.context.assets.open(category.imageUrl)
             val drawable = Drawable.createFromStream(inputStream, null)
             viewHolder.imageView.setImageDrawable(drawable)
         } catch (ex: Exception) {
