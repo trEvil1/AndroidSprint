@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_small"
-    android:layout_marginVertical="@dimen/margin_normal"
+    android:layout_margin="@dimen/margin_small"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -20,7 +19,7 @@
 
         <ImageView
             android:id="@+id/ivBurgerCategory"
-            android:layout_width="@dimen/image_category_card_weight"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/image_category_card_height"
             android:background="@drawable/shape_screen_title"
             android:contentDescription="@string/title_burgers"
@@ -28,6 +27,7 @@
             tools:src="@drawable/bcg_recipes_list" />
 
         <TextView
+            android:id="@+id/tvTitleCategories"
             style="@style/StyleCategoryText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,11 +37,11 @@
             tools:text="@string/title_burgers" />
 
         <TextView
+            android:id="@+id/tvDescription"
             style="@style/StyleTextSimple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_margin="@dimen/margin_small"
             tools:text="@string/description_burger" />
     </LinearLayout>
 
