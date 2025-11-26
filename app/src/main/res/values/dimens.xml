@@ -10,6 +10,7 @@
     <dimen name="margin_normal_x_sp">18sp</dimen>
     <dimen name="margin_smallest">2dp</dimen>
     <dimen name="margin_large">20dp</dimen>
+    <dimen name="margin_large_sp">20sp</dimen>
     <dimen name="layout_height">224dp</dimen>
     <dimen name="image_category_card_height">130dp</dimen>
     <dimen name="margin_small_xx_sp">12sp</dimen>

@@ -3,7 +3,7 @@
 
     <style name="StyleTitle14" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
-        <item name="android:textSize">@dimen/margin_normal_sp</item>
+        <item name="android:textSize">@dimen/margin_small_xxx_sp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/white_background_color</item>
     </style>
@@ -21,7 +21,7 @@
 
     <style name="StyleCategoryTextTitle" parent="TextAppearance.AppCompat">
         <item name="android:textAppearance">@style/StyleTitle14</item>
-        <item name="android:textSize">@dimen/margin_normal_x_sp</item>
+        <item name="android:textSize">@dimen/margin_large_sp</item>
         <item name="android:textColor">@color/title_color</item>
     </style>
 
