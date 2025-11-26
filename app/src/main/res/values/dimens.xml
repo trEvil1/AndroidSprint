@@ -12,5 +12,5 @@
     <dimen name="text_title_height">44dp</dimen>
     <dimen name="text_title_width">149dp</dimen>
     <dimen name="margin_large_xxx">32dp</dimen>
-    <dimen name="image_category_card_height">156dp</dimen>
+    <dimen name="image_category_card_height">130dp</dimen>
 </resources>
