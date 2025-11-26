@@ -5,16 +5,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.androidsprint.databinding.ItemCategoryBinding
 import java.io.InputStream
 
 class CategoriesListAdapter(val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
+
+    val itemClickListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        val itemClickListener = listener
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick()
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding  = ItemCategoryBinding.bind(view)
+        val binding = ItemCategoryBinding.bind(view)
 
         val imageView: ImageView = binding.ivBurgerCategory
         val titleTextView: TextView = binding.tvTitleCategories
@@ -40,9 +51,8 @@ class CategoriesListAdapter(val dataSet: List<Category>) :
         } catch (ex: Exception) {
             Log.e("TAG", "Stack Trace", ex)
         }
-
+        viewHolder.binding.cvCardCategory.setOnClickListener { itemClickListener?.onItemClick() }
     }
 
     override fun getItemCount() = dataSet.size
-
 }
