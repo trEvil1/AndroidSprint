@@ -14,10 +14,10 @@ import java.io.InputStream
 class CategoriesListAdapter(val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
-    val itemClickListener: OnItemClickListener? = null
+    var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
-        val itemClickListener = listener
+        this.itemClickListener = listener
     }
 
     interface OnItemClickListener {
