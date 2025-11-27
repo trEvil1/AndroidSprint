@@ -42,14 +42,17 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         categoriesAdapter.setOnItemClickListener(object :
             CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick() {
-                binding.rvCategories.setOnClickListener {
-                    parentFragmentManager.commit {
-                        replace<RecipeListFragment>(R.id.mainContainer)
-                        setReorderingAllowed(true)
-                        addToBackStack(null)
-                    }
-                }
+                openRecipesByCategoryId()
             }
         })
+    }
+
+    fun openRecipesByCategoryId() {
+        parentFragmentManager.commit {
+            replace<RecipeListFragment>(R.id.mainContainer)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
+
     }
 }
