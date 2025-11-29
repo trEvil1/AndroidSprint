@@ -5,16 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import com.example.androidsprint.databinding.FragmentListCategoriesBinding
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
-
 
 class RecipeListFragment :
     Fragment(R.layout.recipe_list_fragment) {
-
-
     private var _binding: RecipeListFragmentBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException(
