@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
 
 class RecipeListFragment :
@@ -37,5 +39,12 @@ class RecipeListFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun openRecipeByRecipeId(recipeId: Int) {
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<RecipeListFragment>(R.id.mainContainer)
+        }
     }
 }

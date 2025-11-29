@@ -1,7 +1,7 @@
 package com.example.androidsprint
 
 object STUB {
-
+    private val burgerRecipes = RecipeListFragment()
     private val categories: List<Category> = listOf(
         Category(
             0,
@@ -41,8 +41,13 @@ object STUB {
         )
     )
 
+    public fun getRecipesByCategory(categoryId: Int): Category? {
+        return if (categoryId == 0) {
+            categories.get(categoryId)
+        } else null
+    }
+
     fun getCategories(): List<Category> {
-       return categories
+        return categories
     }
 }
-

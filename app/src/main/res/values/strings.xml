@@ -7,4 +7,12 @@
     <string name="title_pizza">Пицца</string>
     <string name="title_dessert">Десерты</string>
     <string name="description_burger">Рецепты всех \nпопулярных видов \nбургеров</string>
+    <string name="burger_hamburger">Гамбургер</string>
+    <string name="burger_cheeseburger">Чизбургер</string>
+    <string name="burger_mushrooms">Бургер с грибами</string>
+    <string name="burger_avocado">Бургер с авакадо</string>
+    <string name="burger_fish">Рыбный бургер</string>
+    <string name="burger_bacon">Бургер с беконом</string>
+    <string name="burger_vegan">Веган-бургер</string>
+    <string name="burger_chili">Острый бургер</string>
 </resources>
