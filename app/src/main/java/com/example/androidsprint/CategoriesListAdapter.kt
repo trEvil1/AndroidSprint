@@ -21,7 +21,7 @@ class CategoriesListAdapter(val dataSet: List<Category>) :
     }
 
     interface OnItemClickListener {
-        fun onItemClick()
+        fun onItemClick(categoryId: Int)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -51,7 +51,11 @@ class CategoriesListAdapter(val dataSet: List<Category>) :
         } catch (ex: Exception) {
             Log.e("TAG", "Stack Trace", ex)
         }
-        viewHolder.binding.cvCardCategory.setOnClickListener { itemClickListener?.onItemClick() }
+        viewHolder.binding.cvCardCategory.setOnClickListener {
+            itemClickListener?.onItemClick(
+                category.id
+            )
+        }
     }
 
     override fun getItemCount() = dataSet.size
