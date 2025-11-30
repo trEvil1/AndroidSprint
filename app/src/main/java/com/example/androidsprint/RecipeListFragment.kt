@@ -35,6 +35,7 @@ class RecipeListFragment :
         categoryId = requireArguments().getInt(ARG_CATEGORY_ID)
         categoryImageUrl = requireArguments().getString(ARG_CATEGORY_IMAGE_URL)
         categoryName = requireArguments().getString(ARG_CATEGORY_NAME)
+        initRecycler()
     }
 
     override fun onDestroyView() {
@@ -42,8 +43,23 @@ class RecipeListFragment :
         _binding = null
     }
 
+    private fun initRecycler() {
+        val recipesAdapter = RecipeListAdapter(STUB.getRecipesByCategory(categoryId))
+        binding.rvRecipes.adapter = recipesAdapter
+        recipesAdapter.setOnItemClickListener(
+            object :
+                RecipeListAdapter.OnItemClickListener {
+                override fun onItemClick(categoryId: Int) {
+                    openRecipeByRecipeId(
+                        categoryId
+                    )
+                }
+            },
+        )
+    }
+
     fun openRecipeByRecipeId(recipeId: Int) {
-        val recipes = STUB.getRecipesByCategory(recipeId)?.find { it.id == recipeId }
+        val recipes = STUB.getRecipesByCategory(recipeId).find { it.id == recipeId }
         val recipeName = recipes?.title
         val recipeImageUrl = recipes?.imageUrl
         val recipeMethod = recipes?.method

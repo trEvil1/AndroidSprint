@@ -261,9 +261,9 @@ object STUB {
         )
     )
 
-    fun getRecipesByCategory(categoryId: Int): List<Recipe>? {
+    fun getRecipesByCategory(categoryId: Int?): List<Recipe> {
         return if (categoryId == 0) burgerRecipes
-        else null
+        else listOf()
     }
 
     fun getCategories(): List<Category> {
