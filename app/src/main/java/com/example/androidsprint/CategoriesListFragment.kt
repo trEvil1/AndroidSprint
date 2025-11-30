@@ -61,7 +61,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
             ARG_CATEGORY_IMAGE_URL to categoryImageUrl
         )
         parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
+            replace<RecipeListFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
         }
