@@ -15,6 +15,4 @@
     <dimen name="image_category_card_height">130dp</dimen>
     <dimen name="margin_small_xx_sp">12sp</dimen>
     <dimen name="margin_normal_sp">16sp</dimen>
-    <dimen name="recipes_image_height">100dp</dimen>
-
 </resources>

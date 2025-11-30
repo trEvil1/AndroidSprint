@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/ivBurgerRecipe"
+            android:id="@+id/ivBurgerCategory"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recipes_image_height"
             android:background="@drawable/shape_screen_title"
@@ -27,7 +27,7 @@
             tools:src="@drawable/bcg_recipes_list" />
 
         <TextView
-            android:id="@+id/tvTitleBurgers"
+            android:id="@+id/tvTitleCategories"
             style="@style/StyleCategoryText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
