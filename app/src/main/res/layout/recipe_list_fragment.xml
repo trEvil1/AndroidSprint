@@ -49,5 +49,5 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="1"
         tools:itemCount="8"
-        tools:listitem="@layout/item_burgers_recipes" />
+        tools:listitem="@layout/item_recipes" />
 </LinearLayout>

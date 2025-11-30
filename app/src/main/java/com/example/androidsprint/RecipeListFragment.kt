@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -42,9 +43,22 @@ class RecipeListFragment :
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {
+        val recipes = STUB.getRecipesByCategory(recipeId)?.find { it.id == recipeId }
+        val recipeName = recipes?.title
+        val recipeImageUrl = recipes?.imageUrl
+        val recipeMethod = recipes?.method
+        val recipeIngredient = recipes?.ingredients
+        val bundle = bundleOf(
+            ARG_RECIPE_ID to recipeId,
+            ARG_RECIPE_NAME to recipeName,
+            ARG_RECIPE_METHOD to recipeMethod,
+            ARG_RECIPE_IMAGE_URL to recipeImageUrl,
+            ARG_RECIPE_INGREDIENTS to recipeIngredient
+        )
         parentFragmentManager.commit {
+            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
-            replace<RecipeListFragment>(R.id.mainContainer)
+            addToBackStack(null)
         }
     }
 }

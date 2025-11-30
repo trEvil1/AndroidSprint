@@ -6,7 +6,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="gdfgdfgdf">
+        android:text="gdfgdfgdf"
+        android:textSize="200dp">
 
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>
