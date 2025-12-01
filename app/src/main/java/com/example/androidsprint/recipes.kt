@@ -28,7 +28,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-hamburger.png"
+            imageUrl = "recipes/burger-hamburger.png"
         ),
         Recipe(
             id = 1,
@@ -56,7 +56,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-cheeseburger.png"
+            imageUrl = "recipes/burger-cheeseburger.png"
         ),
         Recipe(
             id = 2,
@@ -84,7 +84,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-mushrooms.png"
+            imageUrl = "recipes/burger-mushrooms.png"
         ),
         Recipe(
             id = 3,
@@ -112,7 +112,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-avocado.png"
+            imageUrl = "recipes/burger-avocado.png"
         ),
         Recipe(
             id = 4,
@@ -137,7 +137,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-fish.png"
+            imageUrl = "recipes/burger-fish.png"
         ),
         Recipe(
             id = 5,
@@ -165,7 +165,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-bacon.png"
+            imageUrl = "recipes/burger-bacon.png"
         ),
         Recipe(
             id = 6,
@@ -192,7 +192,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки томатным соусом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-vegan.png"
+            imageUrl = "recipes/burger-vegan.png"
         ),
         Recipe(
             id = 7,
@@ -219,7 +219,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и соусом табаско.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "burger-chili.png"
+            imageUrl = "recipes/burger-chili.png"
         )
     )
     private val categories: List<Category> = listOf(
@@ -261,7 +261,7 @@ object STUB {
         )
     )
 
-    fun getRecipesByCategory(categoryId: Int?): List<Recipe> {
+    fun getRecipesByCategoryId(categoryId: Int?): List<Recipe> {
         return if (categoryId == 0) burgerRecipes
         else listOf()
     }
