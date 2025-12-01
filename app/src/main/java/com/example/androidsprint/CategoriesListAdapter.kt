@@ -34,7 +34,9 @@ class CategoriesListAdapter(val dataSet: List<Category>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
-        val view = inflater.inflate(R.layout.item_category, viewGroup, false)
+        val view = inflater.inflate(
+            R.layout.item_category, viewGroup, false
+        )
 
         return ViewHolder(view)
     }
