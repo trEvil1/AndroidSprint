@@ -16,6 +16,11 @@ class RecipeFragment : Fragment(R.layout.recipe_fragment) {
         get() = _binding ?: throw IllegalStateException(
             "Binding for RecipeFragmentBinding must not be null"
         )
+    private val recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        arguments?.getParcelable(ARG_RECIPE_ID, Recipe::class.java)
+    } else {
+        arguments?.getParcelable(ARG_RECIPE_ID)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +34,7 @@ class RecipeFragment : Fragment(R.layout.recipe_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            val recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                arguments?.getParcelable(ARG_RECIPE_ID, Recipe::class.java)
-            } else {
-                arguments?.getParcelable(ARG_RECIPE_ID)
-            }
-            tvRecipe.text = recipe?.title
-        }
+        binding.tvRecipe.text = recipe?.title
     }
 
     override fun onDestroyView() {
