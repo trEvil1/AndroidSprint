@@ -10,7 +10,7 @@ import androidx.fragment.app.replace
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
 
 class RecipeListFragment :
-    Fragment(R.layout.recipe_list_fragment) {
+    Fragment() {
     private var _binding: RecipeListFragmentBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException(

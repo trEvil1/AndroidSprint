@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.androidsprint.databinding.FavoritesFragmentBinding
 
-class FavoritesFragment : Fragment(R.layout.favorites_fragment) {
+class FavoritesFragment : Fragment() {
     private var _binding: FavoritesFragmentBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException(

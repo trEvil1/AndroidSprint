@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.androidsprint.databinding.RecipeFragmentBinding
 
-class RecipeFragment : Fragment(R.layout.recipe_fragment) {
+class RecipeFragment : Fragment() {
     private var _binding: RecipeFragmentBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException(
@@ -28,12 +28,12 @@ class RecipeFragment : Fragment(R.layout.recipe_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvRecipe.text = recipe?.title
         recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
         } else {
             arguments?.getParcelable(ARG_RECIPE)
         }
+        binding.tvRecipe.text = recipe?.title
     }
 
     override fun onDestroyView() {
