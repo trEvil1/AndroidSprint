@@ -4,10 +4,11 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tvRecipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="gdfgdfgdf"
-        android:textSize="200sp">
+        android:textSize="20sp">
 
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

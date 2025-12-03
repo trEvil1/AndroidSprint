@@ -269,4 +269,9 @@ object STUB {
     fun getCategories(): List<Category> {
         return categories
     }
+
+    fun getRecipeById(id: Int): Recipe? {
+        val recipe = burgerRecipes.find { it.id == id }
+        return recipe
+    }
 }
