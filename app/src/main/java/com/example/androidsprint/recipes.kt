@@ -271,7 +271,7 @@ object STUB {
     }
 
     fun getRecipeById(id: Int): Recipe? {
-        val recipe = burgerRecipes.find { it.id == id }
+        val recipe = burgerRecipes.find { it.id == id } ?: burgerRecipes.find { it.id == 0 }
         return recipe
     }
 }
