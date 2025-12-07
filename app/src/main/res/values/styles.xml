@@ -32,14 +32,14 @@
     </style>
 
     <style name="StyleTextSimpleUpperIngredients" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="fontFamily">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/margin_small_xxx_sp</item>
         <item name="android:textColor">@color/grey_color</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="StyleTextSimpleMethod" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="fontFamily">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/margin_small_xxx_sp</item>
         <item name="android:textColor">@color/grey_color</item>
     </style>

@@ -52,7 +52,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecyclerIngredients() {
-        val ingredientsAdapter = IngredientsAdapter(recipe!!.ingredients)
+        val ingredientsAdapter = IngredientsAdapter(recipe?.ingredients)
         binding.rvIngredients.adapter = ingredientsAdapter
         val divider = MaterialDividerItemDecoration(
             binding.rvIngredients.context,
@@ -64,7 +64,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecyclerMethod() {
-        val methodAdapter = MethodAdapter(recipe!!.method)
+        val methodAdapter = MethodAdapter(recipe?.method)
         binding.rvMethod.adapter = methodAdapter
         val divider = MaterialDividerItemDecoration(
             binding.rvMethod.context,
