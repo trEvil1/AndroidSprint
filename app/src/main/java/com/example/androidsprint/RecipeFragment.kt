@@ -58,7 +58,7 @@ class RecipeFragment : Fragment() {
             binding.rvIngredients.context,
             DividerItemDecoration.VERTICAL
         )
-        divider.dividerColor = R.color.line_color
+        divider.setDividerColorResource(binding.rvIngredients.context,R.color.line_color)
         divider.isLastItemDecorated = false
         binding.rvIngredients.addItemDecoration(divider)
     }
@@ -70,7 +70,7 @@ class RecipeFragment : Fragment() {
             binding.rvMethod.context,
             DividerItemDecoration.VERTICAL
         )
-        divider.dividerColor = R.color.line_color
+        divider.setDividerColorResource(binding.rvMethod.context,R.color.line_color)
         divider.isLastItemDecorated = false
         binding.rvMethod.addItemDecoration(divider)
     }

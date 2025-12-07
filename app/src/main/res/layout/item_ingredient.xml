@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/tvIngredient"
-        style="@style/StyleTextSimple"
+        style="@style/StyleTextSimpleUpperIngredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_small"
@@ -18,10 +18,10 @@
 
     <TextView
         android:id="@+id/tvQuantity"
-        style="@style/StyleTextSimple"
+        style="@style/StyleTextSimpleUpperIngredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_small"
+       android:layout_margin="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small_xx"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -30,7 +30,7 @@ class MethodAdapter(val dataset: List<String>) :
         position: Int
     ) {
         val method = dataset[position]
-        holder.method.text = "${position+1}. $method"
+        holder.method.text = "${position + 1}. $method"
     }
 
     override fun getItemCount() = dataset.size
