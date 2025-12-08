@@ -59,8 +59,8 @@ class RecipeFragment : Fragment() {
             DividerItemDecoration.VERTICAL
         )
         divider.setDividerColorResource(binding.rvIngredients.context, R.color.line_color)
-        divider.dividerInsetStart = 8
-        divider.dividerInsetEnd = 8
+        divider.setDividerInsetStartResource(binding.rvIngredients.context,R.dimen.margin_small)
+        divider.setDividerInsetEndResource(binding.rvIngredients.context,R.dimen.margin_small)
         divider.isLastItemDecorated = false
         binding.rvIngredients.addItemDecoration(divider)
     }
@@ -73,8 +73,8 @@ class RecipeFragment : Fragment() {
             DividerItemDecoration.VERTICAL
         )
         divider.setDividerColorResource(binding.rvMethod.context, R.color.line_color)
-        divider.dividerInsetStart = 8
-        divider.dividerInsetEnd = 8
+        divider.setDividerInsetStartResource(binding.rvMethod.context,R.dimen.margin_small)
+        divider.setDividerInsetEndResource(binding.rvMethod.context,R.dimen.margin_small)
         divider.isLastItemDecorated = false
         binding.rvMethod.addItemDecoration(divider)
     }
