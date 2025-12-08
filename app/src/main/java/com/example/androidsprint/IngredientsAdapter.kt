@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidsprint.databinding.ItemIngredientBinding
 
-class IngredientsAdapter(val dataset: List<Ingredient>?) :
+class IngredientsAdapter(val dataset: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -24,12 +24,12 @@ class IngredientsAdapter(val dataset: List<Ingredient>?) :
         holder: ViewHolder,
         position: Int
     ) {
-        val ingredient = dataset?.get(position)
-        holder.ingredients.text = ingredient?.description
-        holder.quantity.text = ("${ingredient?.quantity} ${ingredient?.unitOfMeasure}")
+        val ingredient = dataset.get(position)
+        holder.ingredients.text = ingredient.description
+        holder.quantity.text = ("${ingredient.quantity} ${ingredient.unitOfMeasure}")
     }
 
-    override fun getItemCount() = dataset?.size ?: 0
+    override fun getItemCount() = dataset.size ?: 0
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemIngredientBinding.bind(view)
