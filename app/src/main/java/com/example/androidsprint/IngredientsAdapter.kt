@@ -24,12 +24,12 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
         holder: ViewHolder,
         position: Int
     ) {
-        val ingredient = dataset.get(position)
+        val ingredient = dataset[position]
         holder.ingredients.text = ingredient.description
-        holder.quantity.text = ("${ingredient.quantity} ${ingredient.unitOfMeasure}")
+        holder.quantity.text = "${ingredient.quantity} ${ingredient.unitOfMeasure}"
     }
 
-    override fun getItemCount() = dataset.size ?: 0
+    override fun getItemCount() = dataset.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemIngredientBinding.bind(view)

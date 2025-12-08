@@ -52,25 +52,29 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecyclerIngredients() {
-        val ingredientsAdapter = recipe?.ingredients?.let{ IngredientsAdapter(it) }
+        val ingredientsAdapter = recipe?.ingredients?.let { IngredientsAdapter(it) }
         binding.rvIngredients.adapter = ingredientsAdapter
         val divider = MaterialDividerItemDecoration(
             binding.rvIngredients.context,
             DividerItemDecoration.VERTICAL
         )
-        divider.setDividerColorResource(binding.rvIngredients.context,R.color.line_color)
+        divider.setDividerColorResource(binding.rvIngredients.context, R.color.line_color)
+        divider.dividerInsetStart = 8
+        divider.dividerInsetEnd = 8
         divider.isLastItemDecorated = false
         binding.rvIngredients.addItemDecoration(divider)
     }
 
     private fun initRecyclerMethod() {
-        val methodAdapter = recipe?.method?.let{ MethodAdapter(it) }
+        val methodAdapter = recipe?.method?.let { MethodAdapter(it) }
         binding.rvMethod.adapter = methodAdapter
         val divider = MaterialDividerItemDecoration(
             binding.rvMethod.context,
             DividerItemDecoration.VERTICAL
         )
-        divider.setDividerColorResource(binding.rvMethod.context,R.color.line_color)
+        divider.setDividerColorResource(binding.rvMethod.context, R.color.line_color)
+        divider.dividerInsetStart = 8
+        divider.dividerInsetEnd = 8
         divider.isLastItemDecorated = false
         binding.rvMethod.addItemDecoration(divider)
     }
