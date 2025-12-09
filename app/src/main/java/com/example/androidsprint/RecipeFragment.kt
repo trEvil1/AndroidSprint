@@ -64,7 +64,6 @@ class RecipeFragment : Fragment() {
             dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
             isLastItemDecorated = false
         }
-        divider.isLastItemDecorated = false
         binding.rvIngredients.addItemDecoration(divider)
     }
 
