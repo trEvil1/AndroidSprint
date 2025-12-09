@@ -29,7 +29,7 @@ class MethodAdapter(val dataset: List<String>) :
         holder: ViewHolder,
         position: Int
     ) {
-        val method = dataset.get(position)
+        val method = dataset[position]
         holder.method.text = "${position + 1}. $method"
     }
 
