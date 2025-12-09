@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidsprint.databinding.RecipeFragmentBinding
@@ -57,10 +58,12 @@ class RecipeFragment : Fragment() {
         val divider = MaterialDividerItemDecoration(
             binding.rvIngredients.context,
             DividerItemDecoration.VERTICAL
-        )
-        divider.setDividerColorResource(binding.rvIngredients.context, R.color.line_color)
-        divider.setDividerInsetStartResource(binding.rvIngredients.context,R.dimen.margin_small)
-        divider.setDividerInsetEndResource(binding.rvIngredients.context,R.dimen.margin_small)
+        ).apply {
+            dividerColor = ContextCompat.getColor(binding.rvIngredients.context, R.color.line_color)
+            dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_small)
+            dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
+            isLastItemDecorated = false
+        }
         divider.isLastItemDecorated = false
         binding.rvIngredients.addItemDecoration(divider)
     }
@@ -72,10 +75,12 @@ class RecipeFragment : Fragment() {
             binding.rvMethod.context,
             DividerItemDecoration.VERTICAL
         )
-        divider.setDividerColorResource(binding.rvMethod.context, R.color.line_color)
-        divider.setDividerInsetStartResource(binding.rvMethod.context,R.dimen.margin_small)
-        divider.setDividerInsetEndResource(binding.rvMethod.context,R.dimen.margin_small)
-        divider.isLastItemDecorated = false
+            .apply {
+                dividerColor = ContextCompat.getColor(binding.rvMethod.context, R.color.line_color)
+                dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_small)
+                dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
+                isLastItemDecorated = false
+            }
         binding.rvMethod.addItemDecoration(divider)
     }
 }
