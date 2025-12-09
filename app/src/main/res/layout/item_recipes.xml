@@ -8,7 +8,6 @@
     android:layout_margin="@dimen/margin_small"
     android:clickable="true"
     android:focusable="true"
-    android:focusableInTouchMode="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="@dimen/margin_small">
 
