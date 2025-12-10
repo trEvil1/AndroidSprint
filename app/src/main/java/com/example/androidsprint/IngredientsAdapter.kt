@@ -28,10 +28,7 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
     ) {
         val ingredient = dataset[position]
         val quantityAmount = BigDecimal(ingredient.quantity.toDouble() * quantity)
-        if (quantityAmount.setScale(1) == quantityAmount) {
-            holder.quantity.text = "$quantityAmount ${ingredient.unitOfMeasure}"
-        } else holder.quantity.text = "${quantityAmount} ${ingredient.unitOfMeasure}"
-
+        holder.quantity.text = "$quantityAmount ${ingredient.unitOfMeasure}"
         holder.ingredients.text = ingredient.description
     }
 
