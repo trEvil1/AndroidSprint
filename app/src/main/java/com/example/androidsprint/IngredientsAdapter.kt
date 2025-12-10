@@ -8,6 +8,7 @@ import com.example.androidsprint.databinding.ItemIngredientBinding
 
 class IngredientsAdapter(val dataset: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+    var quantity = 1
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,8 +26,14 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
         position: Int
     ) {
         val ingredient = dataset[position]
+        val quantityAmount = ingredient.quantity.toDouble() * quantity
+        if ((quantityAmount * 10).toInt() % 10 == 0) {
+            holder.quantity.text =
+                "${quantityAmount.toInt()} ${ingredient.unitOfMeasure}"
+        } else holder.quantity.text =
+            "${quantityAmount} ${ingredient.unitOfMeasure}"
+
         holder.ingredients.text = ingredient.description
-        holder.quantity.text = "${ingredient.quantity} ${ingredient.unitOfMeasure}"
     }
 
     override fun getItemCount() = dataset.size
@@ -36,5 +43,9 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
 
         val ingredients = binding.tvIngredient
         val quantity = binding.tvQuantity
+    }
+
+    fun updateIngredients(progress: Int) {
+        quantity = progress
     }
 }
