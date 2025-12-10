@@ -67,7 +67,7 @@ class RecipeFragment : Fragment() {
             isLastItemDecorated = false
         }
         binding.rvIngredients.addItemDecoration(divider)
-        binding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        binding.sbPortions.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(
                 seekBar: SeekBar?,
                 progress: Int,
@@ -75,7 +75,6 @@ class RecipeFragment : Fragment() {
             ) {
                 ingredientsAdapter?.updateIngredients(progress)
                 binding.tvPortionsCount.text = progress.toString()
-                binding.rvIngredients.adapter = ingredientsAdapter
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

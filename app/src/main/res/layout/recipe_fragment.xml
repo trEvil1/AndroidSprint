@@ -65,34 +65,37 @@
             app:layout_constraintTop_toBottomOf="@+id/tvIngredients">
 
             <TextView
+                android:id="@+id/tvPortions"
+                style="@style/StyleTextSimplePortions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small_xxx"
+                android:text="@string/portions"
+                app:layout_constraintBottom_toBottomOf="@id/sbPortions"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/tvPortionsCount"
                 style="@style/StyleTextSimplePortions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_smallest_xx"
+                android:text="1"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPortions"
                 app:layout_constraintStart_toEndOf="@+id/tvPortions"
-                app:layout_constraintTop_toTopOf="@+id/tvPortions"
-                android:text="1" />
-
-            <TextView
-                android:id="@+id/tvPortions"
-                style="@style/StyleTextSimplePortions"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="@string/portions"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/tvPortions" />
 
             <SeekBar
-                android:id="@+id/seekBar"
+                android:id="@+id/sbPortions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:max="5"
                 android:min="1"
                 android:progress="1"
-                android:max="5"/>
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

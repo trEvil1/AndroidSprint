@@ -1,5 +1,6 @@
 package com.example.androidsprint
 
+import android.icu.math.BigDecimal
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,12 +27,10 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
         position: Int
     ) {
         val ingredient = dataset[position]
-        val quantityAmount = ingredient.quantity.toDouble() * quantity
-        if ((quantityAmount * 10).toInt() % 10 == 0) {
-            holder.quantity.text =
-                "${quantityAmount.toInt()} ${ingredient.unitOfMeasure}"
-        } else holder.quantity.text =
-            "${quantityAmount} ${ingredient.unitOfMeasure}"
+        val quantityAmount = BigDecimal(ingredient.quantity.toDouble() * quantity)
+        if (quantityAmount.setScale(1) == quantityAmount) {
+            holder.quantity.text = "$quantityAmount ${ingredient.unitOfMeasure}"
+        } else holder.quantity.text = "${quantityAmount} ${ingredient.unitOfMeasure}"
 
         holder.ingredients.text = ingredient.description
     }
@@ -47,5 +46,6 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
 
     fun updateIngredients(progress: Int) {
         quantity = progress
+        notifyDataSetChanged()
     }
 }
