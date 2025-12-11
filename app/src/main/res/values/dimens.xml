@@ -17,4 +17,6 @@
     <dimen name="margin_normal_sp">16sp</dimen>
     <dimen name="recipes_image_height">100dp</dimen>
     <dimen name="margin_smallest_x">4dp</dimen>
+    <dimen name="margin_smallest_xx">6dp</dimen>
+
 </resources>

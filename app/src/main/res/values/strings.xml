@@ -17,4 +17,5 @@
     <string name="burger_mushrooms">Бургер с грибами</string>
     <string name="burger_vegan">Веган бургер</string>
     <string name="cook_method">Способ приготовления</string>
+    <string name="portions">Порции:</string>
 </resources>
