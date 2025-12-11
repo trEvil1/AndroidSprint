@@ -1,6 +1,6 @@
 package com.example.androidsprint
 
-import android.icu.math.BigDecimal
+import java.math.BigDecimal
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.example.androidsprint.databinding.ItemIngredientBinding
 
 class IngredientsAdapter(val dataset: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-    var quantity = 1
+    var quantity: BigDecimal = BigDecimal(1)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,7 +27,10 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
         position: Int
     ) {
         val ingredient = dataset[position]
-        val quantityAmount = BigDecimal(ingredient.quantity.toDouble() * quantity)
+        val quantityAmount =
+            BigDecimal(ingredient.quantity).multiply(quantity).stripTrailingZeros().let {
+                if (it.scale() <= 0) it.setScale(0) else it
+            }.toString()
         holder.quantity.text = "$quantityAmount ${ingredient.unitOfMeasure}"
         holder.ingredients.text = ingredient.description
     }
@@ -42,7 +45,7 @@ class IngredientsAdapter(val dataset: List<Ingredient>) :
     }
 
     fun updateIngredients(progress: Int) {
-        quantity = progress
+        quantity = BigDecimal(progress)
         notifyDataSetChanged()
     }
 }
