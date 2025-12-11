@@ -18,5 +18,6 @@
     <dimen name="recipes_image_height">100dp</dimen>
     <dimen name="margin_smallest_x">4dp</dimen>
     <dimen name="margin_smallest_xx">6dp</dimen>
+    <dimen name="margin_largest">30dp</dimen>
 
 </resources>
