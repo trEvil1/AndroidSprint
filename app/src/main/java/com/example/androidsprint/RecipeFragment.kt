@@ -45,6 +45,7 @@ class RecipeFragment : Fragment() {
         val recipeImage = view.context.assets.open(recipe?.imageUrl.toString())
         val drawable = Drawable.createFromStream(recipeImage, null)
         binding.ivRecipe.setImageDrawable(drawable)
+        initUI()
         initRecyclerIngredients()
         initRecyclerMethod()
     }
@@ -99,5 +100,11 @@ class RecipeFragment : Fragment() {
                 isLastItemDecorated = false
             }
         binding.rvMethod.addItemDecoration(divider)
+    }
+
+    private fun initUI() {
+        binding.ibFavorite.setOnClickListener {
+            binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+        }
     }
 }

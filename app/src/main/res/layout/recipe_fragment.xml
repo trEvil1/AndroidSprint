@@ -29,6 +29,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageButton
+                android:id="@+id/ibFavorite"
+                android:layout_width="@dimen/margin_largest_xxx"
+                android:layout_height="@dimen/margin_largest_xxx"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:background="@drawable/ripple_effect"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivRecipe"
+                android:src="@drawable/ic_heart_empty"
+                tools:src="@drawable/ic_heart" />
+
             <TextView
                 android:id="@+id/tvRecipe"
                 style="@style/StyleCategoryTextTitle"
