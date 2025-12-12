@@ -28,7 +28,7 @@
             android:layout_marginEnd="@dimen/margin_smallest"
             android:layout_weight="1"
             android:text="@string/title_category"
-            app:backgroundTint="@color/category_color" />
+            app:backgroundTint="@color/light_blue_color" />
 
         <Button
             android:id="@+id/btnFavorite"

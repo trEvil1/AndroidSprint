@@ -71,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small_xxx"
                 android:text="@string/portions"
-                app:layout_constraintBottom_toBottomOf="@id/sbPortions"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -122,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_normal"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/cook_method"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
