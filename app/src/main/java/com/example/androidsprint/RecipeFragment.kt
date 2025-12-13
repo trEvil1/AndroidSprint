@@ -1,5 +1,7 @@
 package com.example.androidsprint
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -29,6 +31,7 @@ class RecipeFragment : Fragment() {
     ): View {
         _binding = RecipeFragmentBinding.inflate(inflater, container, false)
         return binding.root
+
 
     }
 
@@ -106,5 +109,24 @@ class RecipeFragment : Fragment() {
         binding.ibFavorite.setOnClickListener {
             binding.ibFavorite.setImageResource(R.drawable.ic_heart)
         }
+    }
+
+    private fun saveFavorite(set: Set<String>) {
+        val sharedPreferences: SharedPreferences = activity?.getSharedPreferences(
+            KEY_PREFERENCE_FILE,
+            Context.MODE_PRIVATE
+        ) ?: return
+        with(sharedPreferences.edit(), {
+            putStringSet(ID_SP, set)
+            apply()
+        })
+
+    }
+
+    private fun getFavorites(): MutableList<String> {
+        val sp = activity?.getSharedPreferences(
+            ID_SP, Context.MODE_PRIVATE
+        )
+        return HashSet(sp?.all?.map { it.key }).toMutableList()
     }
 }
