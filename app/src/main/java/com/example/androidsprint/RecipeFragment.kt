@@ -109,12 +109,19 @@ class RecipeFragment : Fragment() {
         val recipeId = activity?.getSharedPreferences(
             KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
         )?.getString(KEY_FAVORITE_PREFS, recipe?.id.toString())
-        if (recipeId in getFavorites()){
+
+        if (recipeId in getFavorites()) {
             binding.ibFavorite.setImageResource(R.drawable.ic_heart)
         }
-        binding.ibFavorite.setOnClickListener {
 
-            binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+        binding.ibFavorite.setOnClickListener {
+            if (recipeId !in getFavorites() && recipeId != null) {
+                getFavorites().add(recipeId)
+                binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+            } else {
+                getFavorites().remove(recipeId)
+                binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
+            }
 
             saveFavorite(getFavorites())
         }
