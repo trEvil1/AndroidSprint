@@ -8,4 +8,3 @@ const val ARG_RECIPE = "recipe_id"
 
 const val KEY_PREFERENCE_FILE = "preference_file"
 const val KEY_FAVORITE_PREFS = "favorite_prefs"
-const val KEY_FAVORITE_IMAGE = "image"
