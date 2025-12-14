@@ -32,7 +32,6 @@ class RecipeFragment : Fragment() {
         _binding = RecipeFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -118,12 +117,12 @@ class RecipeFragment : Fragment() {
             if (recipeId !in getFavorites() && recipeId != null) {
                 getFavorites().add(recipeId)
                 binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+                saveFavorite(getFavorites())
             } else {
                 getFavorites().remove(recipeId)
                 binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
+                saveFavorite(getFavorites())
             }
-
-            saveFavorite(getFavorites())
         }
     }
 
