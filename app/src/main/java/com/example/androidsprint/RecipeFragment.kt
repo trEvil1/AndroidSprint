@@ -106,8 +106,17 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-        binding.ibFavorite.setOnClickListener {
+        val recipeId = activity?.getSharedPreferences(
+            KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
+        )?.getString(KEY_FAVORITE_PREFS, recipe?.id.toString())
+        if (recipeId in getFavorites()){
             binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+        }
+        binding.ibFavorite.setOnClickListener {
+
+            binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+
+            saveFavorite(getFavorites())
         }
     }
 
@@ -117,16 +126,19 @@ class RecipeFragment : Fragment() {
             Context.MODE_PRIVATE
         ) ?: return
         with(sharedPreferences.edit(), {
-            putStringSet(ID_SP, set)
+            putStringSet(KEY_FAVORITE_PREFS, set)
             apply()
         })
-
     }
 
-    private fun getFavorites(): MutableList<String> {
+    private fun getFavorites(): MutableSet<String> {
         val sp = activity?.getSharedPreferences(
-            ID_SP, Context.MODE_PRIVATE
+            KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
         )
-        return HashSet(sp?.all?.map { it.key }).toMutableList()
+        return HashSet(
+            sp?.getStringSet(
+                KEY_FAVORITE_PREFS, HashSet<String>()
+            ) ?: mutableSetOf()
+        )
     }
 }
