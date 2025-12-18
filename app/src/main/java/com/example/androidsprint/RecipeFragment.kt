@@ -107,7 +107,8 @@ class RecipeFragment : Fragment() {
     private fun initUI() {
         val recipeId = recipe?.id.toString()
         val favoriteSet = getFavorites()
-        if (recipeId in getFavorites()) {
+
+        if (recipeId in favoriteSet) {
             binding.ibFavorite.setImageResource(R.drawable.ic_heart)
         } else binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
 
@@ -117,7 +118,6 @@ class RecipeFragment : Fragment() {
                 binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
                 saveFavorite(favoriteSet)
             } else {
-
                 favoriteSet.add(recipeId)
                 binding.ibFavorite.setImageResource(R.drawable.ic_heart)
                 saveFavorite(favoriteSet)
