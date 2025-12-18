@@ -1,5 +1,7 @@
 package com.example.androidsprint
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -103,8 +105,45 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-        binding.ibFavorite.setOnClickListener {
+        val recipeId = recipe?.id.toString()
+        val favoriteSet = getFavorites()
+
+        if (recipeId in favoriteSet) {
             binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+        } else binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
+
+        binding.ibFavorite.setOnClickListener {
+            if (recipeId in favoriteSet) {
+                favoriteSet.remove(recipeId)
+                binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
+                saveFavorite(favoriteSet)
+            } else {
+                favoriteSet.add(recipeId)
+                binding.ibFavorite.setImageResource(R.drawable.ic_heart)
+                saveFavorite(favoriteSet)
+            }
         }
+    }
+
+    private fun saveFavorite(set: Set<String>) {
+        val sharedPreferences: SharedPreferences = activity?.getSharedPreferences(
+            KEY_PREFERENCE_FILE,
+            Context.MODE_PRIVATE
+        ) ?: return
+        with(sharedPreferences.edit()) {
+            putStringSet(KEY_FAVORITE_PREFS, set)
+            apply()
+        }
+    }
+
+    private fun getFavorites(): MutableSet<String> {
+        val sp = activity?.getSharedPreferences(
+            KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
+        )
+        return HashSet(
+            sp?.getStringSet(
+                KEY_FAVORITE_PREFS, HashSet<String>()
+            ) ?: mutableSetOf()
+        )
     }
 }

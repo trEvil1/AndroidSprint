@@ -15,11 +15,12 @@ class FavoritesFragment : Fragment() {
             "Binding for FavoriteFragmentBinding must not be null"
         )
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FavoritesFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -27,5 +28,9 @@ class FavoritesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initRecycler(){
+        val recipeAdapter = RecipeListAdapter(STUB.getRecipeById(cate))
     }
 }
