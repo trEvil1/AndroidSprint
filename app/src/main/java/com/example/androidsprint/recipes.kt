@@ -276,11 +276,7 @@ object STUB {
     }
 
     fun getRecipesByIds(set: Set<String>): List<Recipe> {
-        val recipes = mutableListOf<Recipe>()
-        for (i in set) {
-            val recipe = burgerRecipes.find { it.id == i.toInt() } ?: burgerRecipes[0]
-            recipes.add(recipe)
-        }
+        val recipes = burgerRecipes.filter { it.id in set.map{it.toInt()} }
         return recipes
     }
 }
