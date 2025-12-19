@@ -50,7 +50,7 @@
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginBottom="@dimen/margin_normal"
                 android:background="@drawable/shape_screen_title"
-                android:padding="@dimen/margin_small"
+                android:padding="@dimen/margin_small_x"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="1234" />
