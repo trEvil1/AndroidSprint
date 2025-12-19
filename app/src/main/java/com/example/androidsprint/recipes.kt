@@ -274,4 +274,10 @@ object STUB {
         val recipe = burgerRecipes.find { it.id == id } ?: burgerRecipes[0]
         return recipe
     }
+
+    fun getRecipesByIds(set: Set<String>): List<Recipe> {
+        val ids = set.map { it.toInt() }.toSet()
+        val recipes = burgerRecipes.filter { it.id in ids }
+        return recipes
+    }
 }
