@@ -276,7 +276,8 @@ object STUB {
     }
 
     fun getRecipesByIds(set: Set<String>): List<Recipe> {
-        val recipes = burgerRecipes.filter { it.id in set.map{it.toInt()} }
+        val ids = set.map { it.toInt() }.toSet()
+        val recipes = burgerRecipes.filter { it.id in ids }
         return recipes
     }
 }

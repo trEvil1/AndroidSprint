@@ -46,9 +46,11 @@ class FavoritesFragment : Fragment() {
             )
         )
         binding.rvFavorite.adapter = recipeAdapter
-        if (binding.rvFavorite.adapter?.itemCount == 0 ){
-            binding.tvNoRecipes.isVisible = true
-        }
+
+        val recipes = STUB.getRecipesByIds(getFavorites())
+        binding.rvFavorite.isVisible = recipes.isNotEmpty()
+        binding.tvNoRecipes.isVisible = recipes.isEmpty()
+
         recipeAdapter.setOnItemClickListener(
             object :
                 RecipeListAdapter.OnItemClickListener {
