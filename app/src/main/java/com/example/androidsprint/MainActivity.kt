@@ -9,6 +9,8 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.androidsprint.databinding.ActivityMainBinding
+import com.example.androidsprint.ui.categories.CategoriesListFragment
+import com.example.androidsprint.ui.recipes.favorites.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.data
 
 const val ARG_CATEGORY_ID = "category_id"
 const val ARG_CATEGORY_NAME = "category_name"

@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.ui.categories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.androidsprint.data.ARG_CATEGORY_ID
+import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
+import com.example.androidsprint.data.ARG_CATEGORY_NAME
+import com.example.androidsprint.R
+import com.example.androidsprint.ui.recipes.recipe_list.RecipeListFragment
+import com.example.androidsprint.data.STUB
 import com.example.androidsprint.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment() {

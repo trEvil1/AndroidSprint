@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.ui.recipes.recipe_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.androidsprint.data.ARG_CATEGORY_ID
+import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
+import com.example.androidsprint.data.ARG_CATEGORY_NAME
+import com.example.androidsprint.data.ARG_RECIPE
+import com.example.androidsprint.R
+import com.example.androidsprint.data.STUB
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
+import com.example.androidsprint.ui.recipes.recipe.RecipeFragment
 
 class RecipeListFragment :
     Fragment() {

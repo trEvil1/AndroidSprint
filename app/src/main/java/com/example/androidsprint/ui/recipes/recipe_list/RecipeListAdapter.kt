@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.ui.recipes.recipe_list
 
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemRecipesBinding
+import com.example.androidsprint.model.Recipe
 import java.io.InputStream
 
 class RecipeListAdapter(val dataset: List<Recipe>) :

@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

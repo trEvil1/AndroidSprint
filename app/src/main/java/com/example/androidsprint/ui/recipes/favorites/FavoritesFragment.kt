@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.ui.recipes.favorites
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.androidsprint.data.ARG_RECIPE
+import com.example.androidsprint.data.KEY_FAVORITE_PREFS
+import com.example.androidsprint.data.KEY_PREFERENCE_FILE
+import com.example.androidsprint.R
+import com.example.androidsprint.ui.recipes.recipe.RecipeFragment
+import com.example.androidsprint.ui.recipes.recipe_list.RecipeListAdapter
+import com.example.androidsprint.data.STUB
 import com.example.androidsprint.databinding.FavoritesFragmentBinding
 
 class FavoritesFragment : Fragment() {
