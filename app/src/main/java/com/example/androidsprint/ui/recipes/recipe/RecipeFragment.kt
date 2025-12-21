@@ -13,10 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidsprint.data.ARG_RECIPE
-import com.example.androidsprint.data.IngredientsAdapter
+import com.example.androidsprint.ui.recipes.recipe.IngredientsAdapter
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
-import com.example.androidsprint.data.MethodAdapter
+import com.example.androidsprint.ui.recipes.recipe.MethodAdapter
 import com.example.androidsprint.R
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.databinding.RecipeFragmentBinding
