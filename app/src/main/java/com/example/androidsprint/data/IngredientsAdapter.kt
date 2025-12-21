@@ -1,11 +1,13 @@
-package com.example.androidsprint
+package com.example.androidsprint.data
 
-import java.math.BigDecimal
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemIngredientBinding
+import com.example.androidsprint.model.Ingredient
+import java.math.BigDecimal
 
 class IngredientsAdapter(val dataset: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {

@@ -1,4 +1,8 @@
-package com.example.androidsprint
+package com.example.androidsprint.data
+
+import com.example.androidsprint.model.Ingredient
+import com.example.androidsprint.model.Category
+import com.example.androidsprint.model.Recipe
 
 object STUB {
     private val burgerRecipes = listOf(

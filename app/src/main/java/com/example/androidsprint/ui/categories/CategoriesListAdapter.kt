@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.ui.categories
 
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidsprint.model.Category
+import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemCategoryBinding
 import java.io.InputStream
 

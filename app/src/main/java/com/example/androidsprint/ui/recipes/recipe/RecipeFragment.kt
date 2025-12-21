@@ -1,4 +1,4 @@
-package com.example.androidsprint
+package com.example.androidsprint.ui.recipes.recipe
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -9,12 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.SeekBar.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.androidsprint.data.ARG_RECIPE
+import com.example.androidsprint.data.IngredientsAdapter
+import com.example.androidsprint.data.KEY_FAVORITE_PREFS
+import com.example.androidsprint.data.KEY_PREFERENCE_FILE
+import com.example.androidsprint.data.MethodAdapter
+import com.example.androidsprint.R
+import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.databinding.RecipeFragmentBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import androidx.core.content.edit
 
 class RecipeFragment : Fragment() {
     private var _binding: RecipeFragmentBinding? = null
@@ -70,7 +77,7 @@ class RecipeFragment : Fragment() {
             isLastItemDecorated = false
         }
         binding.rvIngredients.addItemDecoration(divider)
-        binding.sbPortions.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        binding.sbPortions.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(
                 seekBar: SeekBar?,
                 progress: Int,
@@ -130,9 +137,8 @@ class RecipeFragment : Fragment() {
             KEY_PREFERENCE_FILE,
             Context.MODE_PRIVATE
         ) ?: return
-        with(sharedPreferences.edit()) {
+        sharedPreferences.edit {
             putStringSet(KEY_FAVORITE_PREFS, set)
-            apply()
         }
     }
 
