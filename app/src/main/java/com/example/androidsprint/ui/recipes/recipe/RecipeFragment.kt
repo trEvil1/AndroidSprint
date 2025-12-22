@@ -32,7 +32,6 @@ class RecipeFragment : Fragment() {
         )
     private var recipe: Recipe? = null
     private val viewModel: RecipeViewModel by viewModels()
-    private var recipeLiveData = viewModel.outsideSelectedItem.value?.isFavorite
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +46,7 @@ class RecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.outsideSelectedItem.observe(viewLifecycleOwner, Observer {
-            Log.i("!!!", "$recipeLiveData")
+            Log.i("!!!", "${viewModel.outsideSelectedItem.value?.isFavorite}")
         })
 
         recipe =
