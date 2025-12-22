@@ -32,6 +32,7 @@ class RecipeFragment : Fragment() {
         )
     private var recipe: Recipe? = null
     private val viewModel: RecipeViewModel by viewModels()
+    private var stateFavorite = RecipeViewModel.RecipeState().isFavorite.toString()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,8 +46,9 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.insideSelectedItem.observe(viewLifecycleOwner, Observer {
-            Log.v("!!!", "??????????")
+        viewModel.outsideSelectedItem.observe(viewLifecycleOwner, Observer {
+            Log.INFO
+            Log.v("!!!", stateFavorite)
         })
 
         recipe =
