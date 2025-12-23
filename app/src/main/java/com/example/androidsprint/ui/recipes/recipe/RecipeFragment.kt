@@ -45,9 +45,7 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.recipeLiveData.observe(viewLifecycleOwner, Observer {
-            Log.i("!!!", "${viewModel.recipeLiveData.value?.isFavorite}")
-        })
+
 
         recipe =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -136,6 +134,10 @@ class RecipeFragment : Fragment() {
                 saveFavorite(favoriteSet)
             }
         }
+
+        viewModel.recipeLiveData.observe(viewLifecycleOwner, Observer {
+            Log.i("!!!", "${viewModel.recipeLiveData.value?.isFavorite}")
+        })
     }
 
     private fun saveFavorite(set: Set<String>) {
