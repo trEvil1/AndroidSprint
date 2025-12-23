@@ -13,12 +13,12 @@ class RecipeViewModel : ViewModel() {
         val isFavorite: Boolean? = null
     )
 
-    private val insideSelectedItem = MutableLiveData<RecipeState>()
-    val outsideSelectedItem : LiveData<RecipeState> = insideSelectedItem
+    private val _recipeLiveData = MutableLiveData<RecipeState>()
+    val recipeLiveData : LiveData<RecipeState> = _recipeLiveData
 
    init {
        Log.d("INIT", "111111111111111111")
-       insideSelectedItem.value = RecipeState(
+       _recipeLiveData.value = RecipeState(
            isFavorite = true
        )
    }
