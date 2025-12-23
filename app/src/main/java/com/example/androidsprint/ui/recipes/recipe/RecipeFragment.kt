@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +14,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidsprint.data.ARG_RECIPE
-import com.example.androidsprint.data.IngredientsAdapter
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
-import com.example.androidsprint.data.MethodAdapter
 import com.example.androidsprint.R
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.databinding.RecipeFragmentBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import androidx.core.content.edit
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 
 class RecipeFragment : Fragment() {
     private var _binding: RecipeFragmentBinding? = null
@@ -30,6 +31,7 @@ class RecipeFragment : Fragment() {
             "Binding for RecipeFragmentBinding must not be null"
         )
     private var recipe: Recipe? = null
+    private val viewModel: RecipeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +45,10 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.recipeLiveData.observe(viewLifecycleOwner, Observer {
+            Log.i("!!!", "${viewModel.recipeLiveData.value?.isFavorite}")
+        })
+
         recipe =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)

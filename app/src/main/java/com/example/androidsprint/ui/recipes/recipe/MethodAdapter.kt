@@ -1,4 +1,4 @@
-package com.example.androidsprint.data
+package com.example.androidsprint.ui.recipes.recipe
 
 import android.view.LayoutInflater
 import android.view.View
