@@ -116,6 +116,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
+        val state = RecipeViewModel.RecipeState()
         val recipeId = recipe?.id.toString()
         val favoriteSet = getFavorites()
 
@@ -135,9 +136,12 @@ class RecipeFragment : Fragment() {
             }
         }
 
-        viewModel.recipeLiveData.observe(viewLifecycleOwner, Observer {
-            Log.i("!!!", "${viewModel.recipeLiveData.value?.isFavorite}")
-        })
+        viewModel.recipeLiveData.observe(viewLifecycleOwner){ state ->
+        state.isFavorite?.let{isFav ->
+            binding.ibFavorite.setImageResource(
+                if(isFav) R.drawable.ic_heart else R.drawable.ic_heart_empty
+            )
+        }}
     }
 
     private fun saveFavorite(set: Set<String>) {
