@@ -35,13 +35,12 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             recipeId = recipe.id,
             portionCount = currentPortions
         )
-        TODO("load from network")
     }
 
     private fun getFavorites(): MutableSet<String> {
         val sp = getApplication<Application>().applicationContext.getSharedPreferences(
-                KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
-            )
+            KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
+        )
         return HashSet(
             sp?.getStringSet(
                 KEY_FAVORITE_PREFS, HashSet<String>()
@@ -51,7 +50,11 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun onFavoriteClicked() {
         val favorites = getFavorites()
-        _recipeLiveData.value = RecipeState().copy(isFavorite = RecipeState().isFavorite)
+        val currentState = _recipeLiveData.value ?: return
+        _recipeLiveData.value = currentState.copy(isFavorite = !(currentState.isFavorite ?: false))
+        if (_recipeLiveData.value?.isFavorite == true)
+            favorites.add(_recipeLiveData.value?.recipeId.toString())
+        else favorites.remove(_recipeLiveData.value?.recipeId.toString())
         saveFavorite(favorites)
     }
 

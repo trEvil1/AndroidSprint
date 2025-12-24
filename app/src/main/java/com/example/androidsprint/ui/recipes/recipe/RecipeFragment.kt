@@ -1,11 +1,8 @@
 package com.example.androidsprint.ui.recipes.recipe
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +11,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidsprint.data.ARG_RECIPE
-import com.example.androidsprint.data.KEY_FAVORITE_PREFS
-import com.example.androidsprint.data.KEY_PREFERENCE_FILE
 import com.example.androidsprint.R
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.databinding.RecipeFragmentBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
-import androidx.core.content.edit
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 
 class RecipeFragment : Fragment() {
     private var _binding: RecipeFragmentBinding? = null
@@ -45,7 +38,6 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         recipe =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -116,52 +108,18 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-        val state = RecipeViewModel.RecipeState()
-        val recipeId = recipe?.id.toString()
-        val favoriteSet = getFavorites()
-
-        if (recipeId in favoriteSet) {
-            binding.ibFavorite.setImageResource(R.drawable.ic_heart)
-        } else binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
+        viewModel.loadRecipe(recipe?.id ?: return)
 
         binding.ibFavorite.setOnClickListener {
-            if (recipeId in favoriteSet) {
-                favoriteSet.remove(recipeId)
-                binding.ibFavorite.setImageResource(R.drawable.ic_heart_empty)
-                saveFavorite(favoriteSet)
-            } else {
-                favoriteSet.add(recipeId)
-                binding.ibFavorite.setImageResource(R.drawable.ic_heart)
-                saveFavorite(favoriteSet)
+            viewModel.onFavoriteClicked()
+        }
+
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
+            state.isFavorite?.let { isFav ->
+                binding.ibFavorite.setImageResource(
+                    if (isFav) R.drawable.ic_heart else R.drawable.ic_heart_empty
+                )
             }
         }
-
-        viewModel.recipeLiveData.observe(viewLifecycleOwner){ state ->
-        state.isFavorite?.let{isFav ->
-            binding.ibFavorite.setImageResource(
-                if(isFav) R.drawable.ic_heart else R.drawable.ic_heart_empty
-            )
-        }}
-    }
-
-    private fun saveFavorite(set: Set<String>) {
-        val sharedPreferences: SharedPreferences = activity?.getSharedPreferences(
-            KEY_PREFERENCE_FILE,
-            Context.MODE_PRIVATE
-        ) ?: return
-        sharedPreferences.edit {
-            putStringSet(KEY_FAVORITE_PREFS, set)
-        }
-    }
-
-    private fun getFavorites(): MutableSet<String> {
-        val sp = activity?.getSharedPreferences(
-            KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
-        )
-        return HashSet(
-            sp?.getStringSet(
-                KEY_FAVORITE_PREFS, HashSet<String>()
-            ) ?: mutableSetOf()
-        )
     }
 }
