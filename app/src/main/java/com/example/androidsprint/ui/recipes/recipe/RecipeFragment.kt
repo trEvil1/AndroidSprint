@@ -38,19 +38,19 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        recipe =
+        val recipeId =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
+                arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)?.id
             } else {
                 arguments?.getParcelable(ARG_RECIPE)
             }
-
-        binding.tvRecipe.text = recipe?.title
-        val recipeImage = view.context.assets.open(recipe?.imageUrl.toString())
-        val drawable = Drawable.createFromStream(recipeImage, null)
-        binding.ivRecipe.setImageDrawable(drawable)
-        initUI()
+        viewModel.loadRecipe(recipeId ?: return)
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) {recipe ->
+            val recipeImage = view.context.assets.open(recipe?.imageUrl.toString())
+            val drawable = Drawable.createFromStream(recipeImage, null)
+            binding.ivRecipe.setImageDrawable(drawable)
+        }
+        initUI(recipeId)
         initRecyclerIngredients()
         initRecyclerMethod()
     }
@@ -81,6 +81,7 @@ class RecipeFragment : Fragment() {
             ) {
                 ingredientsAdapter?.updateIngredients(progress)
                 binding.tvPortionsCount.text = progress.toString()
+                viewModel.onPortionsCountChanged(progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -107,19 +108,18 @@ class RecipeFragment : Fragment() {
         binding.rvMethod.addItemDecoration(divider)
     }
 
-    private fun initUI() {
-        viewModel.loadRecipe(recipe?.id ?: return)
+    private fun initUI(recipeId: Int?) {
+        viewModel.loadRecipe(recipeId ?: return)
 
         binding.ibFavorite.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            state.isFavorite?.let { isFav ->
-                binding.ibFavorite.setImageResource(
-                    if (isFav) R.drawable.ic_heart else R.drawable.ic_heart_empty
-                )
-            }
+            binding.tvRecipe.text = state.recipeName
+            binding.ibFavorite.setImageResource(
+                if (state.isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
+            )
         }
     }
 }
