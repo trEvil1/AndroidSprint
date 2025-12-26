@@ -10,18 +10,14 @@ import androidx.lifecycle.MutableLiveData
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
 import com.example.androidsprint.data.STUB
-import com.example.androidsprint.model.Ingredient
 import com.example.androidsprint.model.Recipe
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
     data class RecipeState(
-        val recipeName: String? = null,
-        val ingredients: List<Ingredient> = emptyList(),
         val isFavorite: Boolean = false,
         val recipeId: Int? = null,
-        val portionCount: Int? = 1,
-        val recipe: Recipe,
-        val imageUrl : String
+        val portionCount: Int = 1,
+        val recipe: Recipe? = null,
     )
 
     private val _recipeLiveData = MutableLiveData<RecipeState>()
@@ -32,14 +28,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val favorites = getFavorites()
         val currentPortions = _recipeLiveData.value?.portionCount ?: 1
         _recipeLiveData.value = RecipeState(
-
-            recipeName = recipe.title,
-            ingredients = recipe.ingredients,
+            recipe = recipe,
             isFavorite = recipe.id.toString() in favorites,
             recipeId = recipe.id,
             portionCount = currentPortions,
-            recipe = recipe,
-            imageUrl = recipe.imageUrl
         )
     }
 
@@ -76,8 +68,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun onPortionsCountChanged(progress:Int){
-        val currentState = _recipeLiveData.value?:return
+    fun onPortionsCountChanged(progress: Int) {
+        val currentState = _recipeLiveData.value ?: return
         _recipeLiveData.value = currentState.copy(portionCount = progress)
     }
 }
