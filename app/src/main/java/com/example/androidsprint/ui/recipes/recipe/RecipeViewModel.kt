@@ -15,7 +15,6 @@ import com.example.androidsprint.model.Recipe
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
     data class RecipeState(
         val isFavorite: Boolean = false,
-        val recipeId: Int? = null,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
     )
@@ -30,7 +29,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         _recipeLiveData.value = RecipeState(
             recipe = recipe,
             isFavorite = recipe.id.toString() in favorites,
-            recipeId = recipe.id,
             portionCount = currentPortions,
         )
     }
@@ -52,8 +50,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val newFavoriteState = !(currentState.isFavorite)
         _recipeLiveData.value = currentState.copy(isFavorite = newFavoriteState)
         if (newFavoriteState)
-            favorites.add(currentState.recipeId.toString())
-        else favorites.remove(currentState.recipeId.toString())
+            favorites.add(currentState.recipe?.id.toString())
+        else favorites.remove(currentState.recipe?.id.toString())
         saveFavorite(favorites)
         _recipeLiveData.value = currentState.copy(isFavorite = newFavoriteState)
     }
@@ -70,6 +68,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun onPortionsCountChanged(progress: Int) {
         val currentState = _recipeLiveData.value ?: return
+
         _recipeLiveData.value = currentState.copy(portionCount = progress)
     }
 }

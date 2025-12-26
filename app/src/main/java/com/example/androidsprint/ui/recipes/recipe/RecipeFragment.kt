@@ -1,7 +1,6 @@
 package com.example.androidsprint.ui.recipes.recipe
 
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidsprint.data.ARG_RECIPE
 import com.example.androidsprint.R
-import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.databinding.RecipeFragmentBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import androidx.fragment.app.viewModels
@@ -38,12 +36,7 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recipeId =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)?.id
-            } else {
-                arguments?.getParcelable(ARG_RECIPE)
-            }
+        val recipeId = arguments?.getInt(ARG_RECIPE)
 
         viewModel.loadRecipe(recipeId ?: return)
         initUI()
@@ -67,23 +60,6 @@ class RecipeFragment : Fragment() {
             isLastItemDecorated = false
         }
         binding.rvIngredients.addItemDecoration(divider)
-        binding.sbPortions.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(
-                seekBar: SeekBar?,
-                progress: Int,
-                fromUser: Boolean
-            ) {
-                ingredientsAdapter.updateIngredients(progress)
-                binding.tvPortionsCount.text = progress.toString()
-                viewModel.onPortionsCountChanged(progress)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
-        })
     }
 
     private fun initRecyclerMethod(method: List<String>) {
@@ -108,8 +84,7 @@ class RecipeFragment : Fragment() {
         }
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            val ingredientsAdapter = IngredientsAdapter(state.recipe?.ingredients ?: return@observe)
-            initRecyclerMethod(state.recipe.method)
+            initRecyclerMethod(state.recipe?.method ?: return@observe)
             initRecyclerIngredients(state.recipe.ingredients)
             binding.tvRecipe.text = state.recipe.title
             binding.ibFavorite.setImageResource(
@@ -119,7 +94,6 @@ class RecipeFragment : Fragment() {
             val drawable = Drawable.createFromStream(recipeImage, null)
             binding.ivRecipe.setImageDrawable(drawable)
 
-            ingredientsAdapter.updateIngredients(state.portionCount)
             binding.tvPortionsCount.text = state.portionCount.toString()
             binding.sbPortions.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
@@ -127,6 +101,7 @@ class RecipeFragment : Fragment() {
                     progress: Int,
                     fromUser: Boolean
                 ) {
+                    IngredientsAdapter(state.recipe.ingredients).updateIngredients(state.portionCount)
                     viewModel.onPortionsCountChanged(progress)
                 }
 
