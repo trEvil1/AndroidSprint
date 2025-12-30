@@ -3,6 +3,8 @@ package com.example.androidsprint.ui.recipes.recipe
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -17,12 +19,21 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val isFavorite: Boolean = false,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
+        val recipeImage: Drawable? = null
     )
 
     private val _recipeLiveData = MutableLiveData<RecipeState>()
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     fun loadRecipe(recipeId: Int) {
+        val recipeImage =
+            _recipeLiveData.value?.recipe?.imageUrl?.let {
+                getApplication<Application>().applicationContext.assets.open(
+                    it
+                )
+            }
+
+        val drawable = Drawable.createFromStream(recipeImage, null)
         val recipe = STUB.getRecipeById(recipeId)
         val favorites = getFavorites()
         val currentPortions = _recipeLiveData.value?.portionCount ?: 1
@@ -30,7 +41,12 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             recipe = recipe,
             isFavorite = recipe.id.toString() in favorites,
             portionCount = currentPortions,
+            recipeImage = drawable
         )
+        if (recipeImage == null) {
+            Log.e("ERROR", "Image is null")
+            return
+        }
     }
 
     private fun getFavorites(): MutableSet<String> {
