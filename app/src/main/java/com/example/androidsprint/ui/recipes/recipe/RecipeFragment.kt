@@ -23,6 +23,7 @@ class RecipeFragment : Fragment() {
             "Binding for RecipeFragmentBinding must not be null"
         )
     private val viewModel: RecipeViewModel by viewModels()
+    private var ingredientsAdapter: IngredientsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,13 +49,14 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecyclerIngredients(ingredients: List<Ingredient>) {
-        val ingredientsAdapter = IngredientsAdapter(ingredients)
+        ingredientsAdapter = IngredientsAdapter(ingredients)
         binding.rvIngredients.adapter = ingredientsAdapter
         val divider = MaterialDividerItemDecoration(
             binding.rvIngredients.context,
             DividerItemDecoration.VERTICAL
         ).apply {
-            dividerColor = ContextCompat.getColor(binding.rvIngredients.context, R.color.line_color)
+            dividerColor =
+                ContextCompat.getColor(binding.rvIngredients.context, R.color.line_color)
             dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_small)
             dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
             isLastItemDecorated = false
@@ -70,7 +72,8 @@ class RecipeFragment : Fragment() {
             DividerItemDecoration.VERTICAL
         )
             .apply {
-                dividerColor = ContextCompat.getColor(binding.rvMethod.context, R.color.line_color)
+                dividerColor =
+                    ContextCompat.getColor(binding.rvMethod.context, R.color.line_color)
                 dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_small)
                 dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
                 isLastItemDecorated = false
@@ -95,22 +98,24 @@ class RecipeFragment : Fragment() {
             binding.ivRecipe.setImageDrawable(drawable)
 
             binding.tvPortionsCount.text = state.portionCount.toString()
-            binding.sbPortions.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekBar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    IngredientsAdapter(state.recipe.ingredients).updateIngredients(state.portionCount)
-                    viewModel.onPortionsCountChanged(progress)
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                }
-            })
         }
+
+        binding.sbPortions.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar?,
+                progress: Int,
+                fromUser: Boolean
+            ) {
+                ingredientsAdapter?.updateIngredients(progress)
+                viewModel.onPortionsCountChanged(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
     }
 }
