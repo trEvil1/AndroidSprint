@@ -39,6 +39,8 @@ class RecipeFragment : Fragment() {
         val recipeId = arguments?.getInt(ARG_RECIPE)
 
         viewModel.loadRecipe(recipeId ?: return)
+        initRecyclerMethod(viewModel.recipeLiveData.value?.recipe?.method ?: return)
+        initRecyclerIngredients(viewModel.recipeLiveData.value?.recipe?.ingredients ?: return)
         initUI()
     }
 
@@ -86,9 +88,7 @@ class RecipeFragment : Fragment() {
         }
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            initRecyclerMethod(state.recipe?.method ?: return@observe)
-            initRecyclerIngredients(state.recipe.ingredients)
-            binding.tvRecipe.text = state.recipe.title
+            binding.tvRecipe.text = state.recipe?.title
             binding.ibFavorite.setImageResource(
                 if (state.isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
             )

@@ -19,22 +19,26 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val isFavorite: Boolean = false,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
-        val recipeImage: Drawable? = null
+        val recipeImage: Drawable?
     )
 
     private val _recipeLiveData = MutableLiveData<RecipeState>()
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     fun loadRecipe(recipeId: Int) {
-        val recipeImage =
-            _recipeLiveData.value?.recipe?.imageUrl?.let {
-                getApplication<Application>().applicationContext.assets.open(
-                    it
-                )
-            }
-
-        val drawable = Drawable.createFromStream(recipeImage, null)
         val recipe = STUB.getRecipeById(recipeId)
+
+        val recipeImage =
+            try {
+                getApplication<Application>().applicationContext.assets.open(
+                    _recipeLiveData.value?.recipe?.imageUrl.toString()
+                )
+            } catch (_: Exception) {
+                print(Log.e("ERROR", "Image not found"))
+                null
+            }
+        val drawable = Drawable.createFromStream(recipeImage, null)
+
         val favorites = getFavorites()
         val currentPortions = _recipeLiveData.value?.portionCount ?: 1
         _recipeLiveData.value = RecipeState(
@@ -43,10 +47,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             portionCount = currentPortions,
             recipeImage = drawable
         )
-        if (recipeImage == null) {
-            Log.e("ERROR", "Image is null")
-            return
-        }
     }
 
     private fun getFavorites(): MutableSet<String> {
