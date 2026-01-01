@@ -27,14 +27,13 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun loadRecipe(recipeId: Int) {
         val recipe = STUB.getRecipeById(recipeId)
-
         val recipeImage =
             try {
                 getApplication<Application>().applicationContext.assets.open(
-                    _recipeLiveData.value?.recipe?.imageUrl.toString()
+                    recipe.imageUrl
                 )
             } catch (_: Exception) {
-                print(Log.e("ERROR", "Image not found"))
+                Log.e("ERROR", "Image not found")
                 null
             }
         val drawable = Drawable.createFromStream(recipeImage, null)
