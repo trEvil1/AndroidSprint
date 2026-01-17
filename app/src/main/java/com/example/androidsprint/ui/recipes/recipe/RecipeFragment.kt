@@ -1,6 +1,5 @@
 package com.example.androidsprint.ui.recipes.recipe
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +39,8 @@ class RecipeFragment : Fragment() {
         val recipeId = arguments?.getInt(ARG_RECIPE)
 
         viewModel.loadRecipe(recipeId ?: return)
+        initRecyclerMethod(viewModel.recipeLiveData.value?.recipe?.method ?: return)
+        initRecyclerIngredients(viewModel.recipeLiveData.value?.recipe?.ingredients ?: return)
         initUI()
     }
 
@@ -87,16 +88,12 @@ class RecipeFragment : Fragment() {
         }
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            initRecyclerMethod(state.recipe?.method ?: return@observe)
-            initRecyclerIngredients(state.recipe.ingredients)
-            binding.tvRecipe.text = state.recipe.title
+            binding.tvRecipe.text = state.recipe?.title
             binding.ibFavorite.setImageResource(
                 if (state.isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
             )
-            val recipeImage = view?.context?.assets?.open(state.recipe.imageUrl)
-            val drawable = Drawable.createFromStream(recipeImage, null)
-            binding.ivRecipe.setImageDrawable(drawable)
 
+            binding.ivRecipe.setImageDrawable(state.recipeImage)
             binding.tvPortionsCount.text = state.portionCount.toString()
         }
 

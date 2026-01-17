@@ -3,6 +3,8 @@ package com.example.androidsprint.ui.recipes.recipe
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -17,6 +19,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val isFavorite: Boolean = false,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
+        val recipeImage: Drawable?
     )
 
     private val _recipeLiveData = MutableLiveData<RecipeState>()
@@ -24,12 +27,24 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun loadRecipe(recipeId: Int) {
         val recipe = STUB.getRecipeById(recipeId)
+        val recipeImage =
+            try {
+                getApplication<Application>().applicationContext.assets.open(
+                    recipe.imageUrl
+                )
+            } catch (_: Exception) {
+                Log.e("ERROR", "Image not found")
+                null
+            }
+        val drawable = Drawable.createFromStream(recipeImage, null)
+
         val favorites = getFavorites()
         val currentPortions = _recipeLiveData.value?.portionCount ?: 1
         _recipeLiveData.value = RecipeState(
             recipe = recipe,
             isFavorite = recipe.id.toString() in favorites,
             portionCount = currentPortions,
+            recipeImage = drawable
         )
     }
 
