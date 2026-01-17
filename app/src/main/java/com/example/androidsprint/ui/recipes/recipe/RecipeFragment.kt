@@ -68,7 +68,6 @@ class RecipeFragment : Fragment() {
                 progress: Int,
                 fromUser: Boolean
             ) {
-                ingredientsAdapter?.updateIngredients(progress)
                 viewModel.onPortionsCountChanged(progress)
             }
 
@@ -79,33 +78,35 @@ class RecipeFragment : Fragment() {
             }
         })
 
-        val methodAdapter = MethodAdapter(viewModel.recipeLiveData.value?.recipe?.method?:return)
-        binding.rvMethod.adapter = methodAdapter
-        val dividerMethod = MaterialDividerItemDecoration(
-            binding.rvMethod.context,
-            DividerItemDecoration.VERTICAL
-        )
-            .apply {
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
+            val methodAdapter = MethodAdapter(state.recipe?.method ?: return@observe)
+            binding.rvMethod.adapter = methodAdapter
+            val dividerMethod = MaterialDividerItemDecoration(
+                binding.rvMethod.context,
+                DividerItemDecoration.VERTICAL
+            )
+                .apply {
+                    dividerColor =
+                        ContextCompat.getColor(binding.rvMethod.context, R.color.line_color)
+                    dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_small)
+                    dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
+                    isLastItemDecorated = false
+                }
+            binding.rvMethod.addItemDecoration(dividerMethod)
+
+            ingredientsAdapter = IngredientsAdapter(state.recipe.ingredients)
+            binding.rvIngredients.adapter = ingredientsAdapter
+            val dividerIngredient = MaterialDividerItemDecoration(
+                binding.rvIngredients.context,
+                DividerItemDecoration.VERTICAL
+            ).apply {
                 dividerColor =
-                    ContextCompat.getColor(binding.rvMethod.context, R.color.line_color)
+                    ContextCompat.getColor(binding.rvIngredients.context, R.color.line_color)
                 dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_small)
                 dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
                 isLastItemDecorated = false
             }
-        binding.rvMethod.addItemDecoration(dividerMethod)
-
-        ingredientsAdapter = IngredientsAdapter(viewModel.recipeLiveData.value?.recipe?.ingredients?:return)
-        binding.rvIngredients.adapter = ingredientsAdapter
-        val dividerIngredient = MaterialDividerItemDecoration(
-            binding.rvIngredients.context,
-            DividerItemDecoration.VERTICAL
-        ).apply {
-            dividerColor =
-                ContextCompat.getColor(binding.rvIngredients.context, R.color.line_color)
-            dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_small)
-            dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_small)
-            isLastItemDecorated = false
+            binding.rvIngredients.addItemDecoration(dividerIngredient)
         }
-        binding.rvIngredients.addItemDecoration(dividerIngredient)
     }
 }
