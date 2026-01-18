@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemMethodBinding
 
-class MethodAdapter(val dataset: List<String>) :
+class MethodAdapter() :
     RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
+    lateinit var dataset: List<String>
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemMethodBinding.bind(view)

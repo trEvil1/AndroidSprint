@@ -9,9 +9,10 @@ import com.example.androidsprint.databinding.ItemIngredientBinding
 import com.example.androidsprint.model.Ingredient
 import java.math.BigDecimal
 
-class IngredientsAdapter(val dataset: List<Ingredient>) :
+class IngredientsAdapter() :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
     var quantity: BigDecimal = BigDecimal(1)
+    lateinit var dataset: List<Ingredient>
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

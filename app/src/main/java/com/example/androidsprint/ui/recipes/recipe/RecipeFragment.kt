@@ -61,25 +61,15 @@ class RecipeFragment : Fragment() {
             binding.tvPortionsCount.text = state.portionCount.toString()
         }
 
-        binding.sbPortions.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(
-                seekBar: SeekBar?,
-                progress: Int,
-                fromUser: Boolean
-            ) {
-                viewModel.onPortionsCountChanged(progress)
-            }
+        binding.sbPortions.setOnSeekBarChangeListener(
+            PortionSeekBarListener {
+                viewModel.onPortionsCountChanged()
+            })
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
-        })
-
+        val methodAdapter = MethodAdapter()
+        ingredientsAdapter = IngredientsAdapter()
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            val methodAdapter = MethodAdapter(state.recipe?.method ?: return@observe)
+            methodAdapter.dataset = state.recipe?.method ?: return@observe
             binding.rvMethod.adapter = methodAdapter
             val dividerMethod = MaterialDividerItemDecoration(
                 binding.rvMethod.context,
@@ -94,7 +84,8 @@ class RecipeFragment : Fragment() {
                 }
             binding.rvMethod.addItemDecoration(dividerMethod)
 
-            ingredientsAdapter = IngredientsAdapter(state.recipe.ingredients)
+
+            ingredientsAdapter?.dataset = state.recipe.ingredients
             binding.rvIngredients.adapter = ingredientsAdapter
             val dividerIngredient = MaterialDividerItemDecoration(
                 binding.rvIngredients.context,
@@ -107,6 +98,23 @@ class RecipeFragment : Fragment() {
                 isLastItemDecorated = false
             }
             binding.rvIngredients.addItemDecoration(dividerIngredient)
+        }
+    }
+
+    class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
+        SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(
+            seekBar: SeekBar?,
+            progress: Int,
+            fromUser: Boolean
+        ) {
+            onChangeIngredients(progress)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
         }
     }
 }
