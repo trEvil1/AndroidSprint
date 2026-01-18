@@ -22,6 +22,7 @@ class RecipeFragment : Fragment() {
         )
     private val viewModel: RecipeViewModel by viewModels()
     private var ingredientsAdapter: IngredientsAdapter? = null
+    private var methodAdapter: MethodAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +37,8 @@ class RecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recipeId = arguments?.getInt(ARG_RECIPE)
-
+        methodAdapter = MethodAdapter()
+        ingredientsAdapter = IngredientsAdapter()
         viewModel.loadRecipe(recipeId ?: return)
         initUI()
     }
@@ -47,8 +49,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-        val methodAdapter = MethodAdapter()
-        ingredientsAdapter = IngredientsAdapter()
+
         binding.ibFavorite.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
@@ -65,12 +66,12 @@ class RecipeFragment : Fragment() {
 
         binding.sbPortions.setOnSeekBarChangeListener(
             PortionSeekBarListener {
-                viewModel.onPortionsCountChanged(it)
                 ingredientsAdapter?.updateIngredients(it)
+                viewModel.onPortionsCountChanged(it)
             })
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            methodAdapter.dataset = state.recipe?.method ?: return@observe
+            methodAdapter?.dataset = state.recipe?.method ?: return@observe
             binding.rvMethod.adapter = methodAdapter
             val dividerMethod = MaterialDividerItemDecoration(
                 binding.rvMethod.context,
@@ -85,7 +86,7 @@ class RecipeFragment : Fragment() {
                 }
             binding.rvMethod.addItemDecoration(dividerMethod)
 
-            ingredientsAdapter?.dataset = state.recipe.ingredients
+            ingredientsAdapter?.dataset = state.recipe?.ingredients?:return@observe
             binding.rvIngredients.adapter = ingredientsAdapter
             val dividerIngredient = MaterialDividerItemDecoration(
                 binding.rvIngredients.context,
