@@ -47,6 +47,8 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
+        val methodAdapter = MethodAdapter()
+        ingredientsAdapter = IngredientsAdapter()
         binding.ibFavorite.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
@@ -64,10 +66,9 @@ class RecipeFragment : Fragment() {
         binding.sbPortions.setOnSeekBarChangeListener(
             PortionSeekBarListener {
                 viewModel.onPortionsCountChanged(it)
+                ingredientsAdapter?.updateIngredients(it)
             })
 
-        val methodAdapter = MethodAdapter()
-        ingredientsAdapter = IngredientsAdapter()
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
             methodAdapter.dataset = state.recipe?.method ?: return@observe
             binding.rvMethod.adapter = methodAdapter
@@ -83,7 +84,6 @@ class RecipeFragment : Fragment() {
                     isLastItemDecorated = false
                 }
             binding.rvMethod.addItemDecoration(dividerMethod)
-
 
             ingredientsAdapter?.dataset = state.recipe.ingredients
             binding.rvIngredients.adapter = ingredientsAdapter
