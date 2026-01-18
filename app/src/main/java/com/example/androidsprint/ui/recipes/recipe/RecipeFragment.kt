@@ -63,7 +63,7 @@ class RecipeFragment : Fragment() {
 
         binding.sbPortions.setOnSeekBarChangeListener(
             PortionSeekBarListener {
-                viewModel.onPortionsCountChanged()
+                viewModel.onPortionsCountChanged(viewModel.onPortionsCountChanged(7))
             })
 
         val methodAdapter = MethodAdapter()
