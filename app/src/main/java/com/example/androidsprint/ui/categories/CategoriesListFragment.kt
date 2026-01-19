@@ -8,12 +8,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.example.androidsprint.data.ARG_CATEGORY_ID
 import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
 import com.example.androidsprint.data.ARG_CATEGORY_NAME
 import com.example.androidsprint.R
 import com.example.androidsprint.ui.recipes.recipe_list.RecipeListFragment
-import com.example.androidsprint.data.STUB
 import com.example.androidsprint.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment() {
@@ -22,6 +22,7 @@ class CategoriesListFragment : Fragment() {
         get() = _binding ?: throw IllegalStateException(
             "Binding for FragmentListCategoriesBinding must not be null"
         )
+    val viewModel: CategoriesListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +35,7 @@ class CategoriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadCategories()
         initRecycler()
     }
 
@@ -43,7 +45,8 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val categoriesAdapter = CategoriesListAdapter(STUB.getCategories())
+        val categoriesAdapter = CategoriesListAdapter()
+        categoriesAdapter.dataSet = viewModel.categoryLiveData.value?.categoriesList?:return
         binding.rvCategories.adapter = categoriesAdapter
         categoriesAdapter.setOnItemClickListener(
             object :
@@ -58,7 +61,7 @@ class CategoriesListFragment : Fragment() {
     }
 
     fun openRecipesByCategoryId(categoryId: Int) {
-        val category = STUB.getCategories().find { it.id == categoryId }
+        val category = viewModel.categoryLiveData.value?.categoriesList?.find { it.id == categoryId }
         val categoryName = category?.title
         val categoryImageUrl = category?.imageUrl
         val bundle = bundleOf(

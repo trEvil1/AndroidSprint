@@ -12,7 +12,6 @@ import com.example.androidsprint.model.Recipe
 
 class FavoritesViewModel(application: Application): AndroidViewModel(application) {
     data class FavoritesListState(
-        val recipe: Recipe? = null,
         val recipeList: List<Recipe>? = emptyList()
     )
 
