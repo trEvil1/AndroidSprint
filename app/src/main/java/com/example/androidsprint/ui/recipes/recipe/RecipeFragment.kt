@@ -59,6 +59,8 @@ class RecipeFragment : Fragment() {
             binding.ibFavorite.setImageResource(
                 if (state.isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
             )
+            methodAdapter?.dataset = state.recipe?.method ?: return@observe
+            ingredientsAdapter?.dataset = state.recipe?.ingredients ?: return@observe
 
             binding.ivRecipe.setImageDrawable(state.recipeImage)
             binding.tvPortionsCount.text = state.portionCount.toString()
@@ -96,11 +98,6 @@ class RecipeFragment : Fragment() {
             isLastItemDecorated = false
         }
         binding.rvIngredients.addItemDecoration(dividerIngredient)
-
-        viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            methodAdapter?.dataset = state.recipe?.method ?: return@observe
-            ingredientsAdapter?.dataset = state.recipe?.ingredients?:return@observe
-        }
     }
 
     class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
