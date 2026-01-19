@@ -46,7 +46,7 @@ class FavoritesFragment : Fragment() {
 
     private fun initRecycler() {
         val recipeAdapter = RecipeListAdapter()
-        viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
+        viewModel.favoriteLiveData.observe(viewLifecycleOwner) { state ->
             val recipes = state.recipeList ?: return@observe
             recipeAdapter.dataset = recipes
             binding.rvFavorite.isVisible = recipes.isNotEmpty()
@@ -66,7 +66,7 @@ class FavoritesFragment : Fragment() {
 
     private fun openRecipeByRecipeId() {
         val bundle = Bundle()
-        bundle.putParcelable(ARG_RECIPE, viewModel.recipeLiveData.value?.recipe)
+        bundle.putParcelable(ARG_RECIPE, viewModel.favoriteLiveData.value?.recipe)
 
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)

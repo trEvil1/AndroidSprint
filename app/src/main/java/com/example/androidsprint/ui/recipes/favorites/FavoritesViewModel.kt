@@ -16,14 +16,14 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
         val recipeList: List<Recipe>? = emptyList()
     )
 
-    private val _recipeLiveData = MutableLiveData<FavoritesListState>()
-    val recipeLiveData: LiveData<FavoritesListState> = _recipeLiveData
+    private val _favoriteLiveData = MutableLiveData<FavoritesListState>()
+    val favoriteLiveData: LiveData<FavoritesListState> = _favoriteLiveData
 
     fun loadRecipes(){
         val recipesList =  STUB.getRecipesByIds(
             getFavorites()
         )
-        _recipeLiveData.value = FavoritesListState(
+        _favoriteLiveData.value = FavoritesListState(
             recipeList = recipesList
         )
     }
