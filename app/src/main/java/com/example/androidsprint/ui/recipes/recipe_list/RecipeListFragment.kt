@@ -13,7 +13,6 @@ import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
 import com.example.androidsprint.data.ARG_CATEGORY_NAME
 import com.example.androidsprint.data.ARG_RECIPE
 import com.example.androidsprint.R
-import com.example.androidsprint.data.STUB
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
 import com.example.androidsprint.ui.recipes.recipe.RecipeFragment
 
@@ -52,7 +51,8 @@ class RecipeListFragment :
     }
 
     private fun initRecycler() {
-        val recipesAdapter = RecipeListAdapter(STUB.getRecipesByCategoryId(categoryId))
+        val recipesAdapter = RecipeListAdapter()
+        recipesAdapter.dataset
         binding.rvRecipes.adapter = recipesAdapter
         recipesAdapter.setOnItemClickListener(
             object :
