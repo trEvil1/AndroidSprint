@@ -15,7 +15,7 @@ import java.io.InputStream
 
 class CategoriesListAdapter() :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
-    lateinit var dataSet: List<Category>
+    var dataSet: List<Category> = emptyList()
     var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

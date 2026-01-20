@@ -46,7 +46,10 @@ class CategoriesListFragment : Fragment() {
 
     private fun initRecycler() {
         val categoriesAdapter = CategoriesListAdapter()
-        categoriesAdapter.dataSet = viewModel.categoryLiveData.value?.categoriesList?:return
+        viewModel.categoryLiveData.observe(viewLifecycleOwner) { state ->
+            categoriesAdapter.dataSet = state.categoriesList ?: return@observe
+        }
+
         binding.rvCategories.adapter = categoriesAdapter
         categoriesAdapter.setOnItemClickListener(
             object :
@@ -61,7 +64,8 @@ class CategoriesListFragment : Fragment() {
     }
 
     fun openRecipesByCategoryId(categoryId: Int) {
-        val category = viewModel.categoryLiveData.value?.categoriesList?.find { it.id == categoryId }
+        val category =
+            viewModel.categoryLiveData.value?.categoriesList?.find { it.id == categoryId }
         val categoryName = category?.title
         val categoryImageUrl = category?.imageUrl
         val bundle = bundleOf(

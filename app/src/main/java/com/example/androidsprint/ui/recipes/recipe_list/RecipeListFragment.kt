@@ -56,7 +56,7 @@ class RecipeListFragment :
     private fun initRecycler() {
         val recipesAdapter = RecipeListAdapter()
         viewModel.recipeListLiveData.observe(viewLifecycleOwner){state ->
-            recipesAdapter.dataset = state.category?:return@observe
+            recipesAdapter.dataset = state.recipesList?:return@observe
         }
 
         binding.rvRecipes.adapter = recipesAdapter

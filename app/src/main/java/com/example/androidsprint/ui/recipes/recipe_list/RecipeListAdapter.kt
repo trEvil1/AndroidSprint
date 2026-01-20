@@ -15,7 +15,7 @@ import java.io.InputStream
 
 class RecipeListAdapter() :
     RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
-    lateinit var dataset: List<Recipe>
+    var dataset: List<Recipe> = emptyList()
     var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

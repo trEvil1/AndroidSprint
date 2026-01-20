@@ -10,7 +10,7 @@ import com.example.androidsprint.data.KEY_PREFERENCE_FILE
 import com.example.androidsprint.data.STUB
 import com.example.androidsprint.model.Recipe
 
-class FavoritesViewModel(application: Application): AndroidViewModel(application) {
+class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
     data class FavoritesListState(
         val recipeList: List<Recipe>? = emptyList()
     )
@@ -18,8 +18,8 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
     private val _favoriteLiveData = MutableLiveData<FavoritesListState>()
     val favoriteLiveData: LiveData<FavoritesListState> = _favoriteLiveData
 
-    fun loadRecipes(){
-        val recipesList =  STUB.getRecipesByIds(
+    fun loadRecipes() {
+        val recipesList = STUB.getRecipesByIds(
             getFavorites()
         )
         _favoriteLiveData.value = FavoritesListState(
@@ -27,7 +27,7 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
         )
     }
 
-     fun getFavorites(): MutableSet<String> {
+    fun getFavorites(): MutableSet<String> {
         val sp = getApplication<Application>().applicationContext.getSharedPreferences(
             KEY_PREFERENCE_FILE, Context.MODE_PRIVATE
         )
