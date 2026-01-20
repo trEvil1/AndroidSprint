@@ -13,9 +13,9 @@ import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemCategoryBinding
 import java.io.InputStream
 
-class CategoriesListAdapter(val dataSet: List<Category>) :
+class CategoriesListAdapter() :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
-
+    var dataSet: List<Category> = emptyList()
     var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

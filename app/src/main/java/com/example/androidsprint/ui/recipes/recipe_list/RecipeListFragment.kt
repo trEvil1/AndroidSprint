@@ -8,12 +8,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.example.androidsprint.data.ARG_CATEGORY_ID
 import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
 import com.example.androidsprint.data.ARG_CATEGORY_NAME
 import com.example.androidsprint.data.ARG_RECIPE
 import com.example.androidsprint.R
-import com.example.androidsprint.data.STUB
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
 import com.example.androidsprint.ui.recipes.recipe.RecipeFragment
 
@@ -24,6 +24,7 @@ class RecipeListFragment :
         get() = _binding ?: throw IllegalStateException(
             "Binding for RecipeListFragmentBinding must not be null"
         )
+    val viewModel: RecipeListViewModel by viewModels()
     var categoryId: Int? = null
     var categoryImageUrl: String? = null
     var categoryName: String? = null
@@ -42,6 +43,7 @@ class RecipeListFragment :
         categoryId = requireArguments().getInt(ARG_CATEGORY_ID)
         categoryImageUrl = requireArguments().getString(ARG_CATEGORY_IMAGE_URL)
         categoryName = requireArguments().getString(ARG_CATEGORY_NAME)
+        viewModel.loadList(categoryId?:return)
         initRecycler()
 
     }
@@ -52,7 +54,11 @@ class RecipeListFragment :
     }
 
     private fun initRecycler() {
-        val recipesAdapter = RecipeListAdapter(STUB.getRecipesByCategoryId(categoryId))
+        val recipesAdapter = RecipeListAdapter()
+        viewModel.recipeListLiveData.observe(viewLifecycleOwner){state ->
+            recipesAdapter.dataset = state.recipesList?:return@observe
+        }
+
         binding.rvRecipes.adapter = recipesAdapter
         recipesAdapter.setOnItemClickListener(
             object :

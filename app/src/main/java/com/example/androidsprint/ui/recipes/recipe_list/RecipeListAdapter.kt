@@ -13,8 +13,9 @@ import com.example.androidsprint.databinding.ItemRecipesBinding
 import com.example.androidsprint.model.Recipe
 import java.io.InputStream
 
-class RecipeListAdapter(val dataset: List<Recipe>) :
+class RecipeListAdapter() :
     RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
+    var dataset: List<Recipe> = emptyList()
     var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
