@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnCategory.setOnClickListener {
-            //NavController(findNavController(R.id.categoriesListFragment))
         }
 
         binding.btnFavorite.setOnClickListener {
