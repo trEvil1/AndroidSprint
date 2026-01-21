@@ -30,11 +30,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.btnCategory.setOnClickListener {
-            findNavController(R.id.mainContainer).navigate(R.id.categoriesListFragment)
+            findNavController(id.nav_host_fragment).navigate(id.categoriesListFragment)
         }
 
         binding.btnFavorite.setOnClickListener {
-            findNavController(id.nav_main_fragment).navigate(id.favoritesFragment)
+            findNavController(id.nav_host_fragment).navigate(id.favoritesFragment)
         }
     }
 }

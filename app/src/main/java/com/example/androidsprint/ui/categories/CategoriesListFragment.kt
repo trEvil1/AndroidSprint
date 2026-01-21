@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.androidsprint.data.ARG_CATEGORY_ID
 import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
 import com.example.androidsprint.data.ARG_CATEGORY_NAME
-import com.example.androidsprint.R
-import com.example.androidsprint.ui.recipes.recipe_list.RecipeListFragment
 import com.example.androidsprint.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment() {
@@ -73,10 +70,6 @@ class CategoriesListFragment : Fragment() {
             ARG_CATEGORY_NAME to categoryName,
             ARG_CATEGORY_IMAGE_URL to categoryImageUrl
         )
-        parentFragmentManager.commit {
-            replace<RecipeListFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+       findNavController().navigate(bundle)
     }
 }

@@ -6,16 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.androidsprint.data.ARG_CATEGORY_ID
 import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
 import com.example.androidsprint.data.ARG_CATEGORY_NAME
 import com.example.androidsprint.data.ARG_RECIPE
-import com.example.androidsprint.R
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
-import com.example.androidsprint.ui.recipes.recipe.RecipeFragment
 
 class RecipeListFragment :
     Fragment() {
@@ -74,11 +71,6 @@ class RecipeListFragment :
 
     fun openRecipeByRecipeId(recipeId: Int) {
         val bundle = bundleOf(ARG_RECIPE to recipeId)
-
-        parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(bundle)
     }
 }
