@@ -5,14 +5,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.example.androidsprint.R.id
 import com.example.androidsprint.databinding.ActivityMainBinding
-import com.example.androidsprint.ui.categories.CategoriesListFragment
-import com.example.androidsprint.ui.recipes.favorites.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,23 +16,25 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CategoriesListFragment>(R.id.mainContainer)
-            }
+        val view = binding.root
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+            insets
         }
+        setContentView(view)
 
         binding.btnCategory.setOnClickListener {
+            findNavController(R.id.mainContainer).navigate(R.id.categoriesListFragment)
         }
 
-        binding.btnFavorite.setOnClickListener {
-            supportFragmentManager.commit {
-                replace<FavoritesFragment>(R.id.mainContainer)
-                setReorderingAllowed(true)
-                addToBackStack("")
-            }
+        binding.btnFavorite.setOnClickListener { view ->
+            findNavController(id.nav_main_fragment).navigate(id.favoritesFragment)
         }
     }
 }
