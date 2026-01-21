@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             findNavController(R.id.mainContainer).navigate(R.id.categoriesListFragment)
         }
 
-        binding.btnFavorite.setOnClickListener { view ->
+        binding.btnFavorite.setOnClickListener {
             findNavController(id.nav_main_fragment).navigate(id.favoritesFragment)
         }
     }
