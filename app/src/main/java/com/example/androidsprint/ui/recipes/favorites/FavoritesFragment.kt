@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
-import com.example.androidsprint.data.ARG_RECIPE
+import androidx.navigation.fragment.findNavController
 import com.example.androidsprint.R
-import com.example.androidsprint.ui.recipes.recipe.RecipeFragment
-import com.example.androidsprint.ui.recipes.recipe_list.RecipeListAdapter
+import com.example.androidsprint.data.ARG_RECIPE
 import com.example.androidsprint.databinding.FavoritesFragmentBinding
+import com.example.androidsprint.ui.recipes.recipe_list.RecipeListAdapter
 
 class FavoritesFragment : Fragment() {
     private var _binding: FavoritesFragmentBinding? = null
@@ -58,20 +56,15 @@ class FavoritesFragment : Fragment() {
         recipeAdapter.setOnItemClickListener(
             object :
                 RecipeListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId:Int) {
+                override fun onItemClick(recipeId: Int) {
                     openRecipeByRecipeId(recipeId)
                 }
             }
         )
     }
 
-    private fun openRecipeByRecipeId(recipeId:Int) {
+    private fun openRecipeByRecipeId(recipeId: Int) {
         val bundle = bundleOf(ARG_RECIPE to recipeId)
-
-        parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.recipeFragment, bundle)
     }
 }
