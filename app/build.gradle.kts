@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     kotlin("plugin.serialization") version "2.0.21"
     id("kotlin-parcelize")
-    id ("androidx.navigation.safeargs.kotlin")
+    id ("androidx.navigation.safeargs.kotlin") version "2.9.6"
 }
 
 android {
@@ -18,15 +18,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildscript {
-        repositories {
-            google()
-        }
-        dependencies {
-            classpath(libs.androidx.navigation.safe.args.gradle.plugin)
-        }
     }
 
     buildTypes {
