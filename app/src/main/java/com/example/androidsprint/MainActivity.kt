@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
-import com.example.androidsprint.R.id
 import com.example.androidsprint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,11 +29,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.btnCategory.setOnClickListener {
-            findNavController(id.nav_host_fragment).navigate(id.categoriesListFragment)
+            findNavController(R.id.nav_host_fragment).navigate(R.id.categoriesListFragment)
         }
 
         binding.btnFavorite.setOnClickListener {
-            findNavController(id.nav_host_fragment).navigate(id.favoritesFragment)
+            findNavController(R.id.nav_host_fragment).navigate(R.id.favoritesFragment)
         }
     }
 }

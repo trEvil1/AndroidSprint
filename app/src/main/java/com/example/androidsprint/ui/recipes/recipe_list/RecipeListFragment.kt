@@ -41,7 +41,7 @@ class RecipeListFragment :
         categoryId = requireArguments().getInt(ARG_CATEGORY_ID)
         categoryImageUrl = requireArguments().getString(ARG_CATEGORY_IMAGE_URL)
         categoryName = requireArguments().getString(ARG_CATEGORY_NAME)
-        viewModel.loadList(categoryId?:return)
+        viewModel.loadList(categoryId ?: return)
         initRecycler()
 
     }
@@ -53,8 +53,8 @@ class RecipeListFragment :
 
     private fun initRecycler() {
         val recipesAdapter = RecipeListAdapter()
-        viewModel.recipeListLiveData.observe(viewLifecycleOwner){state ->
-            recipesAdapter.dataset = state.recipesList?:return@observe
+        viewModel.recipeListLiveData.observe(viewLifecycleOwner) { state ->
+            recipesAdapter.dataset = state.recipesList ?: return@observe
         }
 
         binding.rvRecipes.adapter = recipesAdapter
@@ -72,6 +72,6 @@ class RecipeListFragment :
 
     fun openRecipeByRecipeId(recipeId: Int) {
         val bundle = bundleOf(ARG_RECIPE to recipeId)
-        findNavController().navigate(R.id.recipeFragment,bundle)
+        findNavController().navigate(R.id.recipeFragment, bundle)
     }
 }
