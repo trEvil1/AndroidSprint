@@ -37,7 +37,6 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val recipeId = navArgs()
         methodAdapter = MethodAdapter()
         ingredientsAdapter = IngredientsAdapter()
         viewModel.loadRecipe(args.recipeId.toInt())
