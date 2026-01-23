@@ -34,7 +34,8 @@
         android:name="com.example.androidsprint.ui.recipes.recipe.RecipeFragment"
         android:label="RecipeFragment"
         tools:layout='@layout/recipe_fragment'>
-        <argument android:name="recipeId" />
+        <argument android:name="recipeId"
+            app:argType="string"/>
         <action
             android:id="@+id/action_recipeFragment_to_favoritesFragment2"
             app:destination="@id/favoritesFragment" />
