@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.androidsprint.R
 import com.example.androidsprint.data.ARG_CATEGORY_ID
 import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
 import com.example.androidsprint.data.ARG_CATEGORY_NAME
-import com.example.androidsprint.data.ARG_RECIPE
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
 
 class RecipeListFragment :
@@ -71,7 +68,8 @@ class RecipeListFragment :
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {
-        val bundle = bundleOf(ARG_RECIPE to recipeId)
-        findNavController().navigate(R.id.recipeFragment, bundle)
+        val action =
+            RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment2(recipeId.toString())
+        findNavController().navigate(action)
     }
 }

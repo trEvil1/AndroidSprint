@@ -9,20 +9,53 @@
         android:id="@+id/categoriesListFragment"
         android:name="com.example.androidsprint.ui.categories.CategoriesListFragment"
         android:label="CategoriesListFragment"
-        tools:layout='@layout/fragment_list_categories'/>
+        tools:layout='@layout/fragment_list_categories'>
+        <action
+            android:id="@+id/action_categoriesListFragment_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
+        <action
+            android:id="@+id/action_categoriesListFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.example.androidsprint.ui.recipes.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
-        tools:layout='@layout/favorites_fragment'/>
+        tools:layout='@layout/favorites_fragment'>
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipeFragment2"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_categoriesListFragment"
+            app:destination="@id/categoriesListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.androidsprint.ui.recipes.recipe.RecipeFragment"
         android:label="RecipeFragment"
-        tools:layout='@layout/recipe_fragment'/>
+        tools:layout='@layout/recipe_fragment'>
+        <argument android:name="recipeId"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_recipeFragment_to_favoritesFragment2"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_recipeFragment_to_categoriesListFragment2"
+            app:destination="@id/categoriesListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="com.example.androidsprint.ui.recipes.recipe_list.RecipeListFragment"
         android:label="RecipeListFragment"
-        tools:layout='@layout/recipe_list_fragment'/>
+        tools:layout='@layout/recipe_list_fragment'>
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeFragment2"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_recipeListFragment_to_favoritesFragment2"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_recipeListFragment_to_categoriesListFragment2"
+            app:destination="@id/categoriesListFragment" />
+    </fragment>
 </navigation>
