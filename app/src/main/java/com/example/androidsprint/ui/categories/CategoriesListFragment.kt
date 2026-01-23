@@ -8,11 +8,14 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.androidsprint.R
 import com.example.androidsprint.data.ARG_CATEGORY_ID
 import com.example.androidsprint.data.ARG_CATEGORY_IMAGE_URL
 import com.example.androidsprint.data.ARG_CATEGORY_NAME
 import com.example.androidsprint.databinding.FragmentListCategoriesBinding
+import com.example.androidsprint.model.Category
+import com.example.androidsprint.ui.recipes.recipe_list.RecipeListFragmentDirections
 
 class CategoriesListFragment : Fragment() {
     private var _binding: FragmentListCategoriesBinding? = null
@@ -21,6 +24,7 @@ class CategoriesListFragment : Fragment() {
             "Binding for FragmentListCategoriesBinding must not be null"
         )
     val viewModel: CategoriesListViewModel by viewModels()
+    val args: CategoriesListFragmentArgs by navArgs<CategoriesListFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,6 +75,10 @@ class CategoriesListFragment : Fragment() {
             ARG_CATEGORY_NAME to categoryName,
             ARG_CATEGORY_IMAGE_URL to categoryImageUrl
         )
-        findNavController().navigate(R.id.recipeListFragment, bundle)
+        val action =
+            CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipeListFragment(
+                categoryId.toString()
+            )
+        findNavController().navigate(action)
     }
 }
