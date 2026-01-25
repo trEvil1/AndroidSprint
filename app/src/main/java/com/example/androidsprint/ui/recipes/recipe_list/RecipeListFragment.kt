@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
-import com.example.androidsprint.ui.categories.CategoriesListFragmentArgs
 
 class RecipeListFragment :
     Fragment() {
@@ -19,8 +18,7 @@ class RecipeListFragment :
             "Binding for RecipeListFragmentBinding must not be null"
         )
     val viewModel: RecipeListViewModel by viewModels()
-    val args: CategoriesListFragmentArgs by navArgs()
-    var categoryId: Int? = null
+    val args: RecipeListFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +31,7 @@ class RecipeListFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadList(args.categoryId.id)
+        viewModel.loadList(args.category.id)
         initRecycler()
 
     }

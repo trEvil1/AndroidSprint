@@ -95,7 +95,7 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
-            android:name="categoryId"
+            android:name="category"
             app:argType="com.example.androidsprint.model.Category" />
     </fragment>
 </navigation>
