@@ -13,19 +13,17 @@
         <action
             android:id="@+id/action_categoriesListFragment_to_recipeListFragment"
             app:destination="@id/recipeListFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_categoriesListFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <argument android:name="categoryId"
-            app:argType="com.example.androidsprint.model.Category"/>
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -35,14 +33,14 @@
         <action
             android:id="@+id/action_favoritesFragment_to_recipeFragment2"
             app:destination="@id/recipeFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_favoritesFragment_to_categoriesListFragment"
             app:destination="@id/categoriesListFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
@@ -57,14 +55,14 @@
         <action
             android:id="@+id/action_recipeFragment_to_favoritesFragment2"
             app:destination="@id/favoritesFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_recipeFragment_to_categoriesListFragment2"
             app:destination="@id/categoriesListFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
@@ -77,21 +75,21 @@
         <action
             android:id="@+id/action_recipeListFragment_to_recipeFragment2"
             app:destination="@id/recipeFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_recipeListFragment_to_favoritesFragment2"
             app:destination="@id/favoritesFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_recipeListFragment_to_categoriesListFragment2"
             app:destination="@id/categoriesListFragment"
-            app:enterAnim="@animator/nav_default_enter_anim"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
