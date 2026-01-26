@@ -9,12 +9,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import com.example.androidsprint.databinding.ActivityMainBinding
 import com.google.gson.Gson
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.serialization.Serializable
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private val threadPool = Executors.newFixedThreadPool(10)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -27,13 +33,16 @@ class MainActivity : AppCompatActivity() {
             val connection = url.openConnection() as? HttpURLConnection
             connection?.connect()
             val json = connection?.getInputStream()?.bufferedReader()?.readText()
-            connection?.disconnect()
 
+            connection?.disconnect()
             val categoryList = Gson().fromJson(json, Array<CategoryItem>::class.java)
+            val idList = categoryList.map { it.id }
+            val future = idList.map { threadPool.submit ( Callable{ categoryList[it] }) }
+            val result = future.map { it.get() }.map{it.title}
 
             Log.i("!!!", "Выполняю запрос на потоке :${Thread.currentThread().name}")
             Log.i("!!!", "Метод onCreate() выполняется на потоке: :${Thread.currentThread().name}")
-            Log.i("!!!", " :${categoryList}")
+            Log.i("!!!", "${result}")
         }
         thread.start()
 
