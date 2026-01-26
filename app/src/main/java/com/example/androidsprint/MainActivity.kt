@@ -10,7 +10,6 @@ import androidx.navigation.findNavController
 import com.example.androidsprint.databinding.ActivityMainBinding
 import com.google.gson.Gson
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -25,15 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         val thread = Thread {
             val url = URL("https://recipes.androidsprint.ru/api/category")
-            val connection = url.openConnection() as HttpURLConnection
-            connection.connect()
-            val json = connection.getInputStream().bufferedReader().readText()
+            val connection = url.openConnection() as? HttpURLConnection
+            connection?.connect()
+            val json = connection?.getInputStream()?.bufferedReader()?.readText()
+            connection?.disconnect()
 
-            val categoryList = Gson().fromJson(json, CategoryItem::class.java)
+            val categoryList = Gson().fromJson(json, Array<CategoryItem>::class.java)
 
-            Log.i("!!!", "Выполняю запрос на потоке :${connection.url}")
-            Log.i("!!!", "Метод onCreate() выполняется на потоке: :${connection.url}")
-            Log.i("!!!", " :${json}")
+            Log.i("!!!", "Выполняю запрос на потоке :${Thread.currentThread().name}")
+            Log.i("!!!", "Метод onCreate() выполняется на потоке: :${Thread.currentThread().name}")
+            Log.i("!!!", " :${categoryList}")
         }
         thread.start()
 
