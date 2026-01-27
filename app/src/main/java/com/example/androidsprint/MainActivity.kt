@@ -8,12 +8,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import com.example.androidsprint.databinding.ActivityMainBinding
+import com.example.androidsprint.model.Category
+import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.serialization.Serializable
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -35,15 +35,28 @@ class MainActivity : AppCompatActivity() {
             val json = connection?.getInputStream()?.bufferedReader()?.readText()
 
             connection?.disconnect()
-            val categoryList = Gson().fromJson(json, Array<CategoryItem>::class.java)
+            val categoryList = Gson().fromJson(json, Array<Category>::class.java)
             val idList = categoryList.map { it.id }
-            val future = idList.map { threadPool.submit(Callable { categoryList[it] }) }
-            val result = future.map { it.get() }.map { it.title }
 
-            Log.i("!!!", "Выполняю запрос на потоке :${Thread.currentThread().name}")
-            Log.i("!!!", "Метод onCreate() выполняется на потоке: :${Thread.currentThread().name}")
-            Log.i("!!!", "${result}")
+            idList.forEach { categoryId ->
+                threadPool.execute {
+                    try {
+                        val url =
+                            URL("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+                        val connection = url.openConnection() as? HttpURLConnection
+                        connection?.connect()
+                        val json = connection?.getInputStream()?.bufferedReader()?.readText()
+                        connection?.disconnect()
+
+                        val recipes = Gson().fromJson(json, Array<Recipe>::class.java)
+                        Log.e("!!!!!!!", "Категория $categoryId: ${recipes.size} рецептов")
+                    } catch (e: Exception) {
+                        Log.e("!!!", "Ошибка загрузки для категории $categoryId", e)
+                    }
+                }
+            }
         }
+
         thread.start()
 
         val view = binding.root
@@ -67,12 +80,9 @@ class MainActivity : AppCompatActivity() {
             findNavController(R.id.nav_host_fragment).navigate(R.id.favoritesFragment)
         }
     }
-}
 
-@Serializable
-data class CategoryItem(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val imageUrl: String
-)
+    override fun onDestroy() {
+        super.onDestroy()
+        threadPool.shutdown()
+    }
+}
