@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-
         val thread = Thread {
             val url = URL("https://recipes.androidsprint.ru/api/category")
             val connection = url.openConnection() as? HttpURLConnection
