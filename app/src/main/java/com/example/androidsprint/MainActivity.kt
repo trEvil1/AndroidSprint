@@ -11,7 +11,6 @@ import com.example.androidsprint.databinding.ActivityMainBinding
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
-import kotlinx.coroutines.DelicateCoroutinesApi
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.Executors
@@ -19,7 +18,6 @@ import java.util.concurrent.Executors
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    @OptIn(DelicateCoroutinesApi::class)
     private val threadPool = Executors.newFixedThreadPool(10)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        val thread = Thread {
+        threadPool.execute {
             val url = URL("https://recipes.androidsprint.ru/api/category")
             val connection = url.openConnection() as? HttpURLConnection
             connection?.connect()
@@ -55,8 +53,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        thread.start()
 
         val view = binding.root
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
