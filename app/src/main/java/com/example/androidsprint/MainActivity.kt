@@ -18,7 +18,11 @@ import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    private val interceptor = HttpLoggingInterceptor().apply {
+        level =
+            HttpLoggingInterceptor.Level.BODY
+    }
+    private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     private val threadPool = Executors.newFixedThreadPool(10)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,16 +31,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         threadPool.execute {
-            val interceptor = HttpLoggingInterceptor().apply {
-                level =
-                    HttpLoggingInterceptor.Level.BODY
-            }
-            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
             val request: Request =
                 Request.Builder().url("https://recipes.androidsprint.ru/api/category").build()
 
             client.newCall(request).execute().use { response ->
-                val json = response.body.string()
+                val json = response.body?.string()
 
                 val categoryList = Gson().fromJson(json, Array<Category>::class.java)
                 val idList = categoryList.map { it.id }
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                                 .build()
                         client.newCall(request).execute().use { response ->
                             val json =
-                                response.body.string()
+                                response.body?.string()
 
                             val recipes = Gson().fromJson(json, Array<Recipe>::class.java)
                             Log.i("!!!!!!!", "Категория $categoryId: ${recipes.size} рецептов\"")
