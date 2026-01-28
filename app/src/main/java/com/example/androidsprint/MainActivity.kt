@@ -11,8 +11,9 @@ import com.example.androidsprint.databinding.ActivityMainBinding
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
-import java.net.HttpURLConnection
-import java.net.URL
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -26,29 +27,33 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         threadPool.execute {
-            val url = URL("https://recipes.androidsprint.ru/api/category")
-            val connection = url.openConnection() as? HttpURLConnection
-            connection?.connect()
-            val json = connection?.getInputStream()?.bufferedReader()?.readText()
+            val interceptor = HttpLoggingInterceptor().apply {
+                level =
+                    HttpLoggingInterceptor.Level.BODY
+            }
+            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+            val request: Request =
+                Request.Builder().url("https://recipes.androidsprint.ru/api/category").build()
 
-            connection?.disconnect()
-            val categoryList = Gson().fromJson(json, Array<Category>::class.java)
-            val idList = categoryList.map { it.id }
+            client.newCall(request).execute().use { response ->
+                val json = response.body.string()
 
-            idList.forEach { categoryId ->
-                threadPool.execute {
-                    try {
-                        val url =
-                            URL("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
-                        val connection = url.openConnection() as? HttpURLConnection
-                        connection?.connect()
-                        val json = connection?.getInputStream()?.bufferedReader()?.readText()
-                        connection?.disconnect()
+                val categoryList = Gson().fromJson(json, Array<Category>::class.java)
+                val idList = categoryList.map { it.id }
 
-                        val recipes = Gson().fromJson(json, Array<Recipe>::class.java)
-                        Log.e("!!!!!!!", "Категория $categoryId: ${recipes.size} рецептов")
-                    } catch (e: Exception) {
-                        Log.e("!!!", "Ошибка загрузки для категории $categoryId", e)
+                idList.forEach { categoryId ->
+                    threadPool.execute {
+                        val request: Request =
+                            Request.Builder()
+                                .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+                                .build()
+                        client.newCall(request).execute().use { response ->
+                            val json =
+                                response.body.string()
+
+                            val recipes = Gson().fromJson(json, Array<Recipe>::class.java)
+                            Log.i("!!!!!!!", "Категория $categoryId: ${recipes.size} рецептов\"")
+                        }
                     }
                 }
             }
