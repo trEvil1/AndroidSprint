@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.gson)
     implementation(libs.androidx.navigation.fragment)
