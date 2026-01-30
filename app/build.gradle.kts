@@ -43,6 +43,9 @@ android {
 
 dependencies {
     implementation(platform(libs.okhttp.bom))
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.gson)
+    implementation(libs.picasso)
     implementation(libs.okhttp)
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.androidx.navigation.compose)
