@@ -32,7 +32,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-hamburger.png"
+            imageUrl = "burger-hamburger.png"
         ),
         Recipe(
             id = 1,
@@ -60,7 +60,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-cheeseburger.png"
+            imageUrl = "burger-cheeseburger.png"
         ),
         Recipe(
             id = 2,
@@ -88,7 +88,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-mushrooms.png"
+            imageUrl = "burger-mushrooms.png"
         ),
         Recipe(
             id = 3,
@@ -116,7 +116,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-avocado.png"
+            imageUrl = "burger-avocado.png"
         ),
         Recipe(
             id = 4,
@@ -141,7 +141,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-fish.png"
+            imageUrl = "burger-fish.png"
         ),
         Recipe(
             id = 5,
@@ -169,7 +169,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-bacon.png"
+            imageUrl = "burger-bacon.png"
         ),
         Recipe(
             id = 6,
@@ -196,7 +196,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки томатным соусом и горчицей.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-vegan.png"
+            imageUrl = "burger-vegan.png"
         ),
         Recipe(
             id = 7,
@@ -223,7 +223,7 @@ object STUB {
                 "Смажьте верхнюю часть булочки майонезом, кетчупом и соусом табаско.",
                 "Положите верхнюю часть булочки на остальные ингредиенты и подавайте."
             ),
-            imageUrl = "recipes/burger-chili.png"
+            imageUrl = "burger-chili.png"
         )
     )
     private val categories: List<Category> = listOf(
@@ -231,37 +231,37 @@ object STUB {
             0,
             "Бургеры",
             "Рецепты всех популярных видов бургеров",
-            "categories/burger.png"
+            "burger.png"
         ),
         Category(
             1,
             "Десерты",
             "Самые вкусные рецепты десертов специально для вас",
-            "categories/dessert.png"
+            "dessert.png"
         ),
         Category(
             2,
             "Пицца",
             "Пицца на любой вкус и цвет. Лучшая подборка для тебя",
-            "categories/pizza.png"
+            "pizza.png"
         ),
         Category(
             3,
             "Рыба",
             "Печеная, жареная, сушеная, любая рыба на твой вкус",
-            "categories/fish.png"
+            "fish.png"
         ),
         Category(
             4,
             "Супы",
             "От классики до экзотики: мир в одной тарелке",
-            "categories/soup.png"
+            "soup.png"
         ),
         Category(
             5,
             "Салаты",
             "Хрустящий калейдоскоп под соусом вдохновения",
-            "categories/salad.png"
+            "salad.png"
         )
     )
 

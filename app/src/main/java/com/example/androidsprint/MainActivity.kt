@@ -11,18 +11,19 @@ import com.example.androidsprint.databinding.ActivityMainBinding
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val interceptor = HttpLoggingInterceptor().apply {
-        level =
-            HttpLoggingInterceptor.Level.BODY
-    }
-    private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
     private val threadPool = Executors.newFixedThreadPool(10)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,31 +32,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         threadPool.execute {
-            val request: Request =
-                Request.Builder().url("https://recipes.androidsprint.ru/api/category").build()
+            val contentType = "application/json".toMediaType()
+            val retrofit: Retrofit = Retrofit.Builder()
+                .baseUrl("https://recipes.androidsprint.ru/api/")
+                .addConverterFactory(Json.asConverterFactory(contentType))
+                .build()
 
-            client.newCall(request).execute().use { response ->
-                val json = response.body?.string()
+            val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-                val categoryList = Gson().fromJson(json, Array<Category>::class.java)
-                val idList = categoryList.map { it.id }
 
-                idList.forEach { categoryId ->
-                    threadPool.execute {
-                        val request: Request =
-                            Request.Builder()
-                                .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
-                                .build()
-                        client.newCall(request).execute().use { response ->
-                            val json =
-                                response.body?.string()
+            val categoriesCall = service.getCategories()
+            val categoriesResponse: Response<List<Category>?> = categoriesCall.execute()
+            val category = categoriesResponse.body()
 
-                            val recipes = Gson().fromJson(json, Array<Recipe>::class.java)
-                            Log.i("!!!!!!!", "Категория $categoryId: ${recipes.size} рецептов\"")
-                        }
-                    }
-                }
-            }
+            Log.i("!!!!!!!!!!!!!!!", category.toString())
+
         }
 
         val view = binding.root
