@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.androidsprint.RecipeRepository
-import com.example.androidsprint.data.STUB
 import com.example.androidsprint.model.Category
 
 class CategoriesListViewModel(application: Application) : AndroidViewModel(application) {

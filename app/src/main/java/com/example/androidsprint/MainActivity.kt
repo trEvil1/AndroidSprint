@@ -30,24 +30,19 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         threadPool.execute {
-            val contentType = "application/json".toMediaType()
-            val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl("https://recipes.androidsprint.ru/api/")
-                .addConverterFactory(Json.asConverterFactory(contentType))
+            val client = OkHttpClient()
+            val request: Request = Request.Builder()
+                .url("https://recipes.androidsprint.ru/api/recipe/0")
                 .build()
-
-            val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
-
-
-            val categoriesCall = service.getCategories()
-            val categoriesResponse: Response<List<Category>?> = categoriesCall.execute()
-            val category = categoriesResponse.body()
-
-            Log.i("!!!!!!!!!!!!!!!", category.toString())
+            client.newCall(request).execute().use { response ->
+                val json = response.body?.string()
+                val recipe = Gson().fromJson(json, Recipe::class.java)
+                Log.i("!!!!!!!!!!!!","${recipe}")
+            }
 
         }
+
 
         val view = binding.root
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
