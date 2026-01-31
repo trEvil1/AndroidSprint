@@ -8,55 +8,33 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import com.example.androidsprint.databinding.ActivityMainBinding
-import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val interceptor = HttpLoggingInterceptor().apply {
-        level =
-            HttpLoggingInterceptor.Level.BODY
-    }
-    private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-    private val threadPool = Executors.newFixedThreadPool(10)
 
+    private val threadPool = Executors.newFixedThreadPool(10)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         threadPool.execute {
-            val request: Request =
-                Request.Builder().url("https://recipes.androidsprint.ru/api/category").build()
-
+            val client = OkHttpClient()
+            val request: Request = Request.Builder()
+                .url("https://recipes.androidsprint.ru/api/category/2")
+                .build()
             client.newCall(request).execute().use { response ->
                 val json = response.body?.string()
-
-                val categoryList = Gson().fromJson(json, Array<Category>::class.java)
-                val idList = categoryList.map { it.id }
-
-                idList.forEach { categoryId ->
-                    threadPool.execute {
-                        val request: Request =
-                            Request.Builder()
-                                .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
-                                .build()
-                        client.newCall(request).execute().use { response ->
-                            val json =
-                                response.body?.string()
-
-                            val recipes = Gson().fromJson(json, Array<Recipe>::class.java)
-                            Log.i("!!!!!!!", "Категория $categoryId: ${recipes.size} рецептов\"")
-                        }
-                    }
-                }
+                val recipe = Gson().fromJson(json, Recipe::class.java)
+                Log.i("!!!!!!!!!!!!","${recipe}")
             }
+
         }
+
 
         val view = binding.root
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->

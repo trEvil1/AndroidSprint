@@ -9,6 +9,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
 import com.example.androidsprint.data.STUB
@@ -26,11 +27,11 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     fun loadRecipe(recipeId: Int) {
-        val recipe = STUB.getRecipeById(recipeId)
+        val recipe = RecipeRepository().getRecipeById(recipeId)
         val recipeImage =
             try {
                 getApplication<Application>().applicationContext.assets.open(
-                    recipe.imageUrl
+                    recipe?.imageUrl ?: return
                 )
             } catch (_: Exception) {
                 Log.e("ERROR", "Image not found")
@@ -42,7 +43,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val currentPortions = _recipeLiveData.value?.portionCount ?: 1
         _recipeLiveData.value = RecipeState(
             recipe = recipe,
-            isFavorite = recipe.id.toString() in favorites,
+            isFavorite = recipe?.id.toString() in favorites,
             portionCount = currentPortions,
             recipeImage = drawable
         )

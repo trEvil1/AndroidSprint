@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.androidsprint.data.STUB
+import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.model.Recipe
 
 class RecipeListViewModel(application: Application) : AndroidViewModel(application) {
@@ -12,14 +12,17 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
         val recipesList: List<Recipe>? = null
     )
 
+    private val recipeRepository = RecipeRepository()
     private val _recipeListLiveData = MutableLiveData<RecipeListState>()
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
 
     fun loadList(categoryId: Int) {
-        val category = STUB.getRecipesByCategoryId(categoryId)
-
-        _recipeListLiveData.value = RecipeListState(
-            recipesList = category
-        )
+        recipeRepository.threadPool.execute {
+            _recipeListLiveData.postValue(
+                RecipeListState(
+                    recipesList = recipeRepository.getRecipesByCategoryId(categoryId)
+                )
+            )
+        }
     }
 }

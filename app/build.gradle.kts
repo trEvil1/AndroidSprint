@@ -44,6 +44,9 @@ android {
 dependencies {
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.picasso)
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.gson)
@@ -63,5 +66,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
 }
 
