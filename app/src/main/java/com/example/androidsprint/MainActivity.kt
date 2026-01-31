@@ -8,24 +8,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import com.example.androidsprint.databinding.ActivityMainBinding
-import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
-import retrofit2.Retrofit
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val threadPool = Executors.newFixedThreadPool(10)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -33,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         threadPool.execute {
             val client = OkHttpClient()
             val request: Request = Request.Builder()
-                .url("https://recipes.androidsprint.ru/api/recipe/0")
+                .url("https://recipes.androidsprint.ru/api/category/2")
                 .build()
             client.newCall(request).execute().use { response ->
                 val json = response.body?.string()

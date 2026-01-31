@@ -1,10 +1,7 @@
 package com.example.androidsprint
 
-import android.app.Application
-import android.app.DownloadManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
@@ -26,71 +23,103 @@ interface RecipeApiService {
     @GET("recipes")
     fun getRecipes(): Call<List<Recipe>>
 
+    @GET("recipe")
+    fun getRecipe(): Call<Recipe>
 }
 
-class RecipeRepository() {
+class RecipeRepository : ViewModel() {
 
-    private var categoriesList: List<Category>? = emptyList()
-    private var recipeList: List<Recipe>? = emptyList()
-    private var recipe: Recipe? = null
+    private var categoriesList: MutableLiveData<List<Category>>? = null
+    private var recipesListByCategoryId: MutableLiveData<List<Recipe>>? = null
+    private var recipesListByIds: MutableLiveData<List<Recipe>>? = null
+    private var recipeById: MutableLiveData<Recipe>? = null
+
+
     private val threadPool = Executors.newFixedThreadPool(10)
 
     private val contentType = "application/json".toMediaType()
 
-
     fun getCategory(): List<Category>? {
         threadPool.execute {
-            val retrofit: Retrofit =
-                Retrofit.Builder()
-                    .baseUrl("https://recipes.androidsprint.ru/api/")
-                    .addConverterFactory(
-                        Json.asConverterFactory(contentType)
-                    ).build()
+            try {
+                val retrofit: Retrofit =
+                    Retrofit.Builder()
+                        .baseUrl("https://recipes.androidsprint.ru/api/")
+                        .addConverterFactory(
+                            Json.asConverterFactory(contentType)
+                        ).build()
 
-            val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
-            val categoriesCall = service.getCategories()
-            val categoriesResponse: Response<List<Category>?> = categoriesCall.execute()
-            categoriesList = categoriesResponse.body()
+                val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+                val categoriesCall = service.getCategories()
+                val categoriesResponse: Response<List<Category>?> = categoriesCall.execute()
+                categoriesList?.value = categoriesResponse.body()
+            } catch (e: Exception) {
+
+            }
         }
-        return categoriesList
+        return categoriesList?.value
     }
 
     fun getRecipesByCategoryId(id: Int): List<Recipe>? {
         threadPool.execute {
-            val retrofit: Retrofit =
-                Retrofit.Builder()
-                    .baseUrl("https://recipes.androidsprint.ru/api/category/$id/")
-                    .addConverterFactory(
-                        Json.asConverterFactory(contentType)
-                    ).build()
+            try {
+                val retrofit: Retrofit =
+                    Retrofit.Builder()
+                        .baseUrl("https://recipes.androidsprint.ru/api/category/$id/")
+                        .addConverterFactory(
+                            Json.asConverterFactory(contentType)
+                        ).build()
 
-            val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+                val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-            val recipeCall = service.getRecipes()
-            val recipeResponse: Response<List<Recipe>?>? = recipeCall.execute()
-            recipeList = recipeResponse?.body()
+                val recipeCall = service.getRecipes()
+                val recipeResponse: Response<List<Recipe>?>? = recipeCall.execute()
+                recipesListByCategoryId?.value = recipeResponse?.body()
+            } catch (e: Exception) {
+
+            }
         }
-        return recipeList
+        return recipesListByCategoryId?.value
     }
 
     fun getRecipeById(id: Int): Recipe? {
         threadPool.execute {
-            val client = OkHttpClient()
-            val request: Request = Request.Builder()
-                .url("https://recipes.androidsprint.ru/api/recipe/$id")
-                .build()
-            client.newCall(request).execute().use { response ->
-                val json = response.body?.string()
-                recipe = Gson().fromJson(json, Recipe::class.java)
+            try {
+                val client = OkHttpClient()
+                val request: Request = Request.Builder()
+                    .url("https://recipes.androidsprint.ru/api/recipe/$id")
+                    .build()
+                client.newCall(request).execute().use { response ->
+                    val json = response.body?.string()
+                    recipeById?.value = Gson().fromJson(json, Recipe::class.java)
+                }
+            } catch (e: Exception) {
+
             }
         }
-        return recipe
+        return recipeById?.value
     }
 
-    fun getRecipesByIds(set: Set<String>){
-        val ids = set.map { it.toInt() }.toSet()
-    }
+    fun getRecipesByIds(set: Set<String>): List<Recipe>? {
+        threadPool.execute {
+            try {
+                val retrofit: Retrofit =
+                    Retrofit.Builder()
+                        .baseUrl("https://recipes.androidsprint.ru/api/")
+                        .addConverterFactory(
+                            Json.asConverterFactory(contentType)
+                        ).build()
 
+                val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+
+                val recipeCall = service.getRecipes()
+                val recipeResponse: Response<List<Recipe>?>? = recipeCall.execute()
+                val ids = set.map { it.toInt() }.toSet()
+                recipesListByIds?.value = recipeResponse?.body()?.filter { it.id in ids }
+            } catch (e: Exception) {
+
+            }
+        }
+        return recipesListByIds?.value
+    }
 }
-
-

@@ -5,9 +5,9 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
-import com.example.androidsprint.data.STUB
 import com.example.androidsprint.model.Recipe
 
 class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,7 +19,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     val favoriteLiveData: LiveData<FavoritesListState> = _favoriteLiveData
 
     fun loadRecipes() {
-        val recipesList = STUB.getRecipesByIds(
+        val recipesList = RecipeRepository().getRecipesByIds(
             getFavorites()
         )
         _favoriteLiveData.value = FavoritesListState(
