@@ -39,7 +39,6 @@ class RecipeRepository {
             .addConverterFactory(
                 Json.asConverterFactory(contentType)
             ).build()
-
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
     fun getCategory(): List<Category>? {

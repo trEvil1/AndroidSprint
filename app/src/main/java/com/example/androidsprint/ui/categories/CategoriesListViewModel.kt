@@ -23,6 +23,5 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
                 )
             )
         }
-
     }
 }
