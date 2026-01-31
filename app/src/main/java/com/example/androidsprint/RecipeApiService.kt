@@ -1,7 +1,6 @@
 package com.example.androidsprint
 
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
 import com.google.gson.Gson
@@ -30,10 +29,6 @@ interface RecipeApiService {
 private const val URL_RECIPE = "https://recipes.androidsprint.ru/api/"
 
 class RecipeRepository {
-    private var categoriesList: MutableLiveData<List<Category>>? = null
-    private var recipesListByCategoryId: MutableLiveData<List<Recipe>>? = null
-    private var recipesListByIds: MutableLiveData<List<Recipe>>? = null
-    private var recipeById: MutableLiveData<Recipe>? = null
     val threadPool: ExecutorService = Executors.newFixedThreadPool(10)
 
     private val contentType = "application/json".toMediaType()
