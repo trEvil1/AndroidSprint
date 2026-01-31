@@ -15,16 +15,18 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         val recipeList: List<Recipe>? = emptyList()
     )
 
+    private val recipeRepository = RecipeRepository()
     private val _favoriteLiveData = MutableLiveData<FavoritesListState>()
     val favoriteLiveData: LiveData<FavoritesListState> = _favoriteLiveData
 
     fun loadRecipes() {
-        val recipesList = RecipeRepository().getRecipesByIds(
-            getFavorites()
-        )
-        _favoriteLiveData.value = FavoritesListState(
-            recipeList = recipesList
-        )
+        recipeRepository.threadPool.execute {
+            _favoriteLiveData.postValue(
+                FavoritesListState(
+                    recipeList = recipeRepository.getRecipesByIds(getFavorites())
+                )
+            )
+        }
     }
 
     fun getFavorites(): MutableSet<String> {
