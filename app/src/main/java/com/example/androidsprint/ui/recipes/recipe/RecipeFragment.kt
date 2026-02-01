@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -55,15 +56,23 @@ class RecipeFragment : Fragment() {
         }
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
-            binding.tvRecipe.text = state.recipe?.title
-            binding.ibFavorite.setImageResource(
-                if (state.isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
-            )
-            methodAdapter?.dataset = state.recipe?.method ?: return@observe
-            ingredientsAdapter?.dataset = state.recipe?.ingredients ?: return@observe
+            if (state == null) {
+                Toast.makeText(
+                    context,
+                    "Осознанный текст ошибки, который нужно вынести в ресурсы",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                binding.tvRecipe.text = state.recipe?.title
+                binding.ibFavorite.setImageResource(
+                    if (state.isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
+                )
+                methodAdapter?.dataset = state.recipe?.method ?: return@observe
+                ingredientsAdapter?.dataset = state.recipe?.ingredients ?: return@observe
 
-            binding.ivRecipe.setImageDrawable(state.recipeImage)
-            binding.tvPortionsCount.text = state.portionCount.toString()
+                binding.ivRecipe.setImageDrawable(state.recipeImage)
+                binding.tvPortionsCount.text = state.portionCount.toString()
+            }
         }
 
         binding.sbPortions.setOnSeekBarChangeListener(
