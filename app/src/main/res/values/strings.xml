@@ -19,4 +19,5 @@
     <string name="cook_method">Способ приготовления</string>
     <string name="portions">Порции:</string>
     <string name="fav_no_recipes">Вы еще не добавили ни одного \nрецепта в избранное</string>
+    <string name="exception">Ошибка получения данных</string>
 </resources>

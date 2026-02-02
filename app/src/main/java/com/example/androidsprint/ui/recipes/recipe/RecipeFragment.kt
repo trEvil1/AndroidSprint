@@ -59,7 +59,7 @@ class RecipeFragment : Fragment() {
             if (state == null) {
                 Toast.makeText(
                     context,
-                    "Осознанный текст ошибки, который нужно вынести в ресурсы",
+                    "Ошибка получения данных",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
