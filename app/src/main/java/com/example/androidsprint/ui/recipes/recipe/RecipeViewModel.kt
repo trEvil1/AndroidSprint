@@ -41,12 +41,17 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
         val favorites = getFavorites()
         val currentPortions = _recipeLiveData.value?.portionCount ?: 1
-        _recipeLiveData.value = RecipeState(
-            recipe = recipe,
-            isFavorite = recipe?.id.toString() in favorites,
-            portionCount = currentPortions,
-            recipeImage = drawable
-        )
+        recipeRepository.threadPool.execute {
+            _recipeLiveData.postValue(
+                RecipeState(
+                    recipe = recipe,
+                    isFavorite = recipe?.id.toString() in favorites,
+                    portionCount = currentPortions,
+                    recipeImage = drawable
+                )
+            )
+        }
+
     }
 
     private fun getFavorites(): MutableSet<String> {
