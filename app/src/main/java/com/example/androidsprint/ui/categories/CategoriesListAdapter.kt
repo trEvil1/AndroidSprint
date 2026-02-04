@@ -16,6 +16,10 @@ import java.io.InputStream
 class CategoriesListAdapter() :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
     var dataSet: List<Category> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

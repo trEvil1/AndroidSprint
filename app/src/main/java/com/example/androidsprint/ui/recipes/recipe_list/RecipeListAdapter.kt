@@ -16,6 +16,10 @@ import java.io.InputStream
 class RecipeListAdapter() :
     RecyclerView.Adapter<RecipeListAdapter.ViewHolder>() {
     var dataset: List<Recipe> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

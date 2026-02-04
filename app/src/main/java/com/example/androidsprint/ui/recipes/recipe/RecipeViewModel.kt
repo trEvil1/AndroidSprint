@@ -12,7 +12,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
-import com.example.androidsprint.data.STUB
 import com.example.androidsprint.model.Recipe
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,11 +22,12 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val recipeImage: Drawable?
     )
 
+    private val recipeRepository = RecipeRepository()
     private val _recipeLiveData = MutableLiveData<RecipeState>()
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     fun loadRecipe(recipeId: Int) {
-        val recipe = RecipeRepository().getRecipeById(recipeId)
+        val recipe = recipeRepository.getRecipeById(recipeId)
         val recipeImage =
             try {
                 getApplication<Application>().applicationContext.assets.open(

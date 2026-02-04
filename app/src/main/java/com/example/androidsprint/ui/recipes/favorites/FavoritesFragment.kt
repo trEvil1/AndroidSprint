@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.androidsprint.R
 import com.example.androidsprint.databinding.FavoritesFragmentBinding
 import com.example.androidsprint.ui.recipes.recipe_list.RecipeListAdapter
 
@@ -47,7 +48,7 @@ class FavoritesFragment : Fragment() {
             if (state == null) {
                 Toast.makeText(
                     context,
-                    "Ошибка получения данных",
+                    getString(R.string.exception),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {

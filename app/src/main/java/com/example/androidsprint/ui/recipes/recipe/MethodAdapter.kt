@@ -9,7 +9,11 @@ import com.example.androidsprint.databinding.ItemMethodBinding
 
 class MethodAdapter() :
     RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
-    lateinit var dataset: List<String>
+    var dataset: List<String> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemMethodBinding.bind(view)

@@ -59,7 +59,7 @@ class RecipeFragment : Fragment() {
             if (state == null) {
                 Toast.makeText(
                     context,
-                    "Ошибка получения данных",
+                    getString(R.string.exception),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
