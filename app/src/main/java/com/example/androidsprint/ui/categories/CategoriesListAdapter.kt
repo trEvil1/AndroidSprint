@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemCategoryBinding
@@ -51,6 +52,14 @@ class CategoriesListAdapter() :
         val category = dataSet[position]
         viewHolder.descriptionTextView.text = category.description
         viewHolder.titleTextView.text = category.title
+
+        Glide
+            .with(viewHolder.itemView.context)
+            .load(category.imageUrl)
+            .centerCrop()
+            .placeholder(R.drawable.img_placeholder)
+            .into(viewHolder.imageView)
+
         try {
             val inputStream: InputStream =
                 viewHolder.itemView.context.assets.open(category.imageUrl)

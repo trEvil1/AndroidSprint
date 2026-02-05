@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemRecipesBinding
 import com.example.androidsprint.model.Recipe
@@ -49,6 +50,14 @@ class RecipeListAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe = dataset[position]
         holder.titleTextView.text = recipe.title
+
+        Glide
+            .with(holder.imageView.context)
+            .load(recipe.imageUrl)
+            .centerCrop()
+            .placeholder(R.drawable.img_placeholder)
+            .into(holder.imageView)
+
         try {
             val inputStream: InputStream =
                 holder.itemView.context.assets.open(recipe.imageUrl)
