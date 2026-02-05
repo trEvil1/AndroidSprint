@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.androidsprint.R
 import com.example.androidsprint.databinding.FavoritesFragmentBinding
 import com.example.androidsprint.ui.recipes.recipe_list.RecipeListAdapter
 
@@ -43,10 +45,18 @@ class FavoritesFragment : Fragment() {
     private fun initRecycler() {
         val recipeAdapter = RecipeListAdapter()
         viewModel.favoriteLiveData.observe(viewLifecycleOwner) { state ->
-            val recipes = state.recipeList ?: return@observe
-            recipeAdapter.dataset = recipes
-            binding.rvFavorite.isVisible = recipes.isNotEmpty()
-            binding.tvNoRecipes.isVisible = recipes.isEmpty()
+            if (state == null) {
+                Toast.makeText(
+                    context,
+                    getString(R.string.exception),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val recipes = state.recipeList ?: return@observe
+                recipeAdapter.dataset = recipes
+                binding.rvFavorite.isVisible = recipes.isNotEmpty()
+                binding.tvNoRecipes.isVisible = recipes.isEmpty()
+            }
         }
         binding.rvFavorite.adapter = recipeAdapter
 

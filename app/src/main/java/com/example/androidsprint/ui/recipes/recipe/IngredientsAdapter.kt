@@ -12,7 +12,11 @@ import java.math.BigDecimal
 class IngredientsAdapter() :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
     var quantity: BigDecimal = BigDecimal(1)
-    lateinit var dataset: List<Ingredient>
+    var dataset: List<Ingredient> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

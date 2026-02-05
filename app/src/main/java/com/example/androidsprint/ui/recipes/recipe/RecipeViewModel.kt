@@ -9,9 +9,9 @@ import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
-import com.example.androidsprint.data.STUB
 import com.example.androidsprint.model.Recipe
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
@@ -22,30 +22,37 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val recipeImage: Drawable?
     )
 
+    private val recipeRepository = RecipeRepository()
     private val _recipeLiveData = MutableLiveData<RecipeState>()
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     fun loadRecipe(recipeId: Int) {
-        val recipe = STUB.getRecipeById(recipeId)
-        val recipeImage =
-            try {
-                getApplication<Application>().applicationContext.assets.open(
-                    recipe.imageUrl
-                )
-            } catch (_: Exception) {
-                Log.e("ERROR", "Image not found")
-                null
-            }
-        val drawable = Drawable.createFromStream(recipeImage, null)
+        recipeRepository.threadPool.execute {
+            val recipe = recipeRepository.getRecipeById(recipeId)
+            val recipeImage =
+                try {
+                    getApplication<Application>().applicationContext.assets.open(
+                        recipe?.imageUrl ?: return@execute
+                    )
+                } catch (_: Exception) {
+                    Log.e("ERROR", "Image not found")
+                    null
+                }
+            val drawable = Drawable.createFromStream(recipeImage, null)
 
-        val favorites = getFavorites()
-        val currentPortions = _recipeLiveData.value?.portionCount ?: 1
-        _recipeLiveData.value = RecipeState(
-            recipe = recipe,
-            isFavorite = recipe.id.toString() in favorites,
-            portionCount = currentPortions,
-            recipeImage = drawable
-        )
+            val favorites = getFavorites()
+            val currentPortions = _recipeLiveData.value?.portionCount ?: 1
+
+            _recipeLiveData.postValue(
+                RecipeState(
+                    recipe = recipe,
+                    isFavorite = recipe?.id.toString() in favorites,
+                    portionCount = currentPortions,
+                    recipeImage = drawable
+                )
+            )
+        }
+
     }
 
     private fun getFavorites(): MutableSet<String> {
