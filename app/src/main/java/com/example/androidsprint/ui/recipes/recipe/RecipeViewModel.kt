@@ -27,21 +27,22 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     fun loadRecipe(recipeId: Int) {
-        val recipe = recipeRepository.getRecipeById(recipeId)
-        val recipeImage =
-            try {
-                getApplication<Application>().applicationContext.assets.open(
-                    recipe?.imageUrl ?: return
-                )
-            } catch (_: Exception) {
-                Log.e("ERROR", "Image not found")
-                null
-            }
-        val drawable = Drawable.createFromStream(recipeImage, null)
-
-        val favorites = getFavorites()
-        val currentPortions = _recipeLiveData.value?.portionCount ?: 1
         recipeRepository.threadPool.execute {
+            val recipe = recipeRepository.getRecipeById(recipeId)
+            val recipeImage =
+                try {
+                    getApplication<Application>().applicationContext.assets.open(
+                        recipe?.imageUrl ?: return@execute
+                    )
+                } catch (_: Exception) {
+                    Log.e("ERROR", "Image not found")
+                    null
+                }
+            val drawable = Drawable.createFromStream(recipeImage, null)
+
+            val favorites = getFavorites()
+            val currentPortions = _recipeLiveData.value?.portionCount ?: 1
+
             _recipeLiveData.postValue(
                 RecipeState(
                     recipe = recipe,
