@@ -54,6 +54,7 @@ class RecipeListAdapter() :
             .load("${URL_RECIPE}images/${recipe.imageUrl}")
             .centerCrop()
             .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
             .into(holder.imageView)
 
         holder.binding.cvCardCategory.setOnClickListener {

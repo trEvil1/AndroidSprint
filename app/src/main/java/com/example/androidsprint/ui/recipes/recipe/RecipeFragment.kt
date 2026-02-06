@@ -40,7 +40,6 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(this).load(URL_RECIPE).into(binding.ivRecipe)
 
         methodAdapter = MethodAdapter()
         ingredientsAdapter = IngredientsAdapter()

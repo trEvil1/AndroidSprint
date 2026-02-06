@@ -56,6 +56,7 @@ class CategoriesListAdapter() :
             .load( "${URL_RECIPE}images/${category.imageUrl}" )
             .centerCrop()
             .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
             .into(viewHolder.imageView)
 
         viewHolder.binding.cvCardCategory.setOnClickListener {
