@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.example.androidsprint.R
+import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.databinding.RecipeListFragmentBinding
 
 class RecipeListFragment :
@@ -33,7 +36,6 @@ class RecipeListFragment :
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadList(args.category.id)
         initRecycler()
-
     }
 
     override fun onDestroyView() {
@@ -45,19 +47,23 @@ class RecipeListFragment :
         val recipesAdapter = RecipeListAdapter()
         viewModel.recipeListLiveData.observe(viewLifecycleOwner) { state ->
             recipesAdapter.dataset = state.recipesList ?: return@observe
-        }
-
-        binding.rvRecipes.adapter = recipesAdapter
-        recipesAdapter.setOnItemClickListener(
-            object :
-                RecipeListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipeId(
-                        recipeId
-                    )
+            binding.rvRecipes.adapter = recipesAdapter
+            recipesAdapter.setOnItemClickListener(
+                object :
+                    RecipeListAdapter.OnItemClickListener {
+                    override fun onItemClick(recipeId: Int) {
+                        openRecipeByRecipeId(
+                            recipeId
+                        )
+                    }
                 }
-            }
-        )
+            )
+            Glide.with(this)
+                .load("${URL_RECIPE}images/${args.category.imageUrl}")
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(binding.ivCategories)
+        }
     }
 
     fun openRecipeByRecipeId(recipeId: Int) {

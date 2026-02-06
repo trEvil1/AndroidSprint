@@ -3,19 +3,13 @@ package com.example.androidsprint.ui.recipes.recipe
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
-import android.util.Log
-import android.view.LayoutInflater
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.application
-import com.example.androidsprint.R
 import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
-import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.model.Recipe
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,7 +17,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         val isFavorite: Boolean = false,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
-        val recipeImageUrl: Drawable?
     )
 
     private val recipeRepository = RecipeRepository()
@@ -33,17 +26,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun loadRecipe(recipeId: Int) {
         recipeRepository.threadPool.execute {
             val recipe = recipeRepository.getRecipeById(recipeId)
-            val recipeImage =
-                try {
-                    getApplication<Application>().applicationContext.assets.open(
-                        recipe?.imageUrl ?: return@execute
-                    )
-                } catch (_: Exception) {
-                    Log.e("ERROR", "Image not found")
-                    null
-                }
-            val drawable = Drawable.createFromStream(recipeImage, null)
-
             val favorites = getFavorites()
             val currentPortions = _recipeLiveData.value?.portionCount ?: 1
 
@@ -52,11 +34,9 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                     recipe = recipe,
                     isFavorite = recipe?.id.toString() in favorites,
                     portionCount = currentPortions,
-                    recipeImageUrl = drawable//"${URL_RECIPE}images/${recipe?.imageUrl}"
                 )
             )
         }
-
     }
 
     private fun getFavorites(): MutableSet<String> {

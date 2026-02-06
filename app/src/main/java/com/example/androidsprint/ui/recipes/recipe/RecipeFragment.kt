@@ -40,9 +40,7 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(this).
-        load(URL_RECIPE).
-        into(binding.ivRecipe)
+        Glide.with(this).load(URL_RECIPE).into(binding.ivRecipe)
 
         methodAdapter = MethodAdapter()
         ingredientsAdapter = IngredientsAdapter()
@@ -75,9 +73,13 @@ class RecipeFragment : Fragment() {
                 )
                 methodAdapter?.dataset = state.recipe?.method ?: return@observe
                 ingredientsAdapter?.dataset = state.recipe?.ingredients ?: return@observe
-
-                binding.ivRecipe.setImageDrawable(state.recipeImageUrl)
                 binding.tvPortionsCount.text = state.portionCount.toString()
+
+                Glide.with(this)
+                    .load("${URL_RECIPE}images/${state.recipe?.imageUrl}")
+                    .placeholder(R.drawable.img_placeholder)
+                    .error(R.drawable.img_error)
+                    .into(binding.ivRecipe)
             }
         }
 
