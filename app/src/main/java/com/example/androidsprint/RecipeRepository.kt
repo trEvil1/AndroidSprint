@@ -24,7 +24,7 @@ class RecipeRepository {
     suspend fun getCategory(): List<Category>? {
         return withContext(Dispatchers.IO) {
             try {
-                service.getCategories().execute().body()
+                service.getCategories()
             } catch (e: Exception) {
                 null
             }
@@ -34,7 +34,7 @@ class RecipeRepository {
     suspend fun getRecipesByCategoryId(id: Int): List<Recipe>? {
         return withContext(Dispatchers.IO) {
             try {
-                service.getRecipesByCategoryId(id).execute().body()
+                service.getRecipesByCategoryId(id)
             } catch (e: Exception) {
                 null
             }
@@ -45,7 +45,7 @@ class RecipeRepository {
     suspend fun getRecipeById(id: Int): Recipe? {
         return withContext(Dispatchers.IO) {
             try {
-                service.getRecipeById(id).execute().body()
+                service.getRecipeById(id)
             } catch (e: Exception) {
                 null
             }
@@ -56,7 +56,7 @@ class RecipeRepository {
         return withContext(Dispatchers.IO) {
             try {
                 val ids = set.map { it.toInt() }.toSet()
-                service.getRecipes().execute().body()?.filter { it.id in ids }
+                service.getRecipes().filter { it.id in ids }
             } catch (e: Exception) {
                 null
             }
