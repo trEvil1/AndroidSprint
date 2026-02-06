@@ -1,17 +1,16 @@
 package com.example.androidsprint.ui.categories
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidsprint.model.Category
+import com.bumptech.glide.Glide
 import com.example.androidsprint.R
+import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.databinding.ItemCategoryBinding
-import java.io.InputStream
+import com.example.androidsprint.model.Category
 
 class CategoriesListAdapter() :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
@@ -51,14 +50,15 @@ class CategoriesListAdapter() :
         val category = dataSet[position]
         viewHolder.descriptionTextView.text = category.description
         viewHolder.titleTextView.text = category.title
-        try {
-            val inputStream: InputStream =
-                viewHolder.itemView.context.assets.open(category.imageUrl)
-            val drawable = Drawable.createFromStream(inputStream, null)
-            viewHolder.imageView.setImageDrawable(drawable)
-        } catch (ex: Exception) {
-            Log.e("TAG", "Stack Trace", ex)
-        }
+
+        Glide
+            .with(viewHolder.itemView.context)
+            .load( "${URL_RECIPE}images/${category.imageUrl}" )
+            .centerCrop()
+            .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
+            .into(viewHolder.imageView)
+
         viewHolder.binding.cvCardCategory.setOnClickListener {
             itemClickListener?.onItemClick(
                 category.id

@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.bumptech.glide.Glide
 import com.example.androidsprint.R
+import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.databinding.RecipeFragmentBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
@@ -38,6 +40,7 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         methodAdapter = MethodAdapter()
         ingredientsAdapter = IngredientsAdapter()
         viewModel.loadRecipe(args.recipeId.toInt())
@@ -69,9 +72,13 @@ class RecipeFragment : Fragment() {
                 )
                 methodAdapter?.dataset = state.recipe?.method ?: return@observe
                 ingredientsAdapter?.dataset = state.recipe?.ingredients ?: return@observe
-
-                binding.ivRecipe.setImageDrawable(state.recipeImage)
                 binding.tvPortionsCount.text = state.portionCount.toString()
+
+                Glide.with(this)
+                    .load("${URL_RECIPE}images/${state.recipe?.imageUrl}")
+                    .placeholder(R.drawable.img_placeholder)
+                    .error(R.drawable.img_error)
+                    .into(binding.ivRecipe)
             }
         }
 

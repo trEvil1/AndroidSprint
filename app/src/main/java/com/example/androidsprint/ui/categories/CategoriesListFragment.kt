@@ -50,6 +50,7 @@ class CategoriesListFragment : Fragment() {
                 ).show()
             } else {
                 categoriesAdapter.dataSet = state.categoriesList ?: return@observe
+
             }
         }
 
