@@ -7,10 +7,12 @@ import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.data.KEY_FAVORITE_PREFS
 import com.example.androidsprint.data.KEY_PREFERENCE_FILE
 import com.example.androidsprint.model.Recipe
+import kotlinx.coroutines.launch
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
     data class RecipeState(
@@ -24,7 +26,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val recipeLiveData: LiveData<RecipeState> = _recipeLiveData
 
     fun loadRecipe(recipeId: Int) {
-        recipeRepository.threadPool.execute {
+        viewModelScope.launch {
             val recipe = recipeRepository.getRecipeById(recipeId)
             val favorites = getFavorites()
             val currentPortions = _recipeLiveData.value?.portionCount ?: 1

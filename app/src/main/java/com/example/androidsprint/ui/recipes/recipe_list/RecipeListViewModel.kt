@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.model.Recipe
+import kotlinx.coroutines.launch
 
 class RecipeListViewModel(application: Application) : AndroidViewModel(application) {
     data class RecipeListState(
@@ -17,7 +19,7 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
 
     fun loadList(categoryId: Int) {
-        recipeRepository.threadPool.execute {
+        viewModelScope.launch {
             _recipeListLiveData.postValue(
                 RecipeListState(
                     recipesList = recipeRepository.getRecipesByCategoryId(categoryId)
