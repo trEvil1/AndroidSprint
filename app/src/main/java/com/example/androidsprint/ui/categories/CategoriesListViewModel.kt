@@ -21,7 +21,7 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
         viewModelScope.launch {
             _categoryLiveData.postValue(
                 CategoriesListState(
-                    categoriesList = recipesRepository.getCategory(),
+                    categoriesList = recipesRepository.getCategoriesFromCache(),
                 )
             )
         }
