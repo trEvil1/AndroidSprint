@@ -1,5 +1,6 @@
 package com.example.androidsprint
 
+import android.content.Context
 import androidx.room.Room
 import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.model.Category
@@ -13,7 +14,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
-class RecipeRepository {
+class RecipeRepository(private val context: Context) {
     private val contentType = "application/json".toMediaType()
     val retrofit: Retrofit =
         Retrofit.Builder()
@@ -24,7 +25,7 @@ class RecipeRepository {
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
     val dataBase = Room.databaseBuilder(
-        MainActivity().applicationContext,
+        context,
         DataBase::class.java,
         "database-category"
     ).build()

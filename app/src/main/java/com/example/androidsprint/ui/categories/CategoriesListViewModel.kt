@@ -13,7 +13,8 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
     data class CategoriesListState(
         val categoriesList: List<Category>? = emptyList(),
     )
-    private val recipesRepository = RecipeRepository()
+
+    private val recipesRepository = RecipeRepository(getApplication())
     private val _categoryLiveData = MutableLiveData<CategoriesListState>()
     val categoryLiveData: LiveData<CategoriesListState> = _categoryLiveData
 
@@ -22,8 +23,10 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
             _categoryLiveData.postValue(
                 CategoriesListState(
                     categoriesList = recipesRepository.getCategoriesFromCache(),
-                )
+                    )
             )
+            recipesRepository.getCategory()
+            recipesRepository.dataBase.categoryDao().insertAll()
         }
     }
 }
