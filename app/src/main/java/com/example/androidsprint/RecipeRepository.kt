@@ -2,10 +2,10 @@ package com.example.androidsprint
 
 import android.content.Context
 import androidx.room.Room
+import com.example.androidsprint.data.DataBase
 import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.CategoryDao
-import com.example.androidsprint.model.DataBase
 import com.example.androidsprint.model.Recipe
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.Dispatchers

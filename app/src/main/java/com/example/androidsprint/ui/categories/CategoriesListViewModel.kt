@@ -20,13 +20,16 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
 
     fun loadCategories() {
         viewModelScope.launch {
-            _categoryLiveData.postValue(
-                CategoriesListState(
-                    categoriesList = recipesRepository.getCategoriesFromCache(),
-                    )
-            )
-            recipesRepository.getCategory()
-            recipesRepository.dataBase.categoryDao().insertAll()
+            val categoriesFromCache = recipesRepository.getCategoriesFromCache()
+            _categoryLiveData.postValue(CategoriesListState(categoriesList = categoriesFromCache))
+
+            val categoriesFromServer = recipesRepository.getCategory()
+            if (categoriesFromServer!=null){
+                recipesRepository.dataBase.categoryDao().insertAll(categoriesFromServer)
+                _categoryLiveData.postValue(
+                    CategoriesListState(categoriesList = categoriesFromServer)
+                )
+            }
         }
     }
 }
