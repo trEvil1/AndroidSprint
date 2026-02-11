@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class CategoriesListViewModel(application: Application) : AndroidViewModel(application) {
     data class CategoriesListState(
-        val categoriesList: List<Category>? = emptyList(),
+        val categoriesList: List<Category> = emptyList(),
     )
 
     private val recipesRepository = RecipeRepository(getApplication())
@@ -21,14 +21,14 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
     fun loadCategories() {
         viewModelScope.launch {
             val categoriesFromCache = recipesRepository.getCategoriesFromCache()
-            _categoryLiveData.postValue(CategoriesListState(categoriesList = categoriesFromCache))
+            _categoryLiveData.value =
+                _categoryLiveData.value?.copy(categoriesList = categoriesFromCache?:return@launch)
 
             val categoriesFromServer = recipesRepository.getCategory()
-            if (categoriesFromServer!=null){
-                recipesRepository.dataBase.categoryDao().insertAll(categoriesFromServer)
-                _categoryLiveData.postValue(
-                    CategoriesListState(categoriesList = categoriesFromServer)
-                )
+            if (categoriesFromServer != null) {
+                recipesRepository.insertCategories(categoriesFromServer)
+                _categoryLiveData.value =
+                    _categoryLiveData.value?.copy(categoriesList = categoriesFromServer)
             }
         }
     }
