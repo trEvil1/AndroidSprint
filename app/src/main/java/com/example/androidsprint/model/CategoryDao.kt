@@ -7,13 +7,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
 
 @Dao
 interface CategoryDao {
-
+    @TypeConverter
     @Query("SELECT * FROM category")
     suspend fun getAll(): List<Category>
 
+    @TypeConverter
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(categories: List<Category>)
 

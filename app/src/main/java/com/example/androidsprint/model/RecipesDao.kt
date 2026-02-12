@@ -1,20 +1,20 @@
 package com.example.androidsprint.model
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.TypeConverter
 
 @Dao
 interface RecipesDao {
-    @Query("SELECT * FROM recipe")
+
+    @Query("SELECT * FROM recipe WHERE categoryId")
+    @TypeConverter
     suspend fun getRecipesByCategoryId(categoryId: Int): List<Recipe>
 
+    @TypeConverter
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(recipes: List<Recipe>)
-
-    @Delete
-    suspend fun delete(recipe: Recipe)
 
 }
