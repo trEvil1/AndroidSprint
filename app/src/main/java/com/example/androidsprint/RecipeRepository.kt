@@ -2,7 +2,8 @@ package com.example.androidsprint
 
 import android.content.Context
 import androidx.room.Room
-import com.example.androidsprint.data.DataBase
+import com.example.androidsprint.data.DataBaseCategory
+import com.example.androidsprint.data.DataBaseRecipe
 import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
@@ -23,10 +24,16 @@ class RecipeRepository(private val context: Context) {
             ).build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-   private val dataBase = Room.databaseBuilder(
+    private val dataBaseCategory = Room.databaseBuilder(
         context,
-        DataBase::class.java,
+        DataBaseCategory::class.java,
         "database-category"
+    ).build()
+
+    private val dataBaseRecipe = Room.databaseBuilder(
+        context,
+        DataBaseRecipe::class.java,
+        "database-recipe"
     ).build()
 
     suspend fun getCategory(): List<Category>? {
@@ -74,14 +81,28 @@ class RecipeRepository(private val context: Context) {
     suspend fun getCategoriesFromCache(): List<Category>? {
         return withContext(Dispatchers.IO) {
             try {
-                dataBase.categoryDao().getAll()
+                dataBaseCategory.categoryDao().getAll()
             } catch (e: Exception) {
                 null
             }
         }
     }
 
-    suspend fun insertCategories(categories: List<Category>){
-        dataBase.categoryDao().insertAll(categories)
+    suspend fun insertCategories(categories: List<Category>) {
+        dataBaseCategory.categoryDao().insertAll(categories)
+    }
+
+    suspend fun insertRecipe(recipes: List<Recipe>) {
+        dataBaseRecipe.recipeDao().insertAll(recipes)
+    }
+
+    suspend fun getRecipesFromCache(categoryId: Int): List<Recipe>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                dataBaseRecipe.recipeDao().getRecipesByCategoryId(categoryId)
+            } catch (e: Exception) {
+                null
+            }
+        }
     }
 }
