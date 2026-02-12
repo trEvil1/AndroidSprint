@@ -1,5 +1,8 @@
 package com.example.androidsprint
 
+import android.content.Context
+import androidx.room.Room
+import com.example.androidsprint.data.DataBase
 import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
@@ -10,8 +13,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
-class RecipeRepository {
-
+class RecipeRepository(private val context: Context) {
     private val contentType = "application/json".toMediaType()
     val retrofit: Retrofit =
         Retrofit.Builder()
@@ -20,6 +22,12 @@ class RecipeRepository {
                 Json.asConverterFactory(contentType)
             ).build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+
+   private val dataBase = Room.databaseBuilder(
+        context,
+        DataBase::class.java,
+        "database-category"
+    ).build()
 
     suspend fun getCategory(): List<Category>? {
         return withContext(Dispatchers.IO) {
@@ -61,5 +69,19 @@ class RecipeRepository {
                 null
             }
         }
+    }
+
+    suspend fun getCategoriesFromCache(): List<Category>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                dataBase.categoryDao().getAll()
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    suspend fun insertCategories(categories: List<Category>){
+        dataBase.categoryDao().insertAll(categories)
     }
 }

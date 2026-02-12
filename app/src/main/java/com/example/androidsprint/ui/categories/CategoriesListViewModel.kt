@@ -11,19 +11,25 @@ import kotlinx.coroutines.launch
 
 class CategoriesListViewModel(application: Application) : AndroidViewModel(application) {
     data class CategoriesListState(
-        val categoriesList: List<Category>? = emptyList(),
+        val categoriesList: List<Category> = emptyList(),
     )
-    private val recipesRepository = RecipeRepository()
+
+    private val recipesRepository = RecipeRepository(getApplication())
     private val _categoryLiveData = MutableLiveData<CategoriesListState>()
     val categoryLiveData: LiveData<CategoriesListState> = _categoryLiveData
 
     fun loadCategories() {
         viewModelScope.launch {
-            _categoryLiveData.postValue(
-                CategoriesListState(
-                    categoriesList = recipesRepository.getCategory(),
-                )
-            )
+            val categoriesFromCache = recipesRepository.getCategoriesFromCache()
+            _categoryLiveData.value =
+                _categoryLiveData.value?.copy(categoriesList = categoriesFromCache?:return@launch)
+
+            val categoriesFromServer = recipesRepository.getCategory()
+            if (categoriesFromServer != null) {
+                recipesRepository.insertCategories(categoriesFromServer)
+                _categoryLiveData.value =
+                    _categoryLiveData.value?.copy(categoriesList = categoriesFromServer)
+            }
         }
     }
 }
