@@ -8,13 +8,12 @@ import com.example.androidsprint.model.CategoryDao
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.model.RecipesDao
 
-
 @Database(entities = [Category::class, Recipe::class], version = 1)
-class RecipeAppDatabase {
-    @TypeConverters(Converter::class)
-    abstract class DataBaseCategory : RoomDatabase() {
-        abstract fun categoryDao(): CategoryDao
-        abstract fun recipeDao(): RecipesDao
-    }
+
+@TypeConverters(Converter::class)
+abstract class DataBase : RoomDatabase() {
+    abstract fun categoryDao(): CategoryDao
+    abstract fun recipeDao(): RecipesDao
 }
+
 

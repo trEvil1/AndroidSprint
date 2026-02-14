@@ -6,13 +6,16 @@ import com.google.gson.Gson
 
 class Converter {
     @TypeConverter
-    fun fromIngredientsToJson(value: List<Ingredient>): List<String> {
-        val json = Gson().toJson(value)
-        return Gson().fromJson<List<String>>(json, Array<String>::class.java)
-    }
+    fun fromStringListToString(value: List<String>): String? = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonToList(value: String) =
+    fun fromIngredientsToJson(value: List<Ingredient>): String? = Gson().toJson(value)
+
+    @TypeConverter
+    fun jsonToStringList(value: String): List<String> =
         Gson().fromJson(value, Array<String>::class.java).toList()
 
+    @TypeConverter
+    fun jsonToIngredients(value: String): List<Ingredient> =
+        Gson().fromJson(value, Array<Ingredient>::class.java).toList()
 }

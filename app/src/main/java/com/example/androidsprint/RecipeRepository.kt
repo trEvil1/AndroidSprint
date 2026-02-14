@@ -2,7 +2,7 @@ package com.example.androidsprint
 
 import android.content.Context
 import androidx.room.Room
-import com.example.androidsprint.data.RecipeAppDatabase
+import com.example.androidsprint.data.DataBase
 import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.Recipe
@@ -25,7 +25,7 @@ class RecipeRepository(private val context: Context) {
 
     private val dataBase = Room.databaseBuilder(
         context,
-        RecipeAppDatabase.DataBaseCategory::class.java,
+        DataBase::class.java,
         "database-category"
     ).build()
 
