@@ -15,10 +15,13 @@ import kotlinx.serialization.Serializable
 data class Recipe(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "recipe") val title: String,
-    @ColumnInfo(name = "ingredients")
-    @field:TypeConverters(Converter::class) val ingredients: List<Ingredient>,
-    @ColumnInfo(name = "method")
-    @field:TypeConverters(Converter::class) val method: List<String>,
+
+    @field:TypeConverters(Converter::class)
+    @ColumnInfo(name = "ingredients") val ingredients: List<Ingredient>,
+
+    @field:TypeConverters(Converter::class)
+    @ColumnInfo(name = "method") val method: List<String>,
+
     @ColumnInfo(name = "image") val imageUrl: String,
     @ColumnInfo(name = "categoryId") val categoryId: Int
 ) : Parcelable
