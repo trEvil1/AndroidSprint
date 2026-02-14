@@ -15,7 +15,7 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
     )
 
     private val recipesRepository = RecipeRepository(getApplication())
-    private val _categoryLiveData = MutableLiveData<CategoriesListState>()
+    private val _categoryLiveData = MutableLiveData<CategoriesListState>(CategoriesListState())
     val categoryLiveData: LiveData<CategoriesListState> = _categoryLiveData
 
     fun loadCategories() {

@@ -15,7 +15,7 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
     )
 
     private val recipeRepository = RecipeRepository(getApplication())
-    private val _recipeListLiveData = MutableLiveData<RecipeListState>()
+    private val _recipeListLiveData = MutableLiveData<RecipeListState>(RecipeListState())
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
 
     fun loadList(categoryId: Int) {
