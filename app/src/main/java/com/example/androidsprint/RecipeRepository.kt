@@ -82,11 +82,12 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun insertCategories(categories: List<Category>) {
-        dataBase.categoryDao().insertAll(categories)
+        withContext(Dispatchers.IO) { dataBase.categoryDao().insertAll(categories) }
+
     }
 
     suspend fun insertRecipe(recipes: List<Recipe>) {
-        dataBase.recipeDao().insertAll(recipes)
+        withContext(Dispatchers.IO) { dataBase.recipeDao().insertAll(recipes) }
     }
 
     suspend fun getRecipesFromCache(categoryId: Int): List<Recipe>? {
