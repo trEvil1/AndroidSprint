@@ -10,7 +10,6 @@ import com.example.androidsprint.model.Ingredient
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.model.RecipesDao
 import com.google.gson.Gson
-import java.util.Arrays.asList
 
 
 @Database(entities = [Category::class, Recipe::class], version = 1)
@@ -27,7 +26,7 @@ private class Converter {
     @TypeConverter
     fun fromIngredientsToJson(value: List<Ingredient>): List<String> {
         val json = Gson().toJson(value)
-     return Gson().fromJson<List<String>>(json, Array<String>::class.java)
+        return Gson().fromJson<List<String>>(json, Array<String>::class.java)
     }
 
     @TypeConverter
