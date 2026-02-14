@@ -23,16 +23,10 @@ class RecipeRepository(private val context: Context) {
             ).build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-    private val dataBaseCategory = Room.databaseBuilder(
+    private val dataBase = Room.databaseBuilder(
         context,
         RecipeAppDatabase.DataBaseCategory::class.java,
         "database-category"
-    ).build()
-
-    private val dataBaseRecipe = Room.databaseBuilder(
-        context,
-        RecipeAppDatabase.DataBaseRecipe::class.java,
-        "database-recipe"
     ).build()
 
     suspend fun getCategory(): List<Category>? {
@@ -80,7 +74,7 @@ class RecipeRepository(private val context: Context) {
     suspend fun getCategoriesFromCache(): List<Category>? {
         return withContext(Dispatchers.IO) {
             try {
-                dataBaseCategory.categoryDao().getAll()
+                dataBase.categoryDao().getAll()
             } catch (e: Exception) {
                 null
             }
@@ -88,17 +82,17 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun insertCategories(categories: List<Category>) {
-        dataBaseCategory.categoryDao().insertAll(categories)
+        dataBase.categoryDao().insertAll(categories)
     }
 
     suspend fun insertRecipe(recipes: List<Recipe>) {
-        dataBaseRecipe.recipeDao().insertAll(recipes)
+        dataBase.recipeDao().insertAll(recipes)
     }
 
     suspend fun getRecipesFromCache(categoryId: Int): List<Recipe>? {
         return withContext(Dispatchers.IO) {
             try {
-                dataBaseRecipe.recipeDao().getRecipesByCategoryId(categoryId)
+                dataBase.recipeDao().getRecipesByCategoryId(categoryId)
             } catch (e: Exception) {
                 null
             }

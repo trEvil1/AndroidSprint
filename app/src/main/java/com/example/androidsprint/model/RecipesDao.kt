@@ -9,11 +9,10 @@ import androidx.room.TypeConverter
 @Dao
 interface RecipesDao {
 
-    @Query("SELECT * FROM recipe WHERE categoryId")
-    @TypeConverter
+    @Query("SELECT * FROM recipe WHERE categoryId = :categoryId")
+
     suspend fun getRecipesByCategoryId(categoryId: Int): List<Recipe>
 
-    @TypeConverter
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(recipes: List<Recipe>)
 

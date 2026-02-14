@@ -6,39 +6,32 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.CategoryDao
+import com.example.androidsprint.model.Ingredient
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.model.RecipesDao
 import com.google.gson.Gson
+import java.util.Arrays.asList
 
 
 @Database(entities = [Category::class, Recipe::class], version = 1)
 class RecipeAppDatabase {
 
-    @TypeConverters(ConverterCategory::class)
+    @TypeConverters(Converter::class)
     abstract class DataBaseCategory : RoomDatabase() {
         abstract fun categoryDao(): CategoryDao
-    }
-
-    @TypeConverters(ConverterRecipe::class)
-    abstract class DataBaseRecipe : RoomDatabase() {
         abstract fun recipeDao(): RecipesDao
     }
 }
 
-private class ConverterRecipe {
+private class Converter {
     @TypeConverter
-    fun fromRecipeListToJson(value: List<Recipe>): String? = Gson().toJson(value)
+    fun fromIngredientsToJson(value: List<Ingredient>): List<String> {
+        val json = Gson().toJson(value)
+     return Gson().fromJson<List<String>>(json, Array<String>::class.java)
+    }
 
     @TypeConverter
     fun jsonToRecipeList(value: String) =
         Gson().fromJson(value, Array<String>::class.java).toList()
-}
 
-private class ConverterCategory {
-    @TypeConverter
-    fun fromRecipeListToJson(value: List<Category>): String? = Gson().toJson(value)
-
-    @TypeConverter
-    fun jsonToRecipeList(value: String) =
-        Gson().fromJson(value, Array<String>::class.java).toList()
 }
