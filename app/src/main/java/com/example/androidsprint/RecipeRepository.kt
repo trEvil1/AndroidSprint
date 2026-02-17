@@ -99,4 +99,18 @@ class RecipeRepository(private val context: Context) {
             }
         }
     }
+
+    suspend fun getFavoriteFromCache(): List<Recipe>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                dataBase.favoriteDao().getRecipesByFavorite()
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    suspend fun insertFavorites(recipeList: List<Recipe>) {
+        withContext(Dispatchers.IO) { dataBase.favoriteDao().insertAll(recipeList) }
+    }
 }
