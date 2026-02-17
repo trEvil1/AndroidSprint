@@ -23,7 +23,7 @@ class RecipeRepository(private val context: Context) {
             ).build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-   private val dataBase = Room.databaseBuilder(
+    private val dataBase = Room.databaseBuilder(
         context,
         DataBase::class.java,
         "database-category"
@@ -81,7 +81,22 @@ class RecipeRepository(private val context: Context) {
         }
     }
 
-    suspend fun insertCategories(categories: List<Category>){
-        dataBase.categoryDao().insertAll(categories)
+    suspend fun insertCategories(categories: List<Category>) {
+        withContext(Dispatchers.IO) { dataBase.categoryDao().insertAll(categories) }
+
+    }
+
+    suspend fun insertRecipe(recipes: List<Recipe>) {
+        withContext(Dispatchers.IO) { dataBase.recipeDao().insertAll(recipes) }
+    }
+
+    suspend fun getRecipesFromCache(categoryId: Int): List<Recipe>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                dataBase.recipeDao().getRecipesByCategoryId(categoryId)
+            } catch (e: Exception) {
+                null
+            }
+        }
     }
 }

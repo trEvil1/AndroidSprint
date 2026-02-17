@@ -1,16 +1,13 @@
 package com.example.androidsprint.model
 
 import androidx.room.Dao
-import androidx.room.Database
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.RoomDatabase
 
 @Dao
 interface CategoryDao {
-
     @Query("SELECT * FROM category")
     suspend fun getAll(): List<Category>
 

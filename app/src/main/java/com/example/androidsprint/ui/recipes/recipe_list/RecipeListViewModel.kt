@@ -15,16 +15,20 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
     )
 
     private val recipeRepository = RecipeRepository(getApplication())
-    private val _recipeListLiveData = MutableLiveData<RecipeListState>()
+    private val _recipeListLiveData = MutableLiveData<RecipeListState>(RecipeListState())
     val recipeListLiveData: LiveData<RecipeListState> = _recipeListLiveData
 
     fun loadList(categoryId: Int) {
         viewModelScope.launch {
-            _recipeListLiveData.postValue(
-                RecipeListState(
-                    recipesList = recipeRepository.getRecipesByCategoryId(categoryId)
-                )
-            )
+            val recipesFromCache = recipeRepository.getRecipesFromCache(categoryId)
+            _recipeListLiveData.value =
+                _recipeListLiveData.value?.copy(recipesList = recipesFromCache)
+            val recipesFromServer = recipeRepository.getRecipesByCategoryId(categoryId)
+            if (recipesFromServer != null) {
+                recipeRepository.insertRecipe(recipesFromServer)
+                _recipeListLiveData.value =
+                    _recipeListLiveData.value?.copy(recipesList = recipesFromServer)
+            }
         }
     }
 }
