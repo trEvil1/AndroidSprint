@@ -24,15 +24,12 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     fun loadRecipes() {
         viewModelScope.launch {
             val favoritesFromCache = recipeRepository.getFavoriteFromCache()
-            _favoriteLiveData.value =
-                _favoriteLiveData.value?.copy(recipeList = favoritesFromCache)
             val favoritesFromServer = recipeRepository.getRecipesByIds(getFavorites())
-            if (favoritesFromCache == null) {
-                recipeRepository.insertFavorites(favoritesFromServer ?: return@launch)
+            if (favoritesFromServer != null) {
                 _favoriteLiveData.value =
                     _favoriteLiveData.value?.copy(recipeList = favoritesFromServer)
-            }
-
+            } else _favoriteLiveData.value =
+                _favoriteLiveData.value?.copy(recipeList = favoritesFromCache)
         }
     }
 
