@@ -86,6 +86,4 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
         _recipeLiveData.value = currentState.copy(portionCount = progress)
     }
-
-
 }
