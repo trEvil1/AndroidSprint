@@ -12,5 +12,5 @@ interface FavoritesDao{
     suspend fun getRecipesByFavorite(): List<Recipe>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(recipes:Recipe)
+    suspend fun updateRecipe(recipes:Recipe)
 }

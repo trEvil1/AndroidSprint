@@ -110,7 +110,9 @@ class RecipeRepository(private val context: Context) {
         }
     }
 
-    suspend fun insertFavorites(recipe: Recipe) {
-        withContext(Dispatchers.IO) { dataBase.favoriteDao().insertAll(recipe) }
+    suspend fun updateRecipe(recipe: Recipe) {
+        withContext(Dispatchers.IO) {
+            dataBase.recipeDao().updateRecipe(recipe)
+        }
     }
 }
