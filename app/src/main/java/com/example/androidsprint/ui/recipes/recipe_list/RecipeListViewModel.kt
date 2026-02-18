@@ -22,13 +22,13 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             val recipesFromCache = recipeRepository.getRecipesFromCache(categoryId)
             val recipesFromServer = recipeRepository.getRecipesByCategoryId(categoryId)
-            _recipeListLiveData.value =
-                _recipeListLiveData.value?.copy(recipesList = recipesFromCache)
-            if (recipesFromCache == null) {
-                recipeRepository.insertRecipe(recipesFromServer?:return@launch)
+            if (recipesFromServer != null) {
+                recipesFromServer.forEach { it.categoryId = categoryId }
+                recipeRepository.insertRecipe(recipesFromServer)
                 _recipeListLiveData.value =
                     _recipeListLiveData.value?.copy(recipesList = recipesFromServer)
-            }
+            } else _recipeListLiveData.value =
+                _recipeListLiveData.value?.copy(recipesList = recipesFromCache)
         }
     }
 }

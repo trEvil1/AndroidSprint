@@ -30,7 +30,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             val recipe = recipeRepository.getRecipeById(recipeId)
             val favorites = getFavorites()
             val currentPortions = _recipeLiveData.value?.portionCount ?: 1
-
             _recipeLiveData.postValue(
                 RecipeState(
                     recipe = recipe,
