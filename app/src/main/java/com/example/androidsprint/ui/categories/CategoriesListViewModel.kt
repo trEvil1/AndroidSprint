@@ -21,13 +21,15 @@ class CategoriesListViewModel(application: Application) : AndroidViewModel(appli
     fun loadCategories() {
         viewModelScope.launch {
             val categoriesFromCache = recipesRepository.getCategoriesFromCache()
+            _categoryLiveData.value =
+                _categoryLiveData.value?.copy(categoriesList = categoriesFromCache?:return@launch)
+
             val categoriesFromServer = recipesRepository.getCategory()
             if (categoriesFromServer != null) {
                 recipesRepository.insertCategories(categoriesFromServer)
                 _categoryLiveData.value =
                     _categoryLiveData.value?.copy(categoriesList = categoriesFromServer)
-            } else _categoryLiveData.value =
-                _categoryLiveData.value?.copy(categoriesList = categoriesFromCache ?: return@launch)
+            }
         }
     }
 }

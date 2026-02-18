@@ -29,8 +29,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             val recipe = recipeRepository.getRecipeById(recipeId)
             val favorites = getFavorites()
-            favoritesToDatabase(recipeId)
             val currentPortions = _recipeLiveData.value?.portionCount ?: 1
+
             _recipeLiveData.postValue(
                 RecipeState(
                     recipe = recipe,
@@ -38,13 +38,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                     portionCount = currentPortions,
                 )
             )
-        }
-    }
-
-    private suspend fun favoritesToDatabase(recipeId: Int) {
-        val recipe = recipeRepository.getRecipeById(recipeId)
-        if (recipe?.isFavorite == true){
-            recipeRepository.insertFavorites(recipe)
         }
     }
 

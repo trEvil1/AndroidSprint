@@ -21,14 +21,14 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
     fun loadList(categoryId: Int) {
         viewModelScope.launch {
             val recipesFromCache = recipeRepository.getRecipesFromCache(categoryId)
+            _recipeListLiveData.value =
+                _recipeListLiveData.value?.copy(recipesList = recipesFromCache)
             val recipesFromServer = recipeRepository.getRecipesByCategoryId(categoryId)
             if (recipesFromServer != null) {
-                recipesFromServer.forEach { it.categoryId = categoryId }
                 recipeRepository.insertRecipe(recipesFromServer)
                 _recipeListLiveData.value =
                     _recipeListLiveData.value?.copy(recipesList = recipesFromServer)
-            } else _recipeListLiveData.value =
-                _recipeListLiveData.value?.copy(recipesList = recipesFromCache)
+            }
         }
     }
 }

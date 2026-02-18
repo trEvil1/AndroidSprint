@@ -35,7 +35,6 @@ class RecipeListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadList(args.category.id)
-        binding.tvTitle.text = (args.category.title)
         initRecycler()
     }
 
