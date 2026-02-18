@@ -27,7 +27,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
             _favoriteLiveData.value =
                 _favoriteLiveData.value?.copy(recipeList = favoritesFromCache)
             val favoritesFromServer = recipeRepository.getRecipesByIds(getFavorites())
-            if (favoritesFromCache != null) {
+            if (favoritesFromCache == null) {
                 recipeRepository.insertFavorites(favoritesFromServer ?: return@launch)
                 _favoriteLiveData.value =
                     _favoriteLiveData.value?.copy(recipeList = favoritesFromServer)

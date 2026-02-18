@@ -8,7 +8,7 @@ import com.example.androidsprint.model.Recipe
 
 @Dao
 interface FavoritesDao{
-    @Query("SELECT * FROM recipe WHERE isFavorite == TRUE")
+    @Query("SELECT * FROM recipe WHERE isFavorite = 1")
     suspend fun getRecipesByFavorite(): List<Recipe>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
