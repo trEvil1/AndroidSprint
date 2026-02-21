@@ -35,11 +35,12 @@ class IngredientsAdapter() :
         position: Int
     ) {
         val ingredient = dataset[position]
-        val quantityAmount = if (ingredient.quantity.isDigitsOnly()) {
-            BigDecimal(ingredient.quantity).multiply(quantity).stripTrailingZeros().let {
-                if (it.scale() <= 0) it.setScale(0) else it
-            }.toString()
-        } else ingredient.quantity
+        val quantityAmount =
+            if (ingredient.quantity.isDigitsOnly() || ingredient.quantity.toDoubleOrNull() != null) {
+                BigDecimal(ingredient.quantity).multiply(quantity).stripTrailingZeros().let {
+                    if (it.scale() <= 0) it.setScale(0) else it
+                }.toString()
+            } else ingredient.quantity
         holder.quantity.text = "$quantityAmount ${ingredient.unitOfMeasure}"
         holder.ingredients.text = ingredient.description
     }
