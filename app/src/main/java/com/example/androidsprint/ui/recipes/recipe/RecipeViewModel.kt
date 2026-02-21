@@ -52,8 +52,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun onFavoriteClicked() {
         val currentState = _recipeLiveData.value ?: return
         val recipe = currentState.recipe ?: return
-        val newFavoriteState = currentState.isFavorite
-
+        val newFavoriteState = !currentState.isFavorite
         viewModelScope.launch {
             recipeRepository.updateRecipe(
                 recipe.copy(isFavorite = newFavoriteState)
