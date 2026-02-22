@@ -3,6 +3,7 @@ package com.example.androidsprint.ui.recipes.recipe
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidsprint.R
 import com.example.androidsprint.databinding.ItemIngredientBinding
@@ -35,9 +36,11 @@ class IngredientsAdapter() :
     ) {
         val ingredient = dataset[position]
         val quantityAmount =
-            BigDecimal(ingredient.quantity).multiply(quantity).stripTrailingZeros().let {
-                if (it.scale() <= 0) it.setScale(0) else it
-            }.toString()
+            if (ingredient.quantity.isDigitsOnly() || ingredient.quantity.toDoubleOrNull() != null) {
+                BigDecimal(ingredient.quantity).multiply(quantity).stripTrailingZeros().let {
+                    if (it.scale() <= 0) it.setScale(0) else it
+                }.toString()
+            } else ingredient.quantity
         holder.quantity.text = "$quantityAmount ${ingredient.unitOfMeasure}"
         holder.ingredients.text = ingredient.description
     }
