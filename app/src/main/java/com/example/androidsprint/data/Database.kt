@@ -9,7 +9,7 @@ import com.example.androidsprint.model.CategoryDao
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.model.RecipesDao
 
-@Database(entities = [Category::class, Recipe::class], version = 1)
+@Database(entities = [Category::class, Recipe::class], version = 2)
 
 @TypeConverters(Converter::class)
 abstract class DataBase : RoomDatabase() {

@@ -27,7 +27,7 @@ class RecipeRepository(private val context: Context) {
         context,
         DataBase::class.java,
         "database-category"
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     suspend fun getCategory(): List<Category>? {
         return withContext(Dispatchers.IO) {
@@ -54,17 +54,6 @@ class RecipeRepository(private val context: Context) {
         return withContext(Dispatchers.IO) {
             try {
                 service.getRecipeById(id)
-            } catch (e: Exception) {
-                null
-            }
-        }
-    }
-
-    suspend fun getRecipesByIds(set: Set<String>): List<Recipe>? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val ids = set.map { it.toInt() }.toSet()
-                service.getRecipes().filter { it.id in ids }
             } catch (e: Exception) {
                 null
             }
@@ -110,7 +99,9 @@ class RecipeRepository(private val context: Context) {
         }
     }
 
-    suspend fun insertFavorites(recipe: Recipe) {
-        withContext(Dispatchers.IO) { dataBase.favoriteDao().insertAll(recipe) }
+    suspend fun updateRecipe(recipe: Recipe) {
+        withContext(Dispatchers.IO) {
+            dataBase.recipeDao().updateRecipe(recipe)
+        }
     }
 }
