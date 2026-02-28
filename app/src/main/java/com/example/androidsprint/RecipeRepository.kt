@@ -1,36 +1,21 @@
 package com.example.androidsprint
 
-import android.content.Context
-import androidx.room.Room
-import com.example.androidsprint.data.DataBase
-import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.model.Category
+import com.example.androidsprint.model.CategoryDao
 import com.example.androidsprint.model.Recipe
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.coroutines.Dispatchers
+import com.example.androidsprint.model.RecipesDao
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.Retrofit
+import kotlin.coroutines.CoroutineContext
 
-class RecipeRepository(private val context: Context) {
-    private val contentType = "application/json".toMediaType()
-    val retrofit: Retrofit =
-        Retrofit.Builder()
-            .baseUrl(URL_RECIPE)
-            .addConverterFactory(
-                Json.asConverterFactory(contentType)
-            ).build()
-    private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
-
-    private val dataBase = Room.databaseBuilder(
-        context,
-        DataBase::class.java,
-        "database-category"
-    ).fallbackToDestructiveMigration().build()
+class RecipeRepository(
+    private val recipesDao: RecipesDao,
+    private val categoryDao: CategoryDao,
+    private val favoritesDao: FavoritesDao,
+    private val ioDispatcher: CoroutineContext
+) {
 
     suspend fun getCategory(): List<Category>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 service.getCategories()
             } catch (e: Exception) {
@@ -40,7 +25,7 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun getRecipesByCategoryId(id: Int): List<Recipe>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 service.getRecipesByCategoryId(id)
             } catch (e: Exception) {
@@ -51,7 +36,7 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun getRecipeById(id: Int): Recipe? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 service.getRecipeById(id)
             } catch (e: Exception) {
@@ -61,9 +46,9 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun getCategoriesFromCache(): List<Category>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
-                dataBase.categoryDao().getAll()
+                categoryDao.getAll()
             } catch (e: Exception) {
                 null
             }
@@ -71,18 +56,18 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun insertCategories(categories: List<Category>) {
-        withContext(Dispatchers.IO) { dataBase.categoryDao().insertAll(categories) }
+        withContext(ioDispatcher) { categoryDao.insertAll(categories) }
 
     }
 
     suspend fun insertRecipe(recipes: List<Recipe>) {
-        withContext(Dispatchers.IO) { dataBase.recipeDao().insertAll(recipes) }
+        withContext(ioDispatcher) { recipesDao.insertAll(recipes) }
     }
 
     suspend fun getRecipesFromCache(categoryId: Int): List<Recipe>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
-                dataBase.recipeDao().getRecipesByCategoryId(categoryId)
+                recipesDao.getRecipesByCategoryId(categoryId)
             } catch (e: Exception) {
                 null
             }
@@ -90,9 +75,9 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun getFavoriteFromCache(): List<Recipe>? {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
-                dataBase.favoriteDao().getRecipesByFavorite()
+                favoritesDao.getRecipesByFavorite()
             } catch (e: Exception) {
                 null
             }
@@ -100,8 +85,8 @@ class RecipeRepository(private val context: Context) {
     }
 
     suspend fun updateRecipe(recipe: Recipe) {
-        withContext(Dispatchers.IO) {
-            dataBase.recipeDao().updateRecipe(recipe)
+        withContext(ioDispatcher) {
+            recipesDao.updateRecipe(recipe)
         }
     }
 }
