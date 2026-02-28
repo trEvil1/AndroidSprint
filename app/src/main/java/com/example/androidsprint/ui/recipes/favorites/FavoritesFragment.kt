@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.androidsprint.R
+import com.example.androidsprint.RecipeApplication
 import com.example.androidsprint.databinding.FavoritesFragmentBinding
 import com.example.androidsprint.ui.recipes.recipe_list.RecipeListAdapter
 
@@ -19,8 +19,13 @@ class FavoritesFragment : Fragment() {
         get() = _binding ?: throw IllegalStateException(
             "Binding for FavoriteFragmentBinding must not be null"
         )
-    private val viewModel: FavoritesViewModel by viewModels()
+    private lateinit var viewModel: FavoritesViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val appContainer = (requireActivity().application as RecipeApplication).appContainer
+        viewModel = appContainer.favoritesViewModelFactory.create()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

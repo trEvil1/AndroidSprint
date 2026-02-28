@@ -15,8 +15,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 class AppContainer(context: Context) {
-
-
     val logging = HttpLoggingInterceptor().apply {
         setLevel(HttpLoggingInterceptor.Level.BODY)
     }
@@ -48,10 +46,12 @@ class AppContainer(context: Context) {
         recipesDao = recipesDao,
         categoryDao = categoryDao,
         favoritesDao = favoritesDao,
-        ioDispatcher = ioDispatcher
+        ioDispatcher = ioDispatcher,
+        service = service
     )
 
     val categoriesListViewModelFactory = CategoriesListViewModelFactory(repository)
     val recipeViewModelFactory = RecipeViewModelFactory(repository)
     val recipesListViewModelFactory = RecipesListViewModelFactory(repository)
+    val favoritesViewModelFactory = FavoritesViewModelFactory(repository)
 }

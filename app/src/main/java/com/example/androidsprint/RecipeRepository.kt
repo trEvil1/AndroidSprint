@@ -11,7 +11,8 @@ class RecipeRepository(
     private val recipesDao: RecipesDao,
     private val categoryDao: CategoryDao,
     private val favoritesDao: FavoritesDao,
-    private val ioDispatcher: CoroutineContext
+    private val ioDispatcher: CoroutineContext,
+    private val service : RecipeApiService
 ) {
 
     suspend fun getCategory(): List<Category>? {
