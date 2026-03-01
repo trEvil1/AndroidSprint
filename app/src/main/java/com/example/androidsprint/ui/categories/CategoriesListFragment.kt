@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.androidsprint.R
+import com.example.androidsprint.RecipeApplication
 import com.example.androidsprint.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment() {
@@ -17,7 +17,14 @@ class CategoriesListFragment : Fragment() {
         get() = _binding ?: throw IllegalStateException(
             "Binding for FragmentListCategoriesBinding must not be null"
         )
-    val viewModel: CategoriesListViewModel by viewModels()
+    private lateinit var viewModel: CategoriesListViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipeApplication).appContainer
+        viewModel = appContainer.categoriesListViewModelFactory.create()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
