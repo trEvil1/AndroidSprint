@@ -6,9 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.model.Category
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoriesListViewModel(private val repository: RecipeRepository) : ViewModel() {
+@HiltViewModel
+class CategoriesListViewModel @Inject constructor(private val repository: RecipeRepository) :
+    ViewModel() {
     data class CategoriesListState(
         val categoriesList: List<Category> = emptyList(),
     )

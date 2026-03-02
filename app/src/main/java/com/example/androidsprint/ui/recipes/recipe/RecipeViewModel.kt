@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidsprint.RecipeRepository
 import com.example.androidsprint.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
+@HiltViewModel
+class RecipeViewModel @Inject constructor(private val repository: RecipeRepository) : ViewModel() {
     data class RecipeState(
-        val isFavorite: Boolean,
+        val isFavorite: Boolean = false,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
     )
@@ -35,7 +38,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     fun onFavoriteClicked() {
         viewModelScope.launch {
             val currentState = _recipeLiveData.value
-            val recipe = currentState?.recipe ?:return@launch
+            val recipe = currentState?.recipe ?: return@launch
             val newFavoriteState = !currentState.isFavorite
             repository.updateRecipe(
                 recipe.copy(isFavorite = newFavoriteState)
@@ -43,7 +46,6 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
             _recipeLiveData.value = currentState.copy(isFavorite = newFavoriteState)
         }
     }
-
 
     fun onPortionsCountChanged(progress: Int) {
         val currentState = _recipeLiveData.value ?: return
