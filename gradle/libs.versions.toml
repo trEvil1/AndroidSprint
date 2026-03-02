@@ -23,7 +23,7 @@ retrofit = "3.0.0"
 retrofit2KotlinxSerializationConverter = "1.0.0"
 roomCompiler = "2.8.4"
 databindingAdapters = "9.0.0"
-hilt = "2.44"
+hilt = "2.57.1"
 
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }

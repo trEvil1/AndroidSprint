@@ -25,16 +25,10 @@ class RecipeFragment : Fragment() {
         get() = _binding ?: throw IllegalStateException(
             "Binding for RecipeFragmentBinding must not be null"
         )
-    private  val viewModel: RecipeViewModel by viewModels()
+    private val viewModel: RecipeViewModel by viewModels()
     private var ingredientsAdapter: IngredientsAdapter? = null
     private var methodAdapter: MethodAdapter? = null
     private val args: RecipeFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        val appContainer = (requireActivity().application as RecipeApplication).appContainer
-//        viewModel = appContainer.recipeViewModelFactory.create()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +37,6 @@ class RecipeFragment : Fragment() {
     ): View {
         _binding = RecipeFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,11 +54,9 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-
         binding.ibFavorite.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
-
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
             if (state == null) {
                 Toast.makeText(
