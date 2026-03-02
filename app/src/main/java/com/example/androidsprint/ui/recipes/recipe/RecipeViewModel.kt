@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeViewModel @Inject constructor(private val repository: RecipeRepository) : ViewModel() {
     data class RecipeState(
-        val isFavorite: Boolean,
+        val isFavorite: Boolean = false,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
     )
@@ -46,7 +46,6 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
             _recipeLiveData.value = currentState.copy(isFavorite = newFavoriteState)
         }
     }
-
 
     fun onPortionsCountChanged(progress: Int) {
         val currentState = _recipeLiveData.value ?: return
