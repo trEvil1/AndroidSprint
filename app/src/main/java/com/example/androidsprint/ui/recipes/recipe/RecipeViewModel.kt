@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeViewModel @Inject constructor(private val repository: RecipeRepository) : ViewModel() {
     data class RecipeState(
-        val isFavorite: Boolean = false,
+        val isFavorite: Boolean,
         val portionCount: Int = 1,
         val recipe: Recipe? = null,
     )
@@ -23,7 +23,7 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
 
     fun loadRecipe(recipeId: Int) {
         viewModelScope.launch {
-            val recipe = repository.getRecipeById(recipeId)
+            val recipe = repository.getRecipeByIdFromDb(recipeId)
             val currentPortions = _recipeLiveData.value?.portionCount ?: 1
             _recipeLiveData.postValue(
                 RecipeState(

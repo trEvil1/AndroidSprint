@@ -91,6 +91,18 @@ class RecipeRepository @Inject constructor(
     suspend fun updateRecipe(recipe: Recipe) {
         withContext(ioDispatcher) {
             recipesDao.updateRecipe(recipe)
+            favoritesDao.updateRecipe(recipe)
         }
     }
+
+    suspend fun getRecipeByIdFromDb(recipeId: Int): Recipe? {
+        return withContext(ioDispatcher) {
+            try {
+                recipesDao.getRecipeById(recipeId)
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
 }
