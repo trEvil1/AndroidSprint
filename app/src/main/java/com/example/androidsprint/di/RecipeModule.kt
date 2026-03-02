@@ -2,7 +2,7 @@ package com.example.androidsprint.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.androidsprint.FavoritesDao
+import com.example.androidsprint.model.FavoritesDao
 import com.example.androidsprint.RecipeApiService
 import com.example.androidsprint.data.DataBase
 import com.example.androidsprint.data.URL_RECIPE

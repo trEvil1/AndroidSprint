@@ -1,7 +1,9 @@
-package com.example.androidsprint
+package com.example.androidsprint.data
 
+import com.example.androidsprint.RecipeApiService
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.CategoryDao
+import com.example.androidsprint.model.FavoritesDao
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.model.RecipesDao
 import kotlinx.coroutines.Dispatchers

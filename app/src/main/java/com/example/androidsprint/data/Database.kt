@@ -3,7 +3,7 @@ package com.example.androidsprint.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.androidsprint.FavoritesDao
+import com.example.androidsprint.model.FavoritesDao
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.CategoryDao
 import com.example.androidsprint.model.Recipe
