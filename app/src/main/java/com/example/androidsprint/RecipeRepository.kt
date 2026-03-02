@@ -39,16 +39,6 @@ class RecipeRepository @Inject constructor(
 
     }
 
-    suspend fun getRecipeById(id: Int): Recipe? {
-        return withContext(ioDispatcher) {
-            try {
-                service.getRecipeById(id)
-            } catch (e: Exception) {
-                null
-            }
-        }
-    }
-
     suspend fun getCategoriesFromCache(): List<Category>? {
         return withContext(ioDispatcher) {
             try {
