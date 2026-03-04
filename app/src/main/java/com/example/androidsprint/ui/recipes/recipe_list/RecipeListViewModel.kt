@@ -4,11 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.androidsprint.RecipeRepository
+import com.example.androidsprint.data.RecipeRepository
 import com.example.androidsprint.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeListViewModel(private val repository: RecipeRepository) : ViewModel() {
+@HiltViewModel
+class RecipeListViewModel @Inject constructor(private val repository: RecipeRepository) :
+    ViewModel() {
     data class RecipeListState(
         val recipesList: List<Recipe>? = null
     )

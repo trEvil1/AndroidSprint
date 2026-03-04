@@ -8,31 +8,27 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.example.androidsprint.R
-import com.example.androidsprint.RecipeApplication
 import com.example.androidsprint.data.URL_RECIPE
 import com.example.androidsprint.databinding.RecipeFragmentBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeFragment : Fragment() {
     private var _binding: RecipeFragmentBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException(
             "Binding for RecipeFragmentBinding must not be null"
         )
-    private lateinit var viewModel: RecipeViewModel
+    private val viewModel: RecipeViewModel by viewModels()
     private var ingredientsAdapter: IngredientsAdapter? = null
     private var methodAdapter: MethodAdapter? = null
     private val args: RecipeFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val appContainer = (requireActivity().application as RecipeApplication).appContainer
-        viewModel = appContainer.recipeViewModelFactory.create()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +37,6 @@ class RecipeFragment : Fragment() {
     ): View {
         _binding = RecipeFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,11 +54,9 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-
         binding.ibFavorite.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
-
         viewModel.recipeLiveData.observe(viewLifecycleOwner) { state ->
             if (state == null) {
                 Toast.makeText(

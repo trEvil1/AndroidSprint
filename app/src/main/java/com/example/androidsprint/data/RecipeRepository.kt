@@ -1,19 +1,24 @@
-package com.example.androidsprint
+package com.example.androidsprint.data
 
+import com.example.androidsprint.RecipeApiService
 import com.example.androidsprint.model.Category
 import com.example.androidsprint.model.CategoryDao
+import com.example.androidsprint.model.FavoritesDao
 import com.example.androidsprint.model.Recipe
 import com.example.androidsprint.model.RecipesDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class RecipeRepository(
+class RecipeRepository @Inject constructor(
     private val recipesDao: RecipesDao,
     private val categoryDao: CategoryDao,
     private val favoritesDao: FavoritesDao,
-    private val ioDispatcher: CoroutineContext,
-    private val service : RecipeApiService
+    private val service: RecipeApiService
 ) {
+
+    private val ioDispatcher: CoroutineContext = Dispatchers.IO
 
     suspend fun getCategory(): List<Category>? {
         return withContext(ioDispatcher) {
@@ -34,16 +39,6 @@ class RecipeRepository(
             }
         }
 
-    }
-
-    suspend fun getRecipeById(id: Int): Recipe? {
-        return withContext(ioDispatcher) {
-            try {
-                service.getRecipeById(id)
-            } catch (e: Exception) {
-                null
-            }
-        }
     }
 
     suspend fun getCategoriesFromCache(): List<Category>? {
@@ -88,6 +83,18 @@ class RecipeRepository(
     suspend fun updateRecipe(recipe: Recipe) {
         withContext(ioDispatcher) {
             recipesDao.updateRecipe(recipe)
+            favoritesDao.updateRecipe(recipe)
         }
     }
+
+    suspend fun getRecipeByIdFromDb(recipeId: Int): Recipe? {
+        return withContext(ioDispatcher) {
+            try {
+                recipesDao.getRecipeById(recipeId)
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
 }

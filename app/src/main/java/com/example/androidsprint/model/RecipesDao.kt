@@ -16,4 +16,7 @@ interface RecipesDao {
 
     @Update
     suspend fun updateRecipe(recipe: Recipe)
+
+    @Query("SELECT * FROM recipe WHERE recipe.id = :recipeId ")
+    suspend fun getRecipeById(recipeId: Int): Recipe
 }
